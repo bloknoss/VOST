@@ -10,5 +10,45 @@ Este equipo esta formado por los siguientes integrantes:
 - [Jose Ramón Gallardo Azcárate](https://github.com/Ramon253) - Encargo del apartado del controlador
   
 Cada miembro se encargara de realizar debidamente su apartado y de documentar y realizar todas las tareas necesarias, todos los miembros están de acuerdo con la responsabilidad que ha sido encargada y no existen más problemas al respecto.  
+
 ## Estructura del proyecto
 El proyecto será realizado en PHP puro, una base de datos MySQL y el frontend desarrollado en HTML, CSS y JS, usando Sass y Bootstrap para el diseño de la vista de la página.
+
+Los archivos públicos tales como index.php y sus requeridas dependencias, estarán en la carpeta public, el core del proyecto residirá en la carpeta src/ donde estará la estructura MVC
+
+```bash
+.  
+├── README.md
+├── public  
+│   ├── assets  
+│   │   └── images
+│   ├── css
+│   ├── index.php
+│   └── js
+├── .gitignore
+└── src
+    ├── controllers
+    ├── models
+    └── views
+```
+
+## Base de Datos  
+En nuestra base de datos recopilaremos información de las siguientes entidades  
+
+- Datos del Usuario
+- Vinilo
+- Canción
+- Dirección
+- Pedido
+
+Estas entidades tendran distintos atributos que serán almacenadas en sus respectivas tablas.  
+> **_NOTA_:** Un diagrama Entidad/Relación será presentado para mostrar las cardinalidades y grados entre estas entidades.
+
+## Correciones  
+En caso de correciones, se podría enviar un comentario a la tarea del classroom, o alternativamente mediante una issue de GitHub o un correo electrónico al responsable del proyecto.  
+E-mail de contacto: windpourwow@gmail.com (Responsable del proyecto)
+
+## Conclusión  
+Este proyecto es bastante útil para aprender las bases para desarrollar una página web de la forma correcta y aprender las tecnologías y metodologías utilizadas para el desarrolo de aplicaciones web desde un punto de vista del backend.  
+
+README redactado por Álvaro Carabante Rodríguez con ayuda de Jose Ramón y Gonzalo
