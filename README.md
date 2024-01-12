@@ -11,4 +11,4 @@ Este equipo esta formado por los siguientes integrantes:
   
 Cada miembro se encargara de realizar debidamente su apartado y de documentar y realizar todas las tareas necesarias, todos los miembros están de acuerdo con la responsabilidad que ha sido encargada y no existen más problemas al respecto.  
 ## Estructura del proyecto
-El proyecto será realizado en PHP puro, una base de datos MySQL y el frontend  hecho en HTML, CSS y JS, usando Sass y Bootstrap para el diseño de la vista de la página.
+El proyecto será realizado en PHP puro, una base de datos MySQL y el frontend desarrollado en HTML, CSS y JS, usando Sass y Bootstrap para el diseño de la vista de la página.
