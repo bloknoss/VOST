@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'hostname' => 'localhost',
+    'hostname' => '127.0.0.1',
     'dbname' => 'vostdb',
     'username' => 'root',
     'password' => '',
