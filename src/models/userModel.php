@@ -2,7 +2,7 @@
 class UserModel
 {
 
-    // Los atributos de la clase.
+    // Los atributos del modelo
     private $id;
     private $username;
     private $email;
