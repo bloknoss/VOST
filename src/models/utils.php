@@ -26,6 +26,29 @@ class Utils
         return $pdo;
     }
 
+    public static function generateUpdateQuery($newItem, $tableName, $tableFields)
+    {
+        $baseQuery = "UPDATE $tableName set ";
+        $updateFields = [];
+
+        foreach ($tableFields as $field) {
+            if (isset($newItem[$field]))
+                $updateFields[] = "$field=:$field";
+        }
+
+        return $baseQuery . implode(', ', $updateFields);
+    }
+
+    public static function statementValueBinder($stmt, $item, $tableFields)
+    {
+        foreach ($tableFields as $field) {
+            if (isset($item[$field]))
+                $stmt->bindValue(":$field", $item[$field]);
+        }
+        return $stmt;
+    }
+
+
     public static function validateData($string)
     {
         $data = trim($string);
@@ -37,5 +60,3 @@ class Utils
 
 
 }
-
-?>
