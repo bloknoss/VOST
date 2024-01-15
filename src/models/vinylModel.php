@@ -5,14 +5,14 @@ namespace VOST;
 use VOST\model\Utils;
 use PDOException;
 
-class UserModel
+class VinylModel
 {
 
     private $tableFields = ['id_vinyl', 'stock','price','style','duration','max_duration'];
-    public static function getUsers($pdo)
+    public static function getVinyls($pdo)
     {
         try {
-            $query = "SELECT * FROM  USERS";
+            $query = "SELECT * FROM  VINYLS";
 
             $result = $pdo->query($query);
 
@@ -25,16 +25,16 @@ class UserModel
         return $resultSet;
     }
 
-    public static function getUser($pdo, $userId)
+    public static function getVinyl($pdo, $vinylId)
     {
         try {
-            $query = "SELECT * FROM  USERS WHERE user_id=:user_id";
+            $query = "SELECT * FROM  VINYLS WHERE vinyl_id=:vinyl_id";
 
             $result = $pdo->query($query);
 
             $stmt = $pdo->prepare($query);
             
-            $stmt->bindValue(':user_id', $userId);
+            $stmt->bindValue(':vinyl_id', $vinylId);
 
             $resultSet = $result->fetchAll();
 
@@ -45,14 +45,14 @@ class UserModel
         return $resultSet;
     }
 
-    public static function deleteUser($pdo, $userId)
+    public static function deleteVinyl($pdo, $vinylId)
     {
         try {
-            $query = "DELETE from USERS where user_id=:user_id";
+            $query = "DELETE from VINYLS where vinyl_id=:vinyl_id";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->bindValue(':user_id', $userId);
+            $stmt->bindValue(':vinyl_id', $vinylId);
 
             $stmt->execute();
 
@@ -68,18 +68,18 @@ class UserModel
         }
     }
 
-    public static function insertUser($pdo, $newUser)
+    public static function insertVinyl($pdo, $newVinyl)
     {
 
         $tableFields = ['id_vinyl', 'stock','price','style','duration','max_duration'];
 
         try {
 
-            $query = "INSERT INTO USERS (id_vinyl,stock,price,style,duration,max_duration) VALUES (:id_vinyl,:stock,:price,:style,:duration,:max_duration)";
+            $query = "INSERT INTO VINYLS (id_vinyl,stock,price,style,duration,max_duration) VALUES (:id_vinyl,:stock,:price,:style,:duration,:max_duration)";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt = Utils::statementValueBinder($stmt, $newUser, $tableFields);
+            $stmt = Utils::statementValueBinder($stmt, $newVinyl, $tableFields);
 
             $stmt->execute();
 
@@ -91,20 +91,20 @@ class UserModel
         }
     }
 
-    public static function updateUser($pdo, $newUser)
+    public static function updateVinyl($pdo, $newVinyl)
     {
         try {
 
-            if (count($newUser) == 0)
+            if (count($newVinyl) == 0)
                 return -1;
 
             $tableFields = ['id_vinyl', 'stock','price','style','duration','max_duration'];
 
-            $query = Utils::generateUpdateQuery($newUser, "USERS", $tableFields);
+            $query = Utils::generateUpdateQuery($newVinyl, "VINYLS", $tableFields);
 
             $stmt = $pdo->prepare($query);
 
-            $stmt = Utils::statementValueBinder($stmt, $newUser, $tableFields);
+            $stmt = Utils::statementValueBinder($stmt, $newVinyl, $tableFields);
 
             $stmt->execute();
 
