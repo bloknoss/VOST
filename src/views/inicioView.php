@@ -9,8 +9,6 @@
 
 <body>
 
-    <p class="bold_text">esto un testeo </p>
-
 </body>
 
 </html>
