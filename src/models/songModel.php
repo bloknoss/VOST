@@ -2,7 +2,8 @@
 
 namespace VOST;
 
-use VOST\model\Utils;
+use VOST\models\Utils;
+use PDO;
 use PDOException;
 
 class SongModel
@@ -16,12 +17,12 @@ class SongModel
 
             $result = $pdo->query($query);
 
-            $resultSet = $result->fetchAll();
+            $resultSet = $result->fetch(PDO::FETCH_ASSOC);
 
             return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
     }
@@ -38,7 +39,7 @@ class SongModel
             $stmt->execute();
 
 
-            $resultSet = $stmt->fetchAll();
+            $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $resultSet;
         } catch (PDOException $e) {

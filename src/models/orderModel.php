@@ -2,7 +2,8 @@
 
 namespace VOST;
 
-use VOST\model\Utils;
+use PDO;
+use VOST\models\Utils;
 use PDOException;
 
 class OrderModel
@@ -36,7 +37,7 @@ class OrderModel
 
             $stmt->execute();
 
-            $resultSet = $stmt->fetchAll();
+            $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $resultSet;
         } catch (PDOException $e) {
@@ -71,7 +72,6 @@ class OrderModel
     public static function insertOrder($pdo, $newOrder)
     {
         $tableFields = ['id_order', 'id_address', 'date_time'];
-
 
         try {
 

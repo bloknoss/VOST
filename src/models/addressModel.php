@@ -2,7 +2,8 @@
 
 namespace VOST;
 
-use VOST\model\Utils;
+use PDO;
+use VOST\models\Utils;
 use PDOException;
 
 class AddressModel
@@ -16,7 +17,7 @@ class AddressModel
 
             $result = $pdo->query($query);
 
-            $resultSet = $result->fetchAll();
+            $resultSet = $result->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
@@ -36,7 +37,7 @@ class AddressModel
 
             $stmt->execute();
 
-            $resultSet = $stmt->fetchAll();
+            $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
             
             return $resultSet;
         } catch (PDOException $e) {

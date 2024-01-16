@@ -2,7 +2,8 @@
 
 namespace VOST;
 
-use VOST\model\Utils;
+use VOST\models\Utils;
+use PDO;
 use PDOException;
 
 class UserModel
@@ -16,7 +17,7 @@ class UserModel
 
             $result = $pdo->query($query);
 
-            $resultSet = $result->fetchAll();
+            $resultSet = $result->fetch(PDO::FETCH_ASSOC);
 
             return $resultSet;
 
@@ -37,7 +38,7 @@ class UserModel
 
             $stmt->execute();
 
-            $resultSet = $stmt->fetchAll();
+            $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $resultSet;
         } catch (PDOException $e) {

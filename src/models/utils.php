@@ -1,6 +1,6 @@
 <?php
 
-namespace VOST\model;
+namespace VOST\models;
 
 use PDO;
 use PDOException;
@@ -9,7 +9,7 @@ class Utils
 {
 
     public static function test(){
-        return 'hleo';
+
     }
 
     public static function dbConnect()
@@ -40,14 +40,15 @@ class Utils
                 $updateFields[] = "$field=:$field";
         }
 
-        return $baseQuery . implode(', ', $updateFields);
+        return $baseQuery . implode(',', $updateFields). " where :vinyl_id=". $newItem["vinyl_id"];
     }
 
     public static function statementValueBinder($stmt, $item, $tableFields)
     {
         foreach ($tableFields as $field) {
-            if (isset($item[$field]))
+            if (isset($item[$field])){
                 $stmt->bindValue(":$field", $item[$field]);
+            }
         }
         return $stmt;
     }
