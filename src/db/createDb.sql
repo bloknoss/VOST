@@ -18,7 +18,7 @@ create table vinyls
     name         varchar(255) unique,
     stock        int          not null,
     price        int          not null,
-    style        varchar(255) not null,
+    style        varchar(255),
     duration     int          not null,
     max_duration int          not null
 );
