@@ -12,47 +12,49 @@ class SongModel
     public static function getSongs($pdo)
     {
         try {
-            $query = "SELECT * FROM  SONGS";
+            $query = "SELECT * FROM songs;";
 
             $result = $pdo->query($query);
 
             $resultSet = $result->fetchAll();
 
+            return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
-        return $resultSet;
     }
 
     public static function getSong($pdo, $songId)
     {
         try {
-            $query = "SELECT * FROM  SONGS WHERE song_id=:song_id";
-
-            $result = $pdo->query($query);
+            $query = "SELECT * FROM songs WHERE id_song=:id_song";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->bindValue(':song_id', $songId);
+            $stmt->bindValue(':id_song', $songId);
 
-            $resultSet = $result->fetchAll();
+            $stmt->execute();
 
+
+            $resultSet = $stmt->fetchAll();
+
+            return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
-        return $resultSet;
     }
 
     public static function deleteSong($pdo, $songId)
     {
         try {
-            $query = "DELETE from SONGS where song_id=:song_id";
+            $query = "DELETE from songs where id_song=:id_song";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->bindValue(':song_id', $songId);
+            $stmt->bindValue(':id_song', $songId);
 
             $stmt->execute();
 
@@ -74,7 +76,7 @@ class SongModel
 
         try {
 
-            $query = "INSERT INTO SONGS (id_song,artist,compositor,name,genre,duration) VALUES (:id_song,:artist,:compositor,:name,:genre,:duration)";
+            $query = "INSERT INTO songs (id_song,artist,compositor,name,genre,duration) VALUES (:id_song,:artist,:compositor,:name,:genre,:duration)";
 
             $stmt = $pdo->prepare($query);
 
@@ -99,7 +101,7 @@ class SongModel
             $tableFields = ['id_song', 'artist', 'compositor', 'name', 'genre', 'duration'];
 
 
-            $query = Utils::generateUpdateQuery($newSong, "SONGS", $tableFields);
+            $query = Utils::generateUpdateQuery($newSong, "songs", $tableFields);
 
             $stmt = $pdo->prepare($query);
 

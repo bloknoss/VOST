@@ -8,6 +8,10 @@ use PDOException;
 class Utils
 {
 
+    public static function test(){
+        return 'hleo';
+    }
+
     public static function dbConnect()
     {
         $config = include("../config.php");
@@ -60,3 +64,5 @@ class Utils
 
 
 }
+
+$pdo = Utils::dbConnect();

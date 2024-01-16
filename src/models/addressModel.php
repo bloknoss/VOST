@@ -12,7 +12,7 @@ class AddressModel
     public static function getAddresses($pdo)
     {
         try {
-            $query = "SELECT * FROM  ADDRESSES";
+            $query = "SELECT * FROM  address;";
 
             $result = $pdo->query($query);
 
@@ -28,31 +28,31 @@ class AddressModel
     public static function getAddress($pdo, $addressId)
     {
         try {
-            $query = "SELECT * FROM  ADDRESSES WHERE address_id=:address_id";
-
-            $result = $pdo->query($query);
+            $query = "SELECT * FROM address WHERE id_address=:id_address";
 
             $stmt = $pdo->prepare($query);
+
+            $stmt->bindValue(':id_address', $addressId);
+
+            $stmt->execute();
+
+            $resultSet = $stmt->fetchAll();
             
-            $stmt->bindValue(':address_id', $addressId);
-
-            $resultSet = $result->fetchAll();
-
+            return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
-        return $resultSet;
     }
 
     public static function deleteAddress($pdo, $addressId)
     {
         try {
-            $query = "DELETE from ADDRESSES where address_id=:address_id";
+            $query = "DELETE from address where id_address=:id_address";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->bindValue(':address_id', $addressId);
+            $stmt->bindValue(':id_address', $addressId);
 
             $stmt->execute();
 
@@ -75,7 +75,7 @@ class AddressModel
 
         try {
 
-            $query = "INSERT INTO ADDRESSES (id_address,id_user,postal_code,city,street,number) VALUES (:id_address,:id_user,:postal_code,:city,:street,:number)";
+            $query = "INSERT INTO address (id_address,id_user,postal_code,city,street,number) VALUES (:id_address,:id_user,:postal_code,:city,:street,:number)";
 
             $stmt = $pdo->prepare($query);
 
@@ -100,7 +100,7 @@ class AddressModel
 
             $tableFields = ['id_address', 'id_user', 'postal_code', 'city', 'street', 'number'];
 
-            $query = Utils::generateUpdateQuery($newAddress, "ADDRESSES", $tableFields);
+            $query = Utils::generateUpdateQuery($newAddress, "address", $tableFields);
 
             $stmt = $pdo->prepare($query);
 

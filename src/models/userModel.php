@@ -12,47 +12,48 @@ class UserModel
     public static function getUsers($pdo)
     {
         try {
-            $query = "SELECT * FROM  USERS";
+            $query = "SELECT * FROM  users;";
 
             $result = $pdo->query($query);
 
             $resultSet = $result->fetchAll();
 
+            return $resultSet;
+
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
-        return $resultSet;
     }
 
     public static function getUser($pdo, $userId)
     {
         try {
-            $query = "SELECT * FROM  USERS WHERE user_id=:user_id";
-
-            $result = $pdo->query($query);
+            $query = "SELECT * FROM users WHERE id_user=:id_user";
 
             $stmt = $pdo->prepare($query);
-            
-            $stmt->bindValue(':user_id', $userId);
 
-            $resultSet = $result->fetchAll();
+            $stmt->bindValue(':id_user', $userId);
 
+            $stmt->execute();
+
+            $resultSet = $stmt->fetchAll();
+
+            return $resultSet;
         } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
-        return $resultSet;
     }
 
     public static function deleteUser($pdo, $userId)
     {
         try {
-            $query = "DELETE from USERS where user_id=:user_id";
+            $query = "DELETE from users where id_user=:id_user";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->bindValue(':user_id', $userId);
+            $stmt->bindValue(':id_user', $userId);
 
             $stmt->execute();
 
@@ -75,7 +76,7 @@ class UserModel
 
         try {
 
-            $query = "INSERT INTO productos (id_user,name,email,password) VALUES (:id_user,:name,:email,:password)";
+            $query = "INSERT INTO productos (id_user,name,email,password) VALUES (:id_user,:name,:email,:password);";
 
             $stmt = $pdo->prepare($query);
 
@@ -100,7 +101,7 @@ class UserModel
 
             $tableFields = ['id_user', 'name', 'email', 'password'];
 
-            $query = Utils::generateUpdateQuery($newUser, "USERS", $tableFields);
+            $query = Utils::generateUpdateQuery($newUser, "users", $tableFields);
 
             $stmt = $pdo->prepare($query);
 

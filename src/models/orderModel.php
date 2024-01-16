@@ -12,7 +12,7 @@ class OrderModel
     public static function getOrders($pdo)
     {
         try {
-            $query = "SELECT * FROM  ORDERS";
+            $query = "SELECT * FROM  orders";
 
             $result = $pdo->query($query);
 
@@ -28,31 +28,31 @@ class OrderModel
     public static function getOrder($pdo, $orderId)
     {
         try {
-            $query = "SELECT * FROM  ORDERS WHERE order_id=:order_id";
-
-            $result = $pdo->query($query);
+            $query = "SELECT * FROM  orders WHERE id_order=:id_order";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->bindValue(':order_id', $orderId);
+            $stmt->bindValue(':id_order', $orderId);
 
-            $resultSet = $result->fetchAll();
+            $stmt->execute();
 
+            $resultSet = $stmt->fetchAll();
+
+            return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
-        return $resultSet;
     }
 
     public static function deleteOrder($pdo, $orderId)
     {
         try {
-            $query = "DELETE from ORDERS where order_id=:order_id";
+            $query = "DELETE from orders where id_order=:id_order";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->bindValue(':order_id', $orderId);
+            $stmt->bindValue(':id_order', $orderId);
 
             $stmt->execute();
 
@@ -75,7 +75,7 @@ class OrderModel
 
         try {
 
-            $query = "INSERT INTO ORDERS (id_order,id_address,date_time) VALUES (:id_order,:id_address,:date_time)";
+            $query = "INSERT INTO orders (id_order,id_address,date_time) VALUES (:id_order,:id_address,:date_time)";
 
             $stmt = $pdo->prepare($query);
 
@@ -100,7 +100,7 @@ class OrderModel
             $tableFields = ['id_order', 'id_address', 'date_time'];
 
 
-            $query = Utils::generateUpdateQuery($newOrder, "ORDERS", $tableFields);
+            $query = Utils::generateUpdateQuery($newOrder, "orders", $tableFields);
 
             $stmt = $pdo->prepare($query);
 

@@ -12,31 +12,34 @@ class VinylModel
     public static function getVinyls($pdo)
     {
         try {
-            $query = "SELECT * FROM  VINYLS";
+
+            $query = "SELECT * FROM  vinyls;";
 
             $result = $pdo->query($query);
 
             $resultSet = $result->fetchAll();
 
+            return $resultSet;
         } catch (PDOException $e) {
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
-        return $resultSet;
     }
 
     public static function getVinyl($pdo, $vinylId)
     {
         try {
-            $query = "SELECT * FROM  VINYLS WHERE vinyl_id=:vinyl_id";
+            $query = "SELECT * FROM  vinyls WHERE id_vinyl=:id_vinyl";
 
-            $result = $pdo->query($query);
 
             $stmt = $pdo->prepare($query);
             
-            $stmt->bindValue(':vinyl_id', $vinylId);
+            $stmt->bindValue(':id_vinyl', $vinylId);
 
-            $resultSet = $result->fetchAll();
+            $stmt->execute();
+
+            $resultSet = $stmt->fetchAll();
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
@@ -48,11 +51,11 @@ class VinylModel
     public static function deleteVinyl($pdo, $vinylId)
     {
         try {
-            $query = "DELETE from VINYLS where vinyl_id=:vinyl_id";
+            $query = "DELETE from vinyls where id_vinyl=:id_vinyl";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->bindValue(':vinyl_id', $vinylId);
+            $stmt->bindValue(':id_vinyl', $vinylId);
 
             $stmt->execute();
 
@@ -75,7 +78,7 @@ class VinylModel
 
         try {
 
-            $query = "INSERT INTO VINYLS (id_vinyl,stock,price,style,duration,max_duration) VALUES (:id_vinyl,:stock,:price,:style,:duration,:max_duration)";
+            $query = "INSERT INTO vinyls (id_vinyl,stock,price,style,duration,max_duration) VALUES (:id_vinyl,:stock,:price,:style,:duration,:max_duration)";
 
             $stmt = $pdo->prepare($query);
 
@@ -100,7 +103,7 @@ class VinylModel
 
             $tableFields = ['id_vinyl', 'stock','price','style','duration','max_duration'];
 
-            $query = Utils::generateUpdateQuery($newVinyl, "VINYLS", $tableFields);
+            $query = Utils::generateUpdateQuery($newVinyl, "vinyls", $tableFields);
 
             $stmt = $pdo->prepare($query);
 
