@@ -8,8 +8,15 @@ use PDOException;
 class Utils
 {
 
-    public static function test(){
+    public static function getValuesArray($object)
+    {
+        $tableValues = get_object_vars($object);
+        return array_splice($tableValues, 0, -1);
+    }
 
+    public static function getTableFields($table)
+    {
+        return array_keys($table);
     }
 
     public static function dbConnect()
@@ -30,24 +37,50 @@ class Utils
         return $pdo;
     }
 
-    public static function generateUpdateQuery($newItem, $tableName, $tableFields)
+    public static function generateInsertQuery($item)
     {
-        $baseQuery = "UPDATE $tableName set ";
+        $tableInfo = $item->tableInfo;
+        $tableName = $tableInfo['tableName'];
+        $tableFields = array_splice($tableInfo['tableFields'], 1);
+
+        $baseQuery = "INSERT INTO $tableName (" . implode(',', $tableFields) . ") VALUES (:" . implode(',:', $tableFields) . ");";
+
+        return $baseQuery;
+    }
+
+    public static function generateUpdateQuery($item)
+    {
+        
+        $tableInfo = $item->tableInfo;
+        $tableName = $tableInfo['tableName'];
+        $tableFields = array_splice($tableInfo['tableFields'], 1);
+        $tableValues = $tableInfo['tableValues'];
+        $idField = $tableInfo['tableFields'][0];
+        
+        $baseQuery = "UPDATE $tableName SET ";
+        
         $updateFields = [];
 
         foreach ($tableFields as $field) {
-            if (isset($newItem[$field]))
+            if (isset($tableValues[$field]))
                 $updateFields[] = "$field=:$field";
         }
 
-        return $baseQuery . implode(',', $updateFields). " where :vinyl_id=". $newItem["vinyl_id"];
+
+        return ($baseQuery . implode(', ', $updateFields) . " WHERE $idField=:$idField");
     }
 
-    public static function statementValueBinder($stmt, $item, $tableFields)
+    public static function statementValueBinder($stmt, $item)
     {
+        $tableInfo = $item->tableInfo;
+        $tableValues = $tableInfo['tableValues'];
+        $tableFields = $tableInfo['tableFields'];
+
+
         foreach ($tableFields as $field) {
-            if (isset($item[$field])){
-                $stmt->bindValue(":$field", $item[$field]);
+            if (isset($tableValues[$field])) {
+
+                $stmt->bindValue(":$field", $tableValues[$field]);
             }
         }
         return $stmt;
