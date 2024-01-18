@@ -1,124 +1,48 @@
 <?php
 
-namespace VOST;
+namespace VOST\models;
+
+include_once 'address.php';
+include_once 'database.php';
 
 use PDO;
-use VOST\models\Utils;
 use PDOException;
+use VOST\models\Address;
+use VOST\models\Utils;
+use VOST\models\Database;
 
 class AddressModel
 {
 
-    private $tableFields = ['id_address', 'id_user', 'postal_code', 'city', 'street', 'number'];
-    public static function getAddresses($pdo)
+    public static function getAddresses($pdo, $address)
     {
-        try {
-            $query = "SELECT * FROM address;";
-
-            $result = $pdo->query($query);
-
-            $resultSet = $result->fetch(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        }
-        return $resultSet;
+        $tableName = $address->tableInfo['tableName'];
+        $queryResults = Database::getItems($pdo, $tableName);
+        return $queryResults;
     }
 
-    public static function getAddress($pdo, $addressId)
+    public static function getAddress($pdo, $address)
     {
-        try {
-            $query = "SELECT * FROM address WHERE id_address=:id_address";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt->bindValue(':id_address', $addressId);
-
-            $stmt->execute();
-
-            $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            return $resultSet;
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        }
+        $queryResults = Database::getItem($pdo, $address);
+        return $queryResults;
     }
 
-    public static function deleteAddress($pdo, $addressId)
+    public static function deleteAddress($pdo, $address)
     {
-        try {
-            $query = "DELETE from address where id_address=:id_address";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt->bindValue(':id_address', $addressId);
-
-            $stmt->execute();
-
-            $affectedRows = $stmt->rowCount();
-
-            return $affectedRows;
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::deleteItem($pdo, $address);
+        return $queryResults;
     }
 
     public static function insertAddress($pdo, $newAddress)
     {
-
-        $tableFields = ['id_address', 'id_user', 'postal_code', 'city', 'street', 'number'];
-
-        try {
-
-            $query = "INSERT INTO address (id_address,id_user,postal_code,city,street,number) VALUES (:id_address,:id_user,:postal_code,:city,:street,:number)";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt = Utils::statementValueBinder($stmt, $newAddress, $tableFields);
-
-            $stmt->execute();
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return -1;
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::insertItem($pdo, $newAddress);
+        return $queryResults;
     }
 
-    public static function updateAddress($pdo, $newAddress)
+    public static function updateAddress($pdo, $address)
     {
-        try {
-
-            if (count($newAddress) == 0)
-                return -1;
-
-            $tableFields = ['id_address', 'id_user', 'postal_code', 'city', 'street', 'number'];
-
-            $query = Utils::generateUpdateQuery($newAddress, "address", $tableFields);
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt = Utils::statementValueBinder($stmt, $newAddress, $tableFields);
-
-            $stmt->execute();
-
-            $affectedRows = $stmt->rowCount();
-
-            return $affectedRows;
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return -1;
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::updateTable($pdo, $address);
+        return $queryResults;
     }
 
 }

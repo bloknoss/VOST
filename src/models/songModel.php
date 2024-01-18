@@ -1,125 +1,48 @@
 <?php
 
-namespace VOST;
+namespace VOST\models;
 
-use VOST\models\Utils;
+include_once 'song.php';
+include_once 'database.php';
+
 use PDO;
 use PDOException;
+use VOST\models\Song;
+use VOST\models\Utils;
+use VOST\models\Database;
 
 class SongModel
 {
 
-    private $tableFields = ['id_song', 'artist', 'compositor', 'name', 'genre', 'duration'];
-    public static function getSongs($pdo)
+    public static function getSongs($pdo, $song)
     {
-        try {
-            $query = "SELECT * FROM songs;";
-
-            $result = $pdo->query($query);
-
-            $resultSet = $result->fetch(PDO::FETCH_ASSOC);
-
-            return $resultSet;
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        }
+        $tableName = $song->tableInfo['tableName'];
+        $queryResults = Database::getItems($pdo, $tableName);
+        return $queryResults;
     }
 
-    public static function getSong($pdo, $songId)
+    public static function getSong($pdo, $song)
     {
-        try {
-            $query = "SELECT * FROM songs WHERE id_song=:id_song";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt->bindValue(':id_song', $songId);
-
-            $stmt->execute();
-
-
-            $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            return $resultSet;
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        }
+        $queryResults = Database::getItem($pdo, $song);
+        return $queryResults;
     }
 
-    public static function deleteSong($pdo, $songId)
+    public static function deleteSong($pdo, $song)
     {
-        try {
-            $query = "DELETE from songs where id_song=:id_song";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt->bindValue(':id_song', $songId);
-
-            $stmt->execute();
-
-            $affectedRows = $stmt->rowCount();
-
-            return $affectedRows;
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::deleteItem($pdo, $song);
+        return $queryResults;
     }
 
     public static function insertSong($pdo, $newSong)
     {
-        $tableFields = ['id_song', 'artist', 'compositor', 'name', 'genre', 'duration'];
-
-        try {
-
-            $query = "INSERT INTO songs (id_song,artist,compositor,name,genre,duration) VALUES (:id_song,:artist,:compositor,:name,:genre,:duration)";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt = Utils::statementValueBinder($stmt, $newSong, $tableFields);
-
-            $stmt->execute();
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return -1;
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::insertItem($pdo, $newSong);
+        return $queryResults;
     }
 
-    public static function updateSong($pdo, $newSong)
+    public static function updateSong($pdo, $song)
     {
-        try {
-
-            if (count($newSong) == 0)
-                return -1;
-            $tableFields = ['id_song', 'artist', 'compositor', 'name', 'genre', 'duration'];
-
-
-            $query = Utils::generateUpdateQuery($newSong, "songs", $tableFields);
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt = Utils::statementValueBinder($stmt, $newSong, $tableFields);
-
-            $stmt->execute();
-
-            $affectedRows = $stmt->rowCount();
-
-            return $affectedRows;
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return -1;
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::updateTable($pdo, $song);
+        return $queryResults;
     }
 
 }

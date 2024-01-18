@@ -59,7 +59,7 @@ class Database
             $fieldValue = $item->tableInfo['tableValues'][$fieldId];
 
             echo $fieldId;
-            
+
             $query = "DELETE from $tableName where $fieldId=:$fieldId";
             echo $query;
 
@@ -90,14 +90,15 @@ class Database
 
             $stmt = $pdo->prepare($query);
 
-            echo $query . '<br>';
-
             $stmt = Utils::statementValueBinder($stmt, $newItem);
 
             $stmt->execute();
 
+            return $stmt->rowCount();
+
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         } finally {
             $pdo = null;

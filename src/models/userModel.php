@@ -1,125 +1,48 @@
 <?php
 
-namespace VOST;
+namespace VOST\models;
 
-use VOST\models\Utils;
+include_once 'user.php';
+include_once 'database.php';
+
 use PDO;
 use PDOException;
+use VOST\models\User;
+use VOST\models\Utils;
+use VOST\models\Database;
 
 class UserModel
 {
 
-    private $tableFields = ['id_user', 'name', 'email', 'password'];
-    public static function getUsers($pdo)
+    public static function getUsers($pdo, $user)
     {
-        try {
-            $query = "SELECT * FROM  users;";
-
-            $result = $pdo->query($query);
-
-            $resultSet = $result->fetch(PDO::FETCH_ASSOC);
-
-            return $resultSet;
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        }
+        $tableName = $user->tableInfo['tableName'];
+        $queryResults = Database::getItems($pdo, $tableName);
+        return $queryResults;
     }
 
-    public static function getUser($pdo, $userId)
+    public static function getUser($pdo, $user)
     {
-        try {
-            $query = "SELECT * FROM users WHERE id_user=:id_user";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt->bindValue(':id_user', $userId);
-
-            $stmt->execute();
-
-            $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            return $resultSet;
-        } catch (PDOException $e) {
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        }
+        $queryResults = Database::getItem($pdo, $user);
+        return $queryResults;
     }
 
-    public static function deleteUser($pdo, $userId)
+    public static function deleteUser($pdo, $user)
     {
-        try {
-            $query = "DELETE from users where id_user=:id_user";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt->bindValue(':id_user', $userId);
-
-            $stmt->execute();
-
-            $affectedRows = $stmt->rowCount();
-
-            return $affectedRows;
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die();
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::deleteItem($pdo, $user);
+        return $queryResults;
     }
 
     public static function insertUser($pdo, $newUser)
     {
-
-        $tableFields = ['id_user', 'name', 'email', 'password'];
-
-        try {
-
-            $query = "INSERT INTO productos (id_user,name,email,password) VALUES (:id_user,:name,:email,:password);";
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt = Utils::statementValueBinder($stmt, $newUser, $tableFields);
-
-            $stmt->execute();
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return -1;
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::insertItem($pdo, $newUser);
+        return $queryResults;
     }
 
-    public static function updateUser($pdo, $newUser)
+    public static function updateUser($pdo, $user)
     {
-        try {
-
-            if (count($newUser) == 0)
-                return -1;
-
-            $tableFields = ['id_user', 'name', 'email', 'password'];
-
-            $query = Utils::generateUpdateQuery($newUser, "users", $tableFields);
-
-            $stmt = $pdo->prepare($query);
-
-            $stmt = Utils::statementValueBinder($stmt, $newUser, $tableFields);
-
-            $stmt->execute();
-
-            $affectedRows = $stmt->rowCount();
-
-            return $affectedRows;
-
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return -1;
-        } finally {
-            $pdo = null;
-        }
+        $queryResults = Database::updateTable($pdo, $user);
+        return $queryResults;
     }
 
 }

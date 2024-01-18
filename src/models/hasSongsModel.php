@@ -14,32 +14,32 @@ use VOST\models\Database;
 class VinylModel
 {
 
-    public static function getVinyls($pdo, $vinyl)
+    public static function getHasSongs($pdo, $vinyl)
     {
         $tableName = $vinyl->tableInfo['tableName'];
         $queryResults = Database::getItems($pdo, $tableName);
         return $queryResults;
     }
 
-    public static function getVinyl($pdo, $vinyl)
+    public static function getHasSong($pdo, $vinyl)
     {
         $queryResults = Database::getItem($pdo, $vinyl);
         return $queryResults;
     }
 
-    public static function deleteVinyl($pdo, $vinyl)
+    public static function deleteHasSong($pdo, $vinyl)
     {
         $queryResults = Database::deleteItem($pdo, $vinyl);
         return $queryResults;
     }
 
-    public static function insertVinyl($pdo, $newVinyl)
+    public static function insertHasSong($pdo, $newVinyl)
     {
         $queryResults = Database::insertItem($pdo, $newVinyl);
         return $queryResults;
     }
 
-    public static function updateVinyl($pdo, $vinyl)
+    public static function updateHasSong($pdo, $vinyl)
     {
         $queryResults = Database::updateTable($pdo, $vinyl);
         return $queryResults;

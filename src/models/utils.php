@@ -8,16 +8,6 @@ use PDOException;
 class Utils
 {
 
-    public static function getValuesArray($object)
-    {
-        $tableValues = get_object_vars($object);
-        return array_splice($tableValues, 0, -1);
-    }
-
-    public static function getTableFields($table)
-    {
-        return array_keys($table);
-    }
 
     public static function dbConnect()
     {
@@ -37,6 +27,7 @@ class Utils
         return $pdo;
     }
 
+
     public static function generateInsertQuery($item)
     {
         $tableInfo = $item->tableInfo;
@@ -50,15 +41,15 @@ class Utils
 
     public static function generateUpdateQuery($item)
     {
-        
+
         $tableInfo = $item->tableInfo;
         $tableName = $tableInfo['tableName'];
         $tableFields = array_splice($tableInfo['tableFields'], 1);
         $tableValues = $tableInfo['tableValues'];
         $idField = $tableInfo['tableFields'][0];
-        
+
         $baseQuery = "UPDATE $tableName SET ";
-        
+
         $updateFields = [];
 
         foreach ($tableFields as $field) {
@@ -94,6 +85,16 @@ class Utils
         $data = htmlspecialchars($data);
 
         return $data;
+    }
+    public static function getValuesArray($object)
+    {
+        $tableValues = get_object_vars($object);
+        return array_splice($tableValues, 0, -1);
+    }
+
+    public static function getTableFields($table)
+    {
+        return array_keys($table);
     }
 
 

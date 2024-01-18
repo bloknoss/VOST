@@ -2,10 +2,8 @@
 namespace VOST\models;
 
 use VOST\models\Utils;
-use VOST\models\Database;
 
 include_once 'utils.php';
-include_once 'database.php';
 
 class User
 {
