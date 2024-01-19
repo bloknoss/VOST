@@ -5,43 +5,44 @@ namespace VOST\models;
 include_once 'vinyl.php';
 include_once 'database.php';
 
-use PDO;
-use PDOException;
-use VOST\models\Vinyl;
-use VOST\models\Utils;
+use VOST\models\VinylsOrdered;
 use VOST\models\Database;
 
-class VinylModel
+class VinylsOrderedModel
 {
 
-    public static function getVinylsOrdered($pdo, $vinyl)
+    public static function getVinylsOrdered($pdo, $vinylsOrdered)
     {
-        $tableName = $vinyl->tableInfo['tableName'];
+        $tableName = $vinylsOrdered->tableInfo['tableName'];
         $queryResults = Database::getItems($pdo, $tableName);
+        foreach ($queryResults as $array)
+            $abstractedObjects[] = VinylsOrdered::constructFromArray($array);
+
+        return $abstractedObjects;
+    }
+
+    public static function getVinylOrdered($pdo, $vinylsOrdered)
+    {
+        $queryResults = Database::getItem($pdo, $vinylsOrdered);
+        $abstractedObject = VinylsOrdered::constructFromArray($queryResults);
+        return $abstractedObject;
+    }
+
+    public static function deleteVinylOrdered($pdo, $vinylsOrdered)
+    {
+        $queryResults = Database::deleteItem($pdo, $vinylsOrdered);
         return $queryResults;
     }
 
-    public static function getVinylOrdered($pdo, $vinyl)
+    public static function insertVinylOrdered($pdo, $newVinylsOrdered)
     {
-        $queryResults = Database::getItem($pdo, $vinyl);
+        $queryResults = Database::insertItem($pdo, $newVinylsOrdered);
         return $queryResults;
     }
 
-    public static function deleteVinylOrdered($pdo, $vinyl)
+    public static function updateVinylOrdered($pdo, $vinylsOrdered)
     {
-        $queryResults = Database::deleteItem($pdo, $vinyl);
-        return $queryResults;
-    }
-
-    public static function insertVinylOrdered($pdo, $newVinyl)
-    {
-        $queryResults = Database::insertItem($pdo, $newVinyl);
-        return $queryResults;
-    }
-
-    public static function updateVinylOrdered($pdo, $vinyl)
-    {
-        $queryResults = Database::updateTable($pdo, $vinyl);
+        $queryResults = Database::updateTable($pdo, $vinylsOrdered);
         return $queryResults;
     }
 

@@ -5,12 +5,25 @@ use VOST\models\Utils;
 
 include_once 'utils.php';
 
-class Vinyl
+class VinylsOrdered
 {
 
     public $id_vinyl;
     public $id_order;
     public $number;
+
+    public static function constructFromArray($arr)
+    {
+        $values = array_values($arr);
+        return new Vinyl(...$values);
+    }
+
+    public static function constructIdObject($id)
+    {
+        return new Vinyl($id, ...[null, null, null, null, null, null]);
+    }
+
+
 
     public function __construct($id_vinyl, $id_order, $number)
     {

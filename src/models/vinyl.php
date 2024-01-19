@@ -2,6 +2,7 @@
 namespace VOST\models;
 
 use VOST\models\Utils;
+
 include_once 'utils.php';
 
 class Vinyl
@@ -14,6 +15,19 @@ class Vinyl
     public $duration;
     public $max_duration;
     public $tableInfo;
+
+    public static function constructFromArray($arr)
+    {
+        $values = array_values($arr);
+        return new Vinyl(...$values);
+    }
+
+        public static function constructIdObject($id)
+    {
+        return new Vinyl($id, ...[null, null, null, null, null, null]);
+    }
+
+
 
     public function __construct($id_vinyl, $stock, $price, $style, $duration, $max_duration)
     {

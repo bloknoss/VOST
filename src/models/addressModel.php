@@ -5,10 +5,7 @@ namespace VOST\models;
 include_once 'address.php';
 include_once 'database.php';
 
-use PDO;
-use PDOException;
 use VOST\models\Address;
-use VOST\models\Utils;
 use VOST\models\Database;
 
 class AddressModel
@@ -18,13 +15,18 @@ class AddressModel
     {
         $tableName = $address->tableInfo['tableName'];
         $queryResults = Database::getItems($pdo, $tableName);
-        return $queryResults;
+        $abstractedObjects = [];
+        foreach ($queryResults as $array)
+            $abstractedObjects[] = Address::constructFromArray($array);
+
+        return $abstractedObjects;
     }
 
     public static function getAddress($pdo, $address)
     {
         $queryResults = Database::getItem($pdo, $address);
-        return $queryResults;
+        $abstractedObject = Address::constructFromArray($queryResults);
+        return $abstractedObject;
     }
 
     public static function deleteAddress($pdo, $address)

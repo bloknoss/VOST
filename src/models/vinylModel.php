@@ -5,10 +5,7 @@ namespace VOST\models;
 include_once 'vinyl.php';
 include_once 'database.php';
 
-use PDO;
-use PDOException;
 use VOST\models\Vinyl;
-use VOST\models\Utils;
 use VOST\models\Database;
 
 class VinylModel
@@ -18,13 +15,18 @@ class VinylModel
     {
         $tableName = $vinyl->tableInfo['tableName'];
         $queryResults = Database::getItems($pdo, $tableName);
-        return $queryResults;
+        foreach ($queryResults as $array)
+            $abstractedObjects[] = Vinyl::constructFromArray($array);
+
+        return $abstractedObjects;
     }
 
     public static function getVinyl($pdo, $vinyl)
     {
         $queryResults = Database::getItem($pdo, $vinyl);
-        return $queryResults;
+        $abstractedObject = Vinyl::constructFromArray($queryResults);
+        return $abstractedObject;
+
     }
 
     public static function deleteVinyl($pdo, $vinyl)

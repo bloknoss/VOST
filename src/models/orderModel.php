@@ -5,10 +5,7 @@ namespace VOST\models;
 include_once 'order.php';
 include_once 'database.php';
 
-use PDO;
-use PDOException;
 use VOST\models\Order;
-use VOST\models\Utils;
 use VOST\models\Database;
 
 class OrderModel
@@ -18,13 +15,18 @@ class OrderModel
     {
         $tableName = $order->tableInfo['tableName'];
         $queryResults = Database::getItems($pdo, $tableName);
-        return $queryResults;
+        $abstractedObjects = [];
+        foreach ($queryResults as $array)
+            $abstractedObjects[] = Order::constructFromArray($array);
+
+        return $abstractedObjects;
     }
 
     public static function getOrder($pdo, $order)
     {
         $queryResults = Database::getItem($pdo, $order);
-        return $queryResults;
+        $abstractedObject = Order::constructFromArray($queryResults);
+        return $abstractedObject;
     }
 
     public static function deleteOrder($pdo, $order)

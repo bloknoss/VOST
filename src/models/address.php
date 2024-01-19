@@ -3,6 +3,7 @@
 
 
 namespace VOST\models;
+
 use VOST\models\Utils;
 
 include_once 'utils.php';
@@ -16,6 +17,20 @@ class Address
     public $street;
     public $number;
     public $tableInfo;
+
+
+    public static function constructFromArray($arr)
+    {
+        $values = array_values($arr);
+        return new Address(...$values);
+    }
+
+    public static function constructIdObject($id)
+    {
+        return new Address($id, ...[null, null, null, null, null, null]);
+    }
+
+
 
     public function __construct($id_address, $id_user, $postal_code, $city, $street, $number)
     {

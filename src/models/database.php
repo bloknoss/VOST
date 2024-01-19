@@ -19,6 +19,7 @@ class Database
             $result = $pdo->query($query);
 
             $resultSet = $result->fetchAll(PDO::FETCH_ASSOC);
+
             return $resultSet;
 
         } catch (PDOException $e) {
@@ -31,10 +32,11 @@ class Database
     {
         $idField = $item->tableInfo['tableFields'][0];
         $idValue = $item->tableInfo['tableValues']["$idField"];
+        $tableName = $item->tableInfo['tableName'];
 
         try {
-            $query = "SELECT * FROM users WHERE $idField=:$idField";
-
+            $query = "SELECT * FROM $tableName WHERE $idField=:$idField";
+            
             $stmt = $pdo->prepare($query);
 
             $stmt->bindValue(":$idField", $idValue);
@@ -44,8 +46,10 @@ class Database
             $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $resultSet;
+
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         }
     }
@@ -58,10 +62,7 @@ class Database
             $fieldId = $item->tableInfo['tableFields'][0];
             $fieldValue = $item->tableInfo['tableValues'][$fieldId];
 
-            echo $fieldId;
-
-            $query = "DELETE from $tableName where $fieldId=:$fieldId";
-            echo $query;
+            $query = "DELETE from $tableName where $fieldId=:$fieldId;";
 
             $stmt = $pdo->prepare($query);
 
@@ -75,6 +76,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die();
         } finally {
             $pdo = null;
@@ -111,8 +113,6 @@ class Database
 
             $query = Utils::generateUpdateQuery($item);
 
-            echo $query;
-
             $stmt = $pdo->prepare($query);
 
             $stmt = Utils::statementValueBinder($stmt, $item);
@@ -130,7 +130,4 @@ class Database
             $pdo = null;
         }
     }
-
-
-
 }

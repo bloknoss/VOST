@@ -5,10 +5,7 @@ namespace VOST\models;
 include_once 'song.php';
 include_once 'database.php';
 
-use PDO;
-use PDOException;
 use VOST\models\Song;
-use VOST\models\Utils;
 use VOST\models\Database;
 
 class SongModel
@@ -18,13 +15,19 @@ class SongModel
     {
         $tableName = $song->tableInfo['tableName'];
         $queryResults = Database::getItems($pdo, $tableName);
-        return $queryResults;
+
+        foreach ($queryResults as $array)
+            $abstractedObjects[] = Song::constructFromArray($array);
+
+        return $abstractedObjects;
+
     }
 
     public static function getSong($pdo, $song)
     {
         $queryResults = Database::getItem($pdo, $song);
-        return $queryResults;
+        $abstractedObject = Song::constructFromArray($queryResults);
+        return $abstractedObject;
     }
 
     public static function deleteSong($pdo, $song)

@@ -5,12 +5,25 @@ use VOST\models\Utils;
 
 include_once 'utils.php';
 
-class Vinyl
+class HasSongs
 {
 
     public $id_vinyl;
     public $id_song;
     public $tableInfo;
+
+    public static function constructFromArray($arr)
+    {
+        $values = array_values($arr);
+        return new Song(...$values);
+    }
+
+    public static function constructIdObject($id)
+    {
+        return new Song($id, ...[null, null, null, null, null, null]);
+    }
+
+
 
     public function __construct($id_vinyl, $id_song)
     {

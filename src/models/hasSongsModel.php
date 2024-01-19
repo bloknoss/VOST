@@ -5,43 +5,46 @@ namespace VOST\models;
 include_once 'vinyl.php';
 include_once 'database.php';
 
-use PDO;
-use PDOException;
-use VOST\models\Vinyl;
-use VOST\models\Utils;
+use VOST\models\HasSongs;
 use VOST\models\Database;
 
-class VinylModel
+class HasSongsModel
 {
 
-    public static function getHasSongs($pdo, $vinyl)
+    public static function getHasSongs($pdo, $hasSongs)
     {
-        $tableName = $vinyl->tableInfo['tableName'];
+        $tableName = $hasSongs->tableInfo['tableName'];
         $queryResults = Database::getItems($pdo, $tableName);
+
+        foreach ($queryResults as $array)
+            $abstractedObjects[] = HasSongs::constructFromArray($array);
+
+        return $abstractedObjects;
+
+    }
+
+    public static function getHasSong($pdo, $hasSongs)
+    {
+        $queryResults = Database::getItem($pdo, $hasSongs);
+        $abstractedObject = HasSongs::constructFromArray($queryResults);
+        return $abstractedObject;
+    }
+
+    public static function deleteHasSong($pdo, $hasSongs)
+    {
+        $queryResults = Database::deleteItem($pdo, $hasSongs);
         return $queryResults;
     }
 
-    public static function getHasSong($pdo, $vinyl)
+    public static function insertHasSong($pdo, $newHasSongs)
     {
-        $queryResults = Database::getItem($pdo, $vinyl);
+        $queryResults = Database::insertItem($pdo, $newHasSongs);
         return $queryResults;
     }
 
-    public static function deleteHasSong($pdo, $vinyl)
+    public static function updateHasSong($pdo, $hasSongs)
     {
-        $queryResults = Database::deleteItem($pdo, $vinyl);
-        return $queryResults;
-    }
-
-    public static function insertHasSong($pdo, $newVinyl)
-    {
-        $queryResults = Database::insertItem($pdo, $newVinyl);
-        return $queryResults;
-    }
-
-    public static function updateHasSong($pdo, $vinyl)
-    {
-        $queryResults = Database::updateTable($pdo, $vinyl);
+        $queryResults = Database::updateTable($pdo, $hasSongs);
         return $queryResults;
     }
 

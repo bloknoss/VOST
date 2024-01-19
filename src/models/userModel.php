@@ -5,10 +5,7 @@ namespace VOST\models;
 include_once 'user.php';
 include_once 'database.php';
 
-use PDO;
-use PDOException;
 use VOST\models\User;
-use VOST\models\Utils;
 use VOST\models\Database;
 
 class UserModel
@@ -18,13 +15,19 @@ class UserModel
     {
         $tableName = $user->tableInfo['tableName'];
         $queryResults = Database::getItems($pdo, $tableName);
-        return $queryResults;
+        $abstractedObjects = [];
+        foreach ($queryResults as $array)
+            $abstractedObjects[] = User::constructFromArray($array);
+
+        return $abstractedObjects;
+
     }
 
     public static function getUser($pdo, $user)
     {
         $queryResults = Database::getItem($pdo, $user);
-        return $queryResults;
+        $abstractedObject = User::constructFromArray($queryResults);
+        return $abstractedObject;
     }
 
     public static function deleteUser($pdo, $user)

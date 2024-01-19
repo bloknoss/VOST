@@ -37,10 +37,10 @@ try {
     $pdo = Utils::dbConnect();
     echo '<pre>';
 
+    $abstracted = Address::constructIdObject(111);
 
-    $newUser = new User(3007, "fuckkk you", null, "null");
+    print_r(AddressModel::getAddresses($pdo, $abstracted));
 
-    print_r(UserModel::getUser($pdo, $newUser));
     echo '</pre>';
 
 } catch (PDOException $e) {
