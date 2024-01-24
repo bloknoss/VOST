@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Redirige todas las solicitudes al directorio public
+RewriteRule ^$ public/ [L]
+
+# Redirige las solicitudes al directorio public
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ public/$1 [L]
+
+# Si el recurso no existe, redirige a public/index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^public/(.*)$ public/index.php [L]
