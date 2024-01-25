@@ -1,8 +1,7 @@
+<link rel="stylesheet" href="css/index.css">
+
 <?php
-echo "<style>";
-include './css/index.css';
-echo "</style>";
 
 $rutaVistas = "../src/views/";
 
-require_once $rutaVistas . "inicioView.php";
+require_once $rutaVistas . "login.php";
