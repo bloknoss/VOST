@@ -1,36 +1,74 @@
 <?php
 namespace VOST\controllers;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use VOST\models\User;
+use VOST\models\UserModel;
+use VOST\models\Utils;
+
+require __DIR__.'/../models/user.php';
+require __DIR__.'/../models/userModel.php';
 class UserController {
-    public int $pepe;
-    public function __construct(int $num = 5)
+
+    private User $user;
+
+    public static function login():void
     {
-        $this->pepe = $num;
-    }
+        if (!isset($_POST["userName"]) && !isset($_POST["email"])){
+            require __DIR__.'/../views/login.php';
+            return;
+        }
 
-    public function printHola() {
-        // Lógica para obtener todos los usuarios
-        echo 'Obtener todos los usuarios';
+        $_SESSION["userName"] = $_POST["userName"];
     }
+    public static function getUser():void
+    {
+        if (isset($_SESSION["userName"]))
+            try {
+                $pdo = Utils::dbConnect();
+                $user = UserModel::getUser($pdo, User::constructIdObject(2005));
+                print "<h1>$user->name </h1>";
+                print "<ul>";
+                print "<li>$user->id_user</li>";
+                print "<li>$user->email</li>";
+                print "</ul>";
+            }catch(\PDOException $e){
+                echo "There has been an error with the db";
+                die(500);
+            }
 
-    public function show($id) {
-        // Lógica para obtener un usuario por ID
-        echo "Obtener usuario con ID: $id";
+        else
+            header('Location: http://localhost:80/login');
     }
-
-    public function store() {
-        // Lógica para crear un nuevo usuario
-        echo 'Crear un nuevo usuario';
+    public static function logOut():void
+    {
+        session_destroy();
+        session_abort();
     }
+    public static function sendMail()
+    {
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp-relay.brevo.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'ramontxuwar03@gmail.com';
+            $mail->Password = 'O9X2aqw70m5scZnP';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
-    public function update($id) {
-        // Lógica para actualizar un usuario por ID
-        echo "Actualizar usuario con ID: $id";
-    }
+            // Detalles del correo
+            $mail->setFrom('admin@vost.com', 'Tu Nombre');
+            $mail->addAddress('jgalazc253@g.educaand.es', 'Nombre Destinatario');
+            $mail->Subject = 'Asunto del correo';
+            $mail->Body = 'Contenido del correo';
 
-    public function destroy($id) {
-        // Lógica para eliminar un usuario por ID
-        echo "Eliminar usuario con ID: $id";
+            // Enviar el correo
+            $mail->send();
+            print 'sended';
+        }catch (\Exception $e){
+            print "Exception sending the mail";
+        }
     }
 
 }

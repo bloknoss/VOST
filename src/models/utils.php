@@ -9,9 +9,9 @@ class Utils
 {
 
 
-    public static function dbConnect()
+    public static function dbConnect():PDO
     {
-        $config = include("../config.php");
+        $config = include(__DIR__."/../config.php");
 
         // Sacamos las variables del archivo de configuración fuera para evitar añadir demasiado código más adelante
         $dbname = $config["dbname"];

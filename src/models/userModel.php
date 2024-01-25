@@ -2,9 +2,10 @@
 
 namespace VOST\models;
 
-include_once 'user.php';
-include_once 'database.php';
+include_once __DIR__.'/user.php';
+include_once __DIR__.'/database.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
 use VOST\models\User;
 use VOST\models\Database;
 
@@ -26,8 +27,7 @@ class UserModel
     public static function getUser($pdo, $user)
     {
         $queryResults = Database::getItem($pdo, $user);
-        $abstractedObject = User::constructFromArray($queryResults);
-        return $abstractedObject;
+        return User::constructFromArray($queryResults);
     }
 
     public static function deleteUser($pdo, $user)
@@ -47,5 +47,6 @@ class UserModel
         $queryResults = Database::updateTable($pdo, $user);
         return $queryResults;
     }
+
 
 }

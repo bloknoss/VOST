@@ -1,10 +1,9 @@
 <?php
 
-use VOST\controllers\UserController;
-
-require __DIR__. '/UserController.php';
-
+require __DIR__.'/../../vendor/autoload.php';
 $dispatcher = require __DIR__.'/routes.php';
+
+session_start();
 
 $method = $_SERVER["REQUEST_METHOD"];
 $uri = $_SERVER["REQUEST_URI"];
@@ -22,7 +21,6 @@ switch ($routerInfo[0]){
 
     case FastRoute\Dispatcher::FOUND;
         $handler = $routerInfo[1];
-        $handlerClass = new $handler();
-        $handlerClass->printHola();
+        $handler();
         break;
 }

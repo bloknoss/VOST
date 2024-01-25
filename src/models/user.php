@@ -4,7 +4,7 @@ namespace VOST\models;
 
 use VOST\models\Utils;
 
-include_once 'utils.php';
+include_once __DIR__.'/utils.php';
 
 class User
 {
@@ -14,6 +14,7 @@ class User
     public $email;
     public $password;
     public $tableInfo;
+
 
     public static function constructFromArray($arr)
     {
