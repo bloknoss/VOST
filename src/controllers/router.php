@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__.'/../../vendor/autoload.php';
+
 $dispatcher = require __DIR__.'/routes.php';
 
 session_start();

@@ -9,8 +9,8 @@
 </head>
 <body>
 <form action="/login" method="post">
-    <label for="userName">User name </label>
-    <input type="text" name="userName" id="userName">
+    <label for="email">User name </label>
+    <input type="text" name="email" id="email">
     <label for="password">Password</label>
     <input type="password" name="password" id="password">
     <button type="submit">Login</button>

@@ -24,7 +24,7 @@ class UserModel
 
     }
 
-    public static function getUser($pdo, $user)
+    public static function getUser($pdo, $user):User|null
     {
         $queryResults = Database::getItem($pdo, $user);
         return User::constructFromArray($queryResults);

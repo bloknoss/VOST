@@ -1,5 +1,7 @@
 <?php
+
 include_once (__DIR__.'/../src/controllers/router.php');
+$pepe = 'Pepe';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,5 +15,6 @@ include_once (__DIR__.'/../src/controllers/router.php');
     <a href="/login">login</a>
     <a href="/user">see User</a>
     <a href="/logout">log out</a>
+    <a href="/signin">CreateUser</a>
 </body>
 </html>

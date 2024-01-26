@@ -4,14 +4,16 @@ namespace VOST\models;
 
 use PDO;
 use PDOException;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class Utils
 {
 
 
-    public static function dbConnect():PDO
+    public static function dbConnect(): PDO
     {
-        $config = include(__DIR__."/../config.php");
+        $config = include(__DIR__ . "/../config.php");
+        $config = $config["db"];
 
         // Sacamos las variables del archivo de configuración fuera para evitar añadir demasiado código más adelante
         $dbname = $config["dbname"];
@@ -25,6 +27,35 @@ class Utils
         }
 
         return $pdo;
+    }
+
+    public static function sendMail($target, $targetName, $sender, $senderName,$about, $message,)
+    {
+        $config = require __DIR__ . '/../config.php';
+        $config = $config["smtp"];
+
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host = $config["hostname"];
+            $mail->SMTPAuth = true;
+            $mail->Username = $config["hostEmail"];
+            $mail->Password = $config["password"];
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+
+            // Detalles del correo
+            $mail->setFrom($sender, $senderName);
+            $mail->addAddress($target, $targetName);
+            $mail->Subject = $about;
+            $mail->Body = $message;
+
+            // Enviar el correo
+            $mail->send();
+            print 'sended';
+        } catch (\Exception $e) {
+            print "Exception sending the mail";
+        }
     }
 
 
@@ -86,6 +117,7 @@ class Utils
 
         return $data;
     }
+
     public static function getValuesArray($object)
     {
         $tableValues = get_object_vars($object);
