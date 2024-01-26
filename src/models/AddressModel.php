@@ -2,8 +2,8 @@
 
 namespace VOST\models;
 
-include_once 'address.php';
-include_once 'database.php';
+include_once 'Address.php';
+include_once 'Database.php';
 
 use VOST\models\Address;
 use VOST\models\Database;

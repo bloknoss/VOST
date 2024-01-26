@@ -132,4 +132,3 @@ class Utils
 
 }
 
-$pdo = Utils::dbConnect();

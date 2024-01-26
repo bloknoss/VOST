@@ -7,8 +7,8 @@ use VOST\models\User;
 use VOST\models\UserModel;
 use VOST\models\Utils;
 
-require __DIR__ . '/../models/user.php';
-require __DIR__ . '/../models/userModel.php';
+require __DIR__ . '/../models/User.php';
+require __DIR__ . '/../models/UserModel.php';
 
 class UserController
 {
@@ -18,7 +18,7 @@ class UserController
     public static function login(): void
     {
         if (isset($_SESSION["name"])) {
-            header('Locatio: http://localhost:80/user');
+            header('Location: http://localhost:80/user');
             return;
         }
         if (!isset($_POST["email"])) {
@@ -34,7 +34,6 @@ class UserController
         }
 
         try {
-
             $pdo = Utils::dbConnect();
             $user = User::constructLoginObject($_POST["email"], $tableIdentifier);
             $user = UserModel::getUser($pdo, $user);
@@ -50,12 +49,15 @@ class UserController
                 echo 'Acceso denegado';
                 return;
             }
-            $_SESSION["name"] = $user->name;
-            $_SESSION["email"] = $user->email;
+            
+            if ($user->isActive) {
+                $_SESSION["name"] = $user->name;
+                $_SESSION["email"] = $user->email;
+            }else
+                echo "Debes activar tu cuenta";
         } catch (\Exception $e) {
 
         }
-        echo 'Success';
 
     }
 
@@ -115,7 +117,7 @@ class UserController
             echo 'Usuario creado con exito';
 
         } catch (\PDOException $e) {
-
+            print 'Error al conectarse a la base de datos';
         }
 
         $user = new User(null, $_POST["name"], $_POST["email"], $_POST["password"]);

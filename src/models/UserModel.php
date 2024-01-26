@@ -2,8 +2,8 @@
 
 namespace VOST\models;
 
-include_once __DIR__.'/user.php';
-include_once __DIR__.'/database.php';
+include_once __DIR__ . '/User.php';
+include_once __DIR__ . '/Database.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use VOST\models\User;

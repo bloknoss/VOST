@@ -13,7 +13,7 @@ $routerInfo = $dispatcher->dispatch($method, $uri);
 
 switch ($routerInfo[0]){
     case FastRoute\Dispatcher::NOT_FOUND;
-        http_response_code(404);
+        die(404);
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED;
         echo 'Method not allowed';

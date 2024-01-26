@@ -2,8 +2,8 @@
 
 namespace VOST\models;
 
-include_once 'vinyl.php';
-include_once 'database.php';
+include_once 'Vinyl.php';
+include_once 'Database.php';
 
 use VOST\models\VinylsOrdered;
 use VOST\models\Database;

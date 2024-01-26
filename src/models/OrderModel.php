@@ -2,8 +2,8 @@
 
 namespace VOST\models;
 
-include_once 'order.php';
-include_once 'database.php';
+include_once 'Order.php';
+include_once 'Database.php';
 
 use VOST\models\Order;
 use VOST\models\Database;

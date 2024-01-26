@@ -6,30 +6,40 @@ require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/UserController.php';
 
 return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {
-    $routeCollector->post('/login', function () {
-        UserController::login();
+    $routeCollector->get('/',function (){
+        require __DIR__ . '/../views/index.php';
     });
+    $routeCollector->addGroup('/user' , function (FastRoute\RouteCollector $routeCollector){
 
-    $routeCollector->get('/login', function () {
-        require __DIR__ . '/../views/login.php';
+        $routeCollector->get('/', function () {
+            UserController::get();
+        });
+
+        $routeCollector->post('/login', function () {
+            UserController::login();
+        });
+
+        $routeCollector->get('/login', function () {
+            require __DIR__ . '/../views/login.php';
+        });
+
+        $routeCollector->get('/logout', function () {
+            $_SESSION = [];
+        });
+
+        $routeCollector->get('/register', function (){
+            require __DIR__ . '/../views/register.php';
+        });
+
+        $routeCollector->post('/register', function (){
+            UserController::createUser();
+        });
+
     });
-
-    $routeCollector->get('/user', function () {
-        UserController::get();
-    });
-
-    $routeCollector->get('/logout', function () {
-        $_SESSION = [];
-    });
-
+    
     $routeCollector->get('/send', function () {
         UserController::sendMail('yosoyirenepinillanieto@gmail.com');
     });
 
-    $routeCollector->get('/signin', function (){
-       require __DIR__ . '/../views/register.php';
-    });
-    $routeCollector->post('/signin', function (){
-       UserController::createUser();
-    });
+
 });

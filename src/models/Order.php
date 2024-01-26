@@ -5,7 +5,7 @@ namespace VOST\models;
 
 use VOST\models\Utils;
 
-include_once 'utils.php';
+include_once 'Utils.php';
 
 class Order
 {
