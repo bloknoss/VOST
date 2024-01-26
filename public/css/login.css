@@ -55,7 +55,7 @@ body {
 }
 
 .header .nav-links a {
-  font-size: 700;
+  font-size: 20px;
   color: #eceff1;
   text-decoration: none;
 }
@@ -65,7 +65,7 @@ body {
 }
 
 .header .btn button {
-  font-weight: 700;
+  font-weight: 20PX;
   color: #41788d;
   padding: 9px 25px;
   background: #eceff1;
@@ -87,7 +87,7 @@ body {
 .header .btn button,
     /**/.header .menu button {
   margin-left: 20px;
-  font-weight: 700;
+  font-weight: 20PX;
   color: #41788d;
   padding: 9px 25px;
   background: #eceff1;
