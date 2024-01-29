@@ -8,7 +8,8 @@ create table users
     id_user  int unique          not null auto_increment primary key,
     name     varchar(255) unique not null,
     email    varchar(255) unique not null,
-    password varchar(255)        not null
+    password varchar(255)        not null,
+    isActive boolean not null default(false)
 );
 
 drop table if exists vinyls;
