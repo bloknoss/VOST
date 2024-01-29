@@ -4,6 +4,7 @@ namespace VOST\models;
 
 include_once __DIR__ . '/User.php';
 include_once __DIR__ . '/Database.php';
+use PDOException;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use VOST\models\User;
