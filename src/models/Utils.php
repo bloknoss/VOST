@@ -29,7 +29,7 @@ class Utils
         return $pdo;
     }
 
-    public static function sendMail($target, $targetName, $sender, $senderName,$about, $message,)
+    public static function sendMail($target, $targetName, $sender, $senderName, $about, $message)
     {
         $config = require __DIR__ . '/../config.php';
         $config = $config["smtp"];
@@ -46,9 +46,11 @@ class Utils
 
             // Detalles del correo
             $mail->setFrom($sender, $senderName);
-            $mail->addAddress($target, $targetName);
+            $mail->addAddress($target . "", $targetName);
             $mail->Subject = $about;
-            $mail->Body = $message;
+
+            $mail->Body = self::wrapEmail($message);
+
 
             // Enviar el correo
             $mail->send();
@@ -64,6 +66,7 @@ class Utils
         $tableInfo = $item->tableInfo;
         $tableName = $tableInfo['tableName'];
         $tableFields = array_splice($tableInfo['tableFields'], 1);
+        array_splice($tableFields, -1, 1);
 
         $baseQuery = "INSERT INTO $tableName (" . implode(',', $tableFields) . ") VALUES (:" . implode(',:', $tableFields) . ");";
 
@@ -97,14 +100,15 @@ class Utils
         $tableInfo = $item->tableInfo;
         $tableValues = $tableInfo['tableValues'];
         $tableFields = $tableInfo['tableFields'];
+        array_splice($tableValues, -1, 1);
 
 
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
-
                 $stmt->bindValue(":$field", $tableValues[$field]);
             }
         }
+
         return $stmt;
     }
 
@@ -129,6 +133,11 @@ class Utils
         return array_keys($table);
     }
 
-
+    private static function wrapEmail($message): string
+    {
+        $wrapper = '<h1> Codigo de activacion </h1> <br>';
+        $wrapper .= "<div style='padding: 15px;border-radius: 15px;color: whitesmoke;background: darkgrey; width: 100px; display: flex; justify-content: center; align-content: center;' class='code'><span> $message </span> </div>";
+        return $wrapper;
+    }
 }
 

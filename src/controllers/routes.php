@@ -11,7 +11,7 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
     });
     $routeCollector->addGroup('/user' , function (FastRoute\RouteCollector $routeCollector){
 
-        $routeCollector->get('/', function () {
+        $routeCollector->get('', function () {
             UserController::get();
         });
 
@@ -34,12 +34,13 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
         $routeCollector->post('/register', function (){
             UserController::createUser();
         });
+        $routeCollector->post('/activate', function (){
+            UserController::checkCode();
+        });
 
     });
     
-    $routeCollector->get('/send', function () {
-        UserController::sendMail('yosoyirenepinillanieto@gmail.com');
-    });
+
 
 
 });

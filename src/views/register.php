@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<form action="/signin" method="post">
+<form action="/user/register" method="post">
     <label for="name">
         User name
         <input type="text" name="name" id="name">

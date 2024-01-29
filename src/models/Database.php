@@ -36,7 +36,7 @@ class Database
 
         try {
             $query = "SELECT * FROM $tableName WHERE $idField=:$idField";
-            
+
             $stmt = $pdo->prepare($query);
 
             $stmt->bindValue(":$idField", $idValue);
@@ -49,7 +49,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         }
     }
@@ -76,7 +76,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;
@@ -100,7 +100,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;
@@ -130,4 +130,5 @@ class Database
             $pdo = null;
         }
     }
+
 }

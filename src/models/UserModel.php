@@ -48,5 +48,20 @@ class UserModel
         return $queryResults;
     }
 
+    public static function activateUser ($pdo, $user)
+    {
+        try{
+            $id = $user->id_user;
+            $query = "UPDATE users SET isActive=true WHERE id_user=:id";
+
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            return $stmt->rowCount();
+        }catch (PDOException $e){
+            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            die(500);
+        }
+    }
 
 }

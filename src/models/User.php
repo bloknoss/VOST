@@ -13,8 +13,8 @@ class User
     public $name;
     public $email;
     public $password;
+    public bool $isActive = false;
     public $tableInfo;
-    public bool $isActive;
 
 
     public static function constructFromArray($arr): User|null
@@ -52,4 +52,5 @@ class User
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'users', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
+
 }

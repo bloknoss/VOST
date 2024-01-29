@@ -7,10 +7,10 @@
 </head>
 <body>
 <h1>Hola</h1>
-<a href="/login">login</a>
+<a href="/user/login">login</a>
 <a href="/user">see User</a>
-<a href="/logout">log out</a>
-<a href="/signin">CreateUser</a>
+<a href="/user/logout">log out</a>
+<a href="/user/register">CreateUser</a>
 </body>
 </html>
 <?php

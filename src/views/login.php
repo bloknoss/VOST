@@ -8,7 +8,7 @@
     <title>Login</title>
 </head>
 <body>
-<form action="/login" method="post">
+<form action="/user/login" method="post">
     <label for="email">User name </label>
     <input type="text" name="email" id="email">
     <label for="password">Password</label>

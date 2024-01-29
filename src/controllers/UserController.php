@@ -2,6 +2,7 @@
 
 namespace VOST\controllers;
 
+use JetBrains\PhpStorm\NoReturn;
 use PHPMailer\PHPMailer\PHPMailer;
 use VOST\models\User;
 use VOST\models\UserModel;
@@ -38,6 +39,7 @@ class UserController
             $user = User::constructLoginObject($_POST["email"], $tableIdentifier);
             $user = UserModel::getUser($pdo, $user);
 
+
             if (is_null($user)) {
                 require __DIR__ . '/../views/login.php';
                 echo '<h1>User not found</h1>';
@@ -49,27 +51,32 @@ class UserController
                 echo 'Acceso denegado';
                 return;
             }
-            
-            if ($user->isActive) {
-                $_SESSION["name"] = $user->name;
-                $_SESSION["email"] = $user->email;
-            }else
-                echo "Debes activar tu cuenta";
-        } catch (\Exception $e) {
 
+
+            if (!$user->isActive){
+                $_SESSION["user"] = $user;
+                self::sendCode();
+            }
+
+            $_SESSION["isLogged"] = true;
+            print '<h1> Sesion iniciada </h1>';
+            print '<a href="/">Ir a inicio </a>';
+        } catch (\Exception $e) {
+            die(500);
         }
 
     }
 
 
-    public static function get()
+    public static function get():void
     {
-        if (!isset($_SESSION["name"])){
-            header('Location: http://localhost:80/login');
-            return;
+        if (!isset($_SESSION["isLogged"])) {
+            exit(404);
         }
-        $userName = $_SESSION["name"];
-        $email = $_SESSION["email"];
+
+        $user = $_SESSION["user"];
+        $userName = $user->name;
+        $email = $user->email;
         echo '<h1> User </h1>';
         echo '<ul>';
         echo "<li>Email : $email</li>";
@@ -82,7 +89,6 @@ class UserController
         session_destroy();
         session_abort();
     }
-
 
 
     public static function createUser()
@@ -115,13 +121,44 @@ class UserController
             $user = new User(null, $_POST["name"], $_POST["email"], $password);
             UserModel::insertUser($pdo, $user);
             echo 'Usuario creado con exito';
+            require __DIR__.'/../views/login.php';
 
         } catch (\PDOException $e) {
             print 'Error al conectarse a la base de datos';
         }
 
-        $user = new User(null, $_POST["name"], $_POST["email"], $_POST["password"]);
+    }
 
+    public static function checkCode()
+    {
+        if (!isset($_POST["activationCode"])) {
+            echo 'Inserta el codigo';
+            return ;
+        }
+        if (!isset($_SESSION["code"])) {
+            return;
+        }
+        if ($_SESSION["code"].'' === $_POST["activationCode"].''){
+            $user = $_SESSION["user"];
+            $user->isActive = true;
+            $pdo = Utils::dbConnect();
+            UserModel::activateUser($pdo,$user);
+            $_SESSION["isLogged"] = true;
+            echo 'Usuario activado';
+            exit(200);
+        }
+        echo 'codigo incorrecto';
+        exit(400);
+    }
+
+    #[NoReturn] private static function sendCode():void
+    {
+        $code = rand(100000, 999999);
+        $_SESSION["code"] = $code;
+        $user = $_SESSION["user"];
+        Utils::sendMail($user->email, $user->name, 'admin@vost.com', 'VostAdmin', 'Account Activation Code', "$code");
+        require __DIR__ . '/../views/acivate.php';
+        exit(300);
     }
 
     private static function validateLogin($email): int
