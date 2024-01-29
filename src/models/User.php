@@ -2,8 +2,6 @@
 
 namespace VOST\models;
 
-use VOST\models\Utils;
-
 include_once __DIR__ . '/Utils.php';
 
 class User
@@ -49,8 +47,8 @@ class User
         $this->password = $password;
         $this->isActive = $isActive;
 
-        $_values = Utils::getValuesArray($this);
-        $this->tableInfo = ['tableName' => 'users', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
+        $_values = database\Utils::getValuesArray($this);
+        $this->tableInfo = ['tableName' => 'users', 'tableFields' => database\Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 
 }

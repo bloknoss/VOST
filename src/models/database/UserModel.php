@@ -1,14 +1,12 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
 include_once __DIR__ . '/User.php';
 include_once __DIR__ . '/Database.php';
-use PDOException;
 
-use PHPMailer\PHPMailer\PHPMailer;
+use PDOException;
 use VOST\models\User;
-use VOST\models\Database;
 
 class UserModel
 {
@@ -27,13 +25,13 @@ class UserModel
 
     public static function getUser($pdo, $user):User|null
     {
-        $queryResults = Database::getItem($pdo, $user);
+        $queryResults = \VOST\models\database\Database::getItem($pdo, $user);
         return User::constructFromArray($queryResults);
     }
 
     public static function deleteUser($pdo, $user)
     {
-        $queryResults = Database::deleteItem($pdo, $user);
+        $queryResults = \VOST\models\database\Database::deleteItem($pdo, $user);
         return $queryResults;
     }
 
@@ -45,7 +43,7 @@ class UserModel
 
     public static function updateUser($pdo, $user)
     {
-        $queryResults = Database::updateTable($pdo, $user);
+        $queryResults = \VOST\models\database\Database::updateTable($pdo, $user);
         return $queryResults;
     }
 

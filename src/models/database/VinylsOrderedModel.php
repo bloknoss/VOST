@@ -1,12 +1,11 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
 include_once 'Vinyl.php';
 include_once 'Database.php';
 
 use VOST\models\VinylsOrdered;
-use VOST\models\Database;
 
 class VinylsOrderedModel
 {
@@ -14,7 +13,7 @@ class VinylsOrderedModel
     public static function getVinylsOrdered($pdo, $vinylsOrdered)
     {
         $tableName = $vinylsOrdered->tableInfo['tableName'];
-        $queryResults = Database::getItems($pdo, $tableName);
+        $queryResults = \VOST\models\database\Database::getItems($pdo, $tableName);
         foreach ($queryResults as $array)
             $abstractedObjects[] = VinylsOrdered::constructFromArray($array);
 
@@ -36,13 +35,13 @@ class VinylsOrderedModel
 
     public static function insertVinylOrdered($pdo, $newVinylsOrdered)
     {
-        $queryResults = Database::insertItem($pdo, $newVinylsOrdered);
+        $queryResults = \VOST\models\database\Database::insertItem($pdo, $newVinylsOrdered);
         return $queryResults;
     }
 
     public static function updateVinylOrdered($pdo, $vinylsOrdered)
     {
-        $queryResults = Database::updateTable($pdo, $vinylsOrdered);
+        $queryResults = \VOST\models\database\Database::updateTable($pdo, $vinylsOrdered);
         return $queryResults;
     }
 

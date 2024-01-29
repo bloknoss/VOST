@@ -4,7 +4,7 @@
 
 namespace VOST\models;
 
-use VOST\models\Utils;
+use VOST\models\database\Utils;
 
 include_once 'Utils.php';
 
@@ -43,7 +43,7 @@ class Address
 
 
         $_values = Utils::getValuesArray($this);
-        $this->tableInfo = ['tableName' => 'address', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
+        $this->tableInfo = ['tableName' => 'address', 'tableFields' => database\Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 
 }

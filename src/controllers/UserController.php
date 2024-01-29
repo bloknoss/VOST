@@ -3,10 +3,9 @@
 namespace VOST\controllers;
 
 use JetBrains\PhpStorm\NoReturn;
-use PHPMailer\PHPMailer\PHPMailer;
+use VOST\models\database\UserModel;
+use VOST\models\database\Utils;
 use VOST\models\User;
-use VOST\models\UserModel;
-use VOST\models\Utils;
 
 require __DIR__ . '/../models/User.php';
 require __DIR__ . '/../models/UserModel.php';

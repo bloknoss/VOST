@@ -1,12 +1,11 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
 include_once 'Vinyl.php';
 include_once 'Database.php';
 
 use VOST\models\Vinyl;
-use VOST\models\Database;
 
 class VinylModel
 {
@@ -23,7 +22,7 @@ class VinylModel
 
     public static function getVinyl($pdo, $vinyl)
     {
-        $queryResults = Database::getItem($pdo, $vinyl);
+        $queryResults = \VOST\models\database\Database::getItem($pdo, $vinyl);
         $abstractedObject = Vinyl::constructFromArray($queryResults);
         return $abstractedObject;
 
@@ -37,13 +36,13 @@ class VinylModel
 
     public static function insertVinyl($pdo, $newVinyl)
     {
-        $queryResults = Database::insertItem($pdo, $newVinyl);
+        $queryResults = \VOST\models\database\Database::insertItem($pdo, $newVinyl);
         return $queryResults;
     }
 
     public static function updateVinyl($pdo, $vinyl)
     {
-        $queryResults = Database::updateTable($pdo, $vinyl);
+        $queryResults = \VOST\models\database\Database::updateTable($pdo, $vinyl);
         return $queryResults;
     }
 

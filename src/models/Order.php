@@ -3,8 +3,6 @@
 namespace VOST\models;
 
 
-use VOST\models\Utils;
-
 include_once 'Utils.php';
 
 class Order
@@ -33,8 +31,8 @@ class Order
         $this->id_address = $id_address;
         $this->date_time = $date_time;
 
-        $_values = Utils::getValuesArray($this);
-        $this->tableInfo = ['tableName' => 'orders', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
+        $_values = database\Utils::getValuesArray($this);
+        $this->tableInfo = ['tableName' => 'orders', 'tableFields' => database\Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 
 }

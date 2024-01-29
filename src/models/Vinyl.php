@@ -1,8 +1,6 @@
 <?php
 namespace VOST\models;
 
-use VOST\models\Utils;
-
 include_once 'Utils.php';
 
 class Vinyl
@@ -38,8 +36,8 @@ class Vinyl
         $this->duration = $duration;
         $this->max_duration = $max_duration;
 
-        $_values = Utils::getValuesArray($this);
-        $this->tableInfo = ['tableName' => 'vinyls', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
+        $_values = database\Utils::getValuesArray($this);
+        $this->tableInfo = ['tableName' => 'vinyls', 'tableFields' => database\Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 
 

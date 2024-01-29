@@ -1,12 +1,11 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
 include_once 'Order.php';
 include_once 'Database.php';
 
 use VOST\models\Order;
-use VOST\models\Database;
 
 class OrderModel
 {
@@ -24,7 +23,7 @@ class OrderModel
 
     public static function getOrder($pdo, $order)
     {
-        $queryResults = Database::getItem($pdo, $order);
+        $queryResults = \VOST\models\database\Database::getItem($pdo, $order);
         $abstractedObject = Order::constructFromArray($queryResults);
         return $abstractedObject;
     }
@@ -37,7 +36,7 @@ class OrderModel
 
     public static function insertOrder($pdo, $newOrder)
     {
-        $queryResults = Database::insertItem($pdo, $newOrder);
+        $queryResults = \VOST\models\database\Database::insertItem($pdo, $newOrder);
         return $queryResults;
     }
 

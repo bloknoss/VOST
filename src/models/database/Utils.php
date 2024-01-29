@@ -1,6 +1,6 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
 use PDO;
 use PDOException;

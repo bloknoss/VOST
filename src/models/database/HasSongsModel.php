@@ -1,12 +1,11 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
 include_once 'Vinyl.php';
 include_once 'Database.php';
 
 use VOST\models\HasSongs;
-use VOST\models\Database;
 
 class HasSongsModel
 {
@@ -38,7 +37,7 @@ class HasSongsModel
 
     public static function insertHasSong($pdo, $newHasSongs)
     {
-        $queryResults = Database::insertItem($pdo, $newHasSongs);
+        $queryResults = \VOST\models\database\Database::insertItem($pdo, $newHasSongs);
         return $queryResults;
     }
 

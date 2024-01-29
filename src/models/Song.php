@@ -2,7 +2,7 @@
 
 namespace VOST\models;
 
-use VOST\models\Utils;
+use VOST\models\database\Utils;
 
 include_once 'Utils.php';
 
@@ -38,7 +38,7 @@ class Song
         $this->genre = $genre;
         $this->duration = $duration;
 
-        $_values = Utils::getValuesArray($this);
+        $_values = database\Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'songs', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 }

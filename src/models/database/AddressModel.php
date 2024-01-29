@@ -1,12 +1,11 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
 include_once 'Address.php';
 include_once 'Database.php';
 
 use VOST\models\Address;
-use VOST\models\Database;
 
 class AddressModel
 {

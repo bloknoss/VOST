@@ -1,8 +1,6 @@
 <?php
 namespace VOST\models;
 
-use VOST\models\Utils;
-
 include_once 'Utils.php';
 
 class VinylsOrdered
@@ -31,8 +29,8 @@ class VinylsOrdered
         $this->id_order = $id_order;
         $this->number = $number;
 
-        $_values = Utils::getValuesArray($this);
-        $this->tableInfo = ['tableName' => 'vinyls_ordered', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
+        $_values = database\Utils::getValuesArray($this);
+        $this->tableInfo = ['tableName' => 'vinyls_ordered', 'tableFields' => database\Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 
 

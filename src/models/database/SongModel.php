@@ -1,12 +1,11 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
 include_once 'Song.php';
 include_once 'Database.php';
 
 use VOST\models\Song;
-use VOST\models\Database;
 
 class SongModel
 {
