@@ -13,7 +13,8 @@ class VinylsOrderedModel
 
     public static function getVinylsOrdered($pdo, $vinylsOrdered)
     {
-        $tableName = $vinylsOrdered->tableInfo['tableName'];
+
+        $tableName = "vinyls_ordered";
         $queryResults = Database::getItems($pdo, $tableName);
         foreach ($queryResults as $array)
             $abstractedObjects[] = VinylsOrdered::constructFromArray($array);

@@ -11,9 +11,9 @@ use VOST\models\Database;
 class SongModel
 {
 
-    public static function getSongs($pdo, $song)
+    public static function getSongs($pdo)
     {
-        $tableName = $song->tableInfo['tableName'];
+        $tableName = "songs";
         $queryResults = Database::getItems($pdo, $tableName);
 
         foreach ($queryResults as $array)

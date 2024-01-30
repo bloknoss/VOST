@@ -44,33 +44,6 @@ class Vinyl
         $this->tableInfo = ['tableName' => 'vinyls', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 
-    public function getOrderedVinyls($pdo)
-    {
-        try {
-            $query = "select * from vinyls_ordered where id_vinyl=:id_vinyl";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindValue(":id_vinyl", $this->id_vinyl);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-
-        }
-    }
-
-    public function getHasSongs($pdo)
-    {
-        try {
-            $query = "select * from has_songs where id_vinyl=:id_vinyl";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindValue(":id_vinyl", $this->id_vinyl);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-
-        }
-    }
 
 
 }

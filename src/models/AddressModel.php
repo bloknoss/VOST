@@ -13,7 +13,7 @@ class AddressModel
 
     public static function getAddresses($pdo, $address)
     {
-        $tableName = $address->tableInfo['tableName'];
+        $tableName = "address";
         $queryResults = Database::getItems($pdo, $tableName);
         $abstractedObjects = [];
         foreach ($queryResults as $array)

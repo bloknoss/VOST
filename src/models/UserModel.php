@@ -14,9 +14,9 @@ use VOST\models\Database;
 class UserModel
 {
 
-    public static function getUsers($pdo, $user)
+    public static function getUsers($pdo)
     {
-        $tableName = $user->tableInfo['tableName'];
+        $tableName = "users"; 
         $queryResults = Database::getItems($pdo, $tableName);
         $abstractedObjects = [];
         foreach ($queryResults as $array)
