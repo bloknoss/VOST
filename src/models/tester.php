@@ -1,20 +1,20 @@
 <?php
 
 use VOST\models\User;
-use VOST\models\database\UserModel;
-use VOST\models\database\Utils;
+use VOST\models\UserModel;
+use VOST\models\Utils;
 
-include_once __DIR__ . 'database/Utils.php';
+include_once __DIR__ . 'Utils.php';
 
 class Tester
 {
     public static function test()
     {
         try{
-
             $pdo = Utils::dbConnect();
-            $user = UserModel::getUsers($pdo, User::constructIdObject(0));
-            return $user;
+            
+            $users = UserModel::getUserByName($pdo, "Randi");
+            return $users;
         }catch(Exception $e){
             echo $e->getMessage();
         }

@@ -5,6 +5,7 @@ namespace VOST\models;
 include_once 'Vinyl.php';
 include_once 'Database.php';
 
+use PDOException;
 use VOST\models\Vinyl;
 use VOST\models\Database;
 
@@ -45,6 +46,16 @@ class VinylModel
     {
         $queryResults = Database::updateTable($pdo, $vinyl);
         return $queryResults;
+    }
+
+    public static function getVinylByName(){
+        try{
+            
+
+
+        }catch(PDOException $e){
+
+        }
     }
 
 }
