@@ -1,5 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap");
+body {
+  background-color: #ffffff;
+  font-family: Helvetica Neue, Helvetica;
+  font-size: 14px;
+}
 
+/*----------------------*/
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +12,6 @@
   font-family: "Nunito", sans-serif;
   font-size: 20px;
 }
-
 .header {
   background-color: #41788d;
   display: flex;
@@ -46,7 +50,6 @@
 }
 
 .header .nav-links a {
-  font-size: 20px;
   color: #eceff1;
   text-decoration: none;
 }
@@ -56,7 +59,6 @@
 }
 
 .header .btn button {
-  font-weight: 20px;
   color: #41788d;
   padding: 9px 25px;
   background: #eceff1;
@@ -78,7 +80,6 @@
 .header .btn button,
     /**/.header .menu button {
   margin-left: 20px;
-  font-weight: 20px;
   color: #41788d;
   padding: 9px 25px;
   background: #eceff1;
@@ -135,7 +136,6 @@
   font-size: 36px;
   display: block;
   transition: all 0.3s ease 0s;
-  font-weight: 700;
   color: #eceff1;
 }
 
@@ -161,122 +161,170 @@
     right: 35px;
   }
 }
+/*------------------*/
 
-/*--------------GRID---------------*/
-.container {
-  width: 100%;
-  height: 100vh;
+.bestsellers {
   display: flex;
+  justify-content: center;
+  margin-top: 70px;
+}
+.bestsellers b {
+  font-size: 40px;
+}
+
+.news {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: -300px;
+}
+
+.news b {
+  font-size: 40px;
+}
+.swiper {
+  width: 100%;
+  padding: 60px 0 50px 0;
+}
+
+.swiper-slide {
+  width: 300px;
+  height: 550px;
+  background-color: #41788d;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  padding: 40px;
+  text-align: center;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 40px;
 }
 
-.main {
-  position: relative;
+.icons i {
+  font-size: 20px;
+  color: #ffb900;
+}
+
+.icons img {
+  width: 120px;
+}
+
+.product-content {
   display: flex;
-  flex-direction: column;
-  background-color: #41788d;
-  max-height: 450px;
-  width: 400px;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: #41788d;
+  justify-content: space-between;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 24px;
+.product-txt {
+  flex-basis: 50%;
+  text-align: left;
 }
 
-/*checkbox to switch from sign up to login*/
-
-#chk {
-  display: none;
-}
-
-/*Login*/
-
-.login {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.login label {
-  margin: 5% 0 5%;
-}
-
-label {
-  color: #fff;
-  font-size: 2rem;
-  justify-content: center;
-  display: flex;
+.product-txt span {
+  font-size: 25px;
+  color: #ffb900;
   font-weight: bold;
+}
+
+.product-txt h3 {
+  font-size: 20px;
+  color: #242121;
+  text-transform: uppercase;
+}
+
+.product-txt p {
+  font-size: 14, 5px;
+  color: #252222;
+}
+
+.product-img {
+  flex-basis: 50%;
+  text-align: right;
+}
+
+.product-img img {
+  width: 120px;
+}
+
+.btn-1 {
+  display: inline-block;
+  padding: 13px 55px;
+  border: 1px solid #ffb900;
+  border-radius: 25px;
+  color: #ffb900;
+  text-decoration: none;
+  margin-top: 50px;
+}
+.swiper-slide:hover {
+  background-color: #1b5871;
+}
+
+/*--------------------------*/
+.container-related-products img {
+  max-width: 100%;
+}
+.container-related-products h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.card-list-products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.card {
   cursor: pointer;
-  transition: 0.5s ease-in-out;
 }
 
-.input {
-  width: 100%;
-  height: 40px;
-  font-size: 1rem;
-  background: #e0dede;
-  padding: 10px;
-  margin-top: 15px;
-  border: none;
-  outline: none;
-  border-radius: 4px;
+.card-img {
+  background: transparent;
+  margin-bottom: 15px;
 }
 
-/*Register*/
-
-.register {
-  background: #eee;
-  border-radius: 60% / 10%;
-  transition: 0.8s ease-in-out;
+.card-img img {
+  height: 400px;
+  object-fit: cover;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.register label {
-  color: #41788d;
-  transform: scale(0.6);
+.info-card {
+  display: flex;
+  justify-content: space-between;
 }
 
-#chk:checked ~ .register {
-  transform: translateY(-68%);
+.text-product {
+  color: #252525;
+  font-weight: 300;
+  line-height: 1.4;
 }
 
-#chk:checked ~ .register label {
-  transform: scale(1);
-  margin-bottom: 0.5rem;
+.text-product h3 {
+  color: inherit;
+  font-weight: inherit;
+  font-size: 15px;
 }
 
-#chk:checked ~ .login label {
-  transform: scale(0.6);
+.text-product h3:hover {
+  color: #1bbeb4;
 }
 
-/*Button*/
-
-.form button {
-  width: 70%;
-  height: 40px;
-  margin: 15px auto 10%;
-  color: #fff;
-  background: #41788d;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: 0.2s ease-in;
+.text-product p {
+  color: #666;
+  font-size: 13px;
 }
 
-.form button:hover {
-  background-color: #41788d;
+.text-product p:hover {
+  color: #1bbeb4;
 }
 
-/*--------footer---------*/
+/*----------*/
 footer {
   background: #41788d;
   padding: 60px 0 30px 0;

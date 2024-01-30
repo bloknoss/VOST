@@ -1,5 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap");
+body {
+  background-color: #ffffff;
+  font-family: Helvetica Neue, Helvetica;
+  font-size: 14px;
+}
 
+/*----------------------*/
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +12,6 @@
   font-family: "Nunito", sans-serif;
   font-size: 20px;
 }
-
 .header {
   background-color: #41788d;
   display: flex;
@@ -46,7 +50,6 @@
 }
 
 .header .nav-links a {
-  font-size: 20px;
   color: #eceff1;
   text-decoration: none;
 }
@@ -56,7 +59,6 @@
 }
 
 .header .btn button {
-  font-weight: 20px;
   color: #41788d;
   padding: 9px 25px;
   background: #eceff1;
@@ -76,9 +78,8 @@
 }
 
 .header .btn button,
-    /**/.header .menu button {
+      /**/.header .menu button {
   margin-left: 20px;
-  font-weight: 20px;
   color: #41788d;
   padding: 9px 25px;
   background: #eceff1;
@@ -89,7 +90,7 @@
 }
 
 .header .btn button:hover,
-    /**/.header .menu button:hover {
+      /**/.header .menu button:hover {
   background-color: #e2f1f8;
   color: #179aca;
   transform: scale(1.1);
@@ -135,7 +136,6 @@
   font-size: 36px;
   display: block;
   transition: all 0.3s ease 0s;
-  font-weight: 700;
   color: #eceff1;
 }
 
@@ -161,122 +161,9 @@
     right: 35px;
   }
 }
+/*------------------*/
 
-/*--------------GRID---------------*/
-.container {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.main {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background-color: #41788d;
-  max-height: 450px;
-  width: 400px;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: #41788d;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 24px;
-}
-
-/*checkbox to switch from sign up to login*/
-
-#chk {
-  display: none;
-}
-
-/*Login*/
-
-.login {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.login label {
-  margin: 5% 0 5%;
-}
-
-label {
-  color: #fff;
-  font-size: 2rem;
-  justify-content: center;
-  display: flex;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.5s ease-in-out;
-}
-
-.input {
-  width: 100%;
-  height: 40px;
-  font-size: 1rem;
-  background: #e0dede;
-  padding: 10px;
-  margin-top: 15px;
-  border: none;
-  outline: none;
-  border-radius: 4px;
-}
-
-/*Register*/
-
-.register {
-  background: #eee;
-  border-radius: 60% / 10%;
-  transition: 0.8s ease-in-out;
-}
-
-.register label {
-  color: #41788d;
-  transform: scale(0.6);
-}
-
-#chk:checked ~ .register {
-  transform: translateY(-68%);
-}
-
-#chk:checked ~ .register label {
-  transform: scale(1);
-  margin-bottom: 0.5rem;
-}
-
-#chk:checked ~ .login label {
-  transform: scale(0.6);
-}
-
-/*Button*/
-
-.form button {
-  width: 70%;
-  height: 40px;
-  margin: 15px auto 10%;
-  color: #fff;
-  background: #41788d;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: 0.2s ease-in;
-}
-
-.form button:hover {
-  background-color: #41788d;
-}
-
-/*--------footer---------*/
+/*----------*/
 footer {
   background: #41788d;
   padding: 60px 0 30px 0;
