@@ -7,9 +7,6 @@ include_once __DIR__ . '/Database.php';
 
 use PDO;
 use PDOException;
-use PHPMailer\PHPMailer\PHPMailer;
-use VOST\models\User;
-use VOST\models\Database;
 
 class UserModel
 {
@@ -26,10 +23,13 @@ class UserModel
 
     }
 
+    //Mi forma de get User
     public static function getUser($pdo, $user): User|null
     {
         $queryResults = Database::getItem($pdo, $user);
-        return User::constructFromArray($queryResults);
+        $user = User::constructFromArray($queryResults);
+        unset($user->tableInfo);
+        return $user;
     }
 
     public static function deleteUser($pdo, $user)
@@ -49,18 +49,13 @@ class UserModel
         $queryResults = Database::updateTable($pdo, $user);
         return $queryResults;
     }
-
+    //Mi forma de la function
     public static function getUserByEmail($pdo, $email)
     {
-        try {
-            $query = "select from users where email=:email";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindValue(':email', $email);
-            $stmt->execute();
-            return $stmt->rowCount();
-        } catch (PDOException $e) {
-
-        }
+        $pdo = Utils::dbConnect();
+        $user = new User(null, null, $email, null);
+        $user->tableInfo['tableFields'][0] = 'email';
+        return Database::getItem($pdo, $user);
     }
 
     public static function getUserByName($pdo, $name)
