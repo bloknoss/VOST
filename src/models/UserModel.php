@@ -13,7 +13,7 @@ class UserModel
 
     public static function getUsers($pdo)
     {
-        $tableName = "users"; 
+        $tableName = "users";
         $queryResults = Database::getItems($pdo, $tableName);
         $abstractedObjects = [];
         foreach ($queryResults as $array)
@@ -49,6 +49,7 @@ class UserModel
         $queryResults = Database::updateTable($pdo, $user);
         return $queryResults;
     }
+
     //Mi forma de la function
     public static function getUserByEmail($pdo, $email)
     {
@@ -82,6 +83,7 @@ class UserModel
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(':id', $id);
             $stmt->execute();
+
             return $stmt->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {

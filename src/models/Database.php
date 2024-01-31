@@ -111,13 +111,11 @@ class Database
     {
         try {
 
+            print_r($item);
             $query = Utils::generateUpdateQuery($item);
-
+            print_r($item);
             $stmt = $pdo->prepare($query);
-            print_r($item);
             $stmt = Utils::statementValueBinder($stmt, $item);
-            print_r($item);
-            print_r($stmt);
             $stmt->execute();
 
             $affectedRows = $stmt->rowCount();

@@ -78,6 +78,7 @@ class Utils
 
         $tableInfo = $item->tableInfo;
         $tableName = $tableInfo['tableName'];
+
         $tableFields = array_splice($tableInfo['tableFields'], 1);
         $tableValues = $tableInfo['tableValues'];
         $idField = $tableInfo['tableFields'][0];
@@ -92,21 +93,27 @@ class Utils
         }
 
 
+
         return ($baseQuery . implode(', ', $updateFields) . " WHERE $idField=:$idField");
     }
 
     public static function statementValueBinder($stmt, $item)
     {
         $tableInfo = $item->tableInfo;
+        print_r($tableInfo);
         $tableValues = $tableInfo['tableValues'];
         $tableFields = $tableInfo['tableFields'];
-        
+
+
         array_splice($tableValues, -1, 1);
-        var_dump($tableValues);        
 
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
-                $stmt->bindValue(":$field", $tableValues[$field]);
+                var_dump($tableValues[$field]);
+                if ($field == "is_active") {
+                    
+                } 
+                $stmt->bindValue(":$field", $tableValues[$field] ?? 0);
             }
         }
 
