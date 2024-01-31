@@ -1,6 +1,10 @@
 <?php
 namespace VOST\models;
 
+use PDO;
+use PDOException;
+use VOST\models\Utils;
+
 include_once 'Utils.php';
 
 class Vinyl
@@ -20,7 +24,7 @@ class Vinyl
         return new Vinyl(...$values);
     }
 
-        public static function constructIdObject($id)
+    public static function constructIdObject($id)
     {
         return new Vinyl($id, ...[null, null, null, null, null, null]);
     }
@@ -36,9 +40,10 @@ class Vinyl
         $this->duration = $duration;
         $this->max_duration = $max_duration;
 
-        $_values = database\Utils::getValuesArray($this);
-        $this->tableInfo = ['tableName' => 'vinyls', 'tableFields' => database\Utils::getTableFields($_values), 'tableValues' => $_values];
+        $_values = Utils::getValuesArray($this);
+        $this->tableInfo = ['tableName' => 'vinyls', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
+
 
 
 }

@@ -10,16 +10,15 @@ use VOST\models\HasSongs;
 class HasSongsModel
 {
 
-    public static function getHasSongs($pdo, $hasSongs)
+    public static function getHasSongs($pdo)
     {
-        $tableName = $hasSongs->tableInfo['tableName'];
+        $tableName = "songs";
         $queryResults = Database::getItems($pdo, $tableName);
 
         foreach ($queryResults as $array)
             $abstractedObjects[] = HasSongs::constructFromArray($array);
 
         return $abstractedObjects;
-
     }
 
     public static function getHasSong($pdo, $hasSongs)

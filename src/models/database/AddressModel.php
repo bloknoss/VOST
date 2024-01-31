@@ -1,18 +1,16 @@
 <?php
 
-namespace VOST\models\database;
+namespace VOST\models;
 
 include_once 'Address.php';
 include_once 'Database.php';
 
-use VOST\models\Address;
-
 class AddressModel
 {
 
-    public static function getAddresses($pdo, $address)
+    public static function getAddresses($pdo)
     {
-        $tableName = $address->tableInfo['tableName'];
+        $tableName = "address";
         $queryResults = Database::getItems($pdo, $tableName);
         $abstractedObjects = [];
         foreach ($queryResults as $array)

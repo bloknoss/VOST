@@ -150,13 +150,13 @@ class UserController
         exit(400);
     }
 
-    #[NoReturn] private static function sendCode():void
+    private static function sendCode():void
     {
         $code = rand(100000, 999999);
         $_SESSION["code"] = $code;
         $user = $_SESSION["user"];
         Utils::sendMail($user->email, $user->name, 'admin@vost.com', 'VostAdmin', 'Account Activation Code', "$code");
-        require __DIR__ . '/../views/acivate.php';
+        require __DIR__ . '/../views/activate.php';
         exit(300);
     }
 

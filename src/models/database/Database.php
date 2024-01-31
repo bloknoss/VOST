@@ -109,12 +109,11 @@ class Database
     {
         try {
 
+            print_r($item);
             $query = Utils::generateUpdateQuery($item);
-
+            print_r($item);
             $stmt = $pdo->prepare($query);
-
             $stmt = Utils::statementValueBinder($stmt, $item);
-
             $stmt->execute();
 
             $affectedRows = $stmt->rowCount();
@@ -123,6 +122,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;

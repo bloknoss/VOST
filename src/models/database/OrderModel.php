@@ -10,9 +10,10 @@ use VOST\models\Order;
 class OrderModel
 {
 
-    public static function getOrders($pdo, $order)
+    public static function getOrders($pdo)
     {
-        $tableName = $order->tableInfo['tableName'];
+
+        $tableName = "orders";
         $queryResults = Database::getItems($pdo, $tableName);
         $abstractedObjects = [];
         foreach ($queryResults as $array)
