@@ -3,10 +3,8 @@
 use VOST\models\User;
 use VOST\models\UserModel;
 use VOST\models\Utils;
-use VOST\models\Vinyl;
-use VOST\models\VinylModel;
 
-include_once __DIR__ . 'Utils.php';
+include_once __DIR__ . '/Utils.php';
 include_once 'VinylModel.php';
 
 class Tester
@@ -15,9 +13,8 @@ class Tester
     {
         try{
             $pdo = Utils::dbConnect();
-            
-            $users = VinylModel::getHasSongs($pdo, 20);
-            return $users;
+            $user = UserModel::getUserByName($pdo, 'Helga');
+            UserModel::updateUser($pdo, new User($user->id_user,"null",'','pene',true));
         }catch(Exception $e){
             echo $e;
         }

@@ -102,7 +102,6 @@ class Utils
         $tableFields = $tableInfo['tableFields'];
         array_splice($tableValues, -1, 1);
 
-
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
                 $stmt->bindValue(":$field", $tableValues[$field]);

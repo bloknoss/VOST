@@ -13,7 +13,7 @@ class User
     public $name;
     public $email;
     public $password;
-    public bool $isActive = false;
+    public bool $is_active = false;
     public $tableInfo;
 
 
@@ -41,13 +41,13 @@ class User
     }
 
 
-    public function __construct($id_user, $name, $email, $password, $isActive = false)
+    public function __construct($id_user, $name, $email, $password, $is_active = false)
     {
         $this->id_user = $id_user;
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
-        $this->isActive = $isActive;
+        $this->is_active = $is_active;
 
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'users', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];

@@ -63,11 +63,11 @@ class UserModel
         try {
 
             $query = "select * from users where name=:name";
+
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(':name', $name);
             $stmt->execute();
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (PDOException $e) {
 
         }
@@ -77,7 +77,7 @@ class UserModel
     {
         try {
             $id = $user->id_user;
-            $query = "UPDATE users SET isActive=true WHERE id_user=:id";
+            $query = "UPDATE users SET is_active=true WHERE id_user=:id";
 
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(':id', $id);
