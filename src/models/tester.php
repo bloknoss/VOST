@@ -11,11 +11,11 @@ class Tester
 {
     public static function test()
     {
-        try{
+        try {
             $pdo = Utils::dbConnect();
             $user = UserModel::getUserByName($pdo, 'Helga');
-            UserModel::updateUser($pdo, new User($user->id_user,"null",'','pene',true));
-        }catch(Exception $e){
+            UserModel::updateUser($pdo, new User($user->id_user, "null", '', 'pene', true));
+        } catch (Exception $e) {
             echo $e;
         }
     }

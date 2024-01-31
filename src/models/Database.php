@@ -126,6 +126,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;

@@ -100,7 +100,9 @@ class Utils
         $tableInfo = $item->tableInfo;
         $tableValues = $tableInfo['tableValues'];
         $tableFields = $tableInfo['tableFields'];
+        
         array_splice($tableValues, -1, 1);
+        var_dump($tableValues);        
 
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
@@ -124,7 +126,7 @@ class Utils
     public static function getValuesArray($object)
     {
         $tableValues = get_object_vars($object);
-        return array_splice($tableValues, 0, -1);
+        return ($tableValues);
     }
 
     public static function getTableFields($table)
