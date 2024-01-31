@@ -179,7 +179,7 @@
         <div class="card-list-products">
             <div class="card">
                 <div class="card-img">
-                    <img src="/public/assets/images/sfdk.jpg" alt="producto-1" />
+                    <img src="/public/assets/images/sfdk.png" alt="producto-1" />
                 </div>
                 <div class="info-card">
                     <div class="text-product">

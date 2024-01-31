@@ -42,13 +42,15 @@
 </header>
 
 <body>
-    <img src="/public/assets/images/sfdk.jpg" alt="producto-4" />
-    <img src="/public/assets/images/sfdk.jpg" alt="producto-4" />
-    <img src="/public/assets/images/sfdk.jpg" alt="producto-4" />
-    <img src="/public/assets/images/sfdk.jpg" alt="producto-4" />
-    <img src="/public/assets/images/sfdk.jpg" alt="producto-4" />
-    <img src="/public/assets/images/sfdk.jpg" alt="producto-4" />
-    <img src="/public/assets/images/sfdk.jpg" alt="producto-4" />
+    <div class="productos">
+        <img src="/public/assets/images/sfdk.png" alt="" />
+        <img src="/public/assets/images/sfdk.png" alt="" />
+        <img src="/public/assets/images/sfdk.png" alt="" />
+        <img src="/public/assets/images/sfdk.png" alt="" />
+        <img src="/public/assets/images/sfdk.png" alt="" />
+        <img src="/public/assets/images/sfdk.png" alt="" />
+        <img src="/public/assets/images/sfdk.png" alt="" />
+    </div>
 </body>
 <footer>
     <div class="contenedor-footer">
