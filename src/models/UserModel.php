@@ -3,6 +3,8 @@
 namespace VOST\models;
 
 include_once __DIR__ . '/User.php';
+include_once __DIR__ . '/Orders.php';
+include_once __DIR__ . '/Address.php';
 include_once __DIR__ . '/Database.php';
 
 use PDO;
@@ -10,8 +12,7 @@ use PDOException;
 
 class UserModel
 {
-
-    public static function getUsers($pdo)
+    public static function getUsers($pdo): array
     {
         $tableName = "users";
         $queryResults = Database::getItems($pdo, $tableName);
@@ -23,12 +24,10 @@ class UserModel
 
     }
 
-    //Mi forma de get User
     public static function getUser($pdo, $user): User|null
     {
         $queryResults = Database::getItem($pdo, $user);
         $user = User::constructFromArray($queryResults);
-        unset($user->tableInfo);
         return $user;
     }
 
@@ -50,16 +49,77 @@ class UserModel
         return $queryResults;
     }
 
-    //Mi forma de la function
     public static function getUserByEmail($pdo, $email)
     {
-        $pdo = Utils::dbConnect();
-        $user = new User(null, null, $email, null);
-        $user->tableInfo['tableFields'][0] = 'email';
-        return Database::getItem($pdo, $user);
+        try {
+            $query = "select * from users where email=:email";
+
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(':email', $email);
+            $stmt->execute();
+
+            return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
+
+        } catch (PDOException $e) {
+            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+        } finally {
+            $pdo = null;
+        }
+    }
+    public static function getUserOrders($pdo, $idUser): array|null
+    {
+        try {
+            $query = "select orders.id_order, orders.date_time, orders.id_address from orders inner join address on address.id_address=orders.id_address inner join users on users.id_user=address.id_user where users.id_user=:id_user;";
+
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(":id_user", $idUser);
+            $stmt->execute();
+
+            $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $abstractedObjects = [];
+            foreach ($orders as $order)
+                $abstractedObjects[] = Order::constructFromArray($order);
+
+
+            return $abstractedObjects;
+
+        } catch (PDOException $e) {
+            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            return null;
+
+        } finally {
+            $pdo = null;
+        }
     }
 
-    public static function getUserByName($pdo, $name)
+    public static function getUserAddresses($pdo, $idUser): array|null
+    {
+        try {
+            $query = "select id_address, postal_code, city, street, number, address.id_user from address inner join users on users.id_user=address.id_user where users.id_user=:id_user;";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(":id_user", $idUser);
+            $stmt->execute();
+
+            $addresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $abstractedObjects = [];
+
+            foreach ($addresses as $address)
+                $abstractedObjects[] = Address::constructFromArray($address);
+
+            return $abstractedObjects;
+        } catch (PDOException $e) {
+            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            return null;
+
+        } finally {
+            $pdo = null;
+        }
+    }
+
+    public static function getUserByName($pdo, $name): User|null
     {
         try {
 
@@ -69,27 +129,15 @@ class UserModel
             $stmt->bindValue(':name', $name);
             $stmt->execute();
             return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
-        } catch (PDOException $e) {
-
-        }
-    }
-
-    public static function activateUser($pdo, $user)
-    {
-        try {
-            $id = $user->id_user;
-            $query = "UPDATE users SET is_active=true WHERE id_user=:id";
-
-            $stmt = $pdo->prepare($query);
-            $stmt->bindValue(':id', $id);
-            $stmt->execute();
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die(500);
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            return null;
+        } finally {
+            $pdo = null;
         }
+
     }
 
 }

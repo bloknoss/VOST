@@ -17,7 +17,6 @@ class Database
             $query = "SELECT * FROM  $tableName;";
 
             $result = $pdo->query($query);
-
             $resultSet = $result->fetchAll(PDO::FETCH_ASSOC);
 
             return $resultSet;
@@ -25,16 +24,19 @@ class Database
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
+        } finally {
+            $pdo = null;
         }
     }
 
-    public static function getItem($pdo, $item)
+    public static function getItem($pdo, $item) 
     {
-        $idField = $item->tableInfo['tableFields'][0];
-        $idValue = $item->tableInfo['tableValues']["$idField"];
-        $tableName = $item->tableInfo['tableName'];
 
         try {
+            $idField = $item->tableInfo['tableFields'][0];
+            $idValue = $item->tableInfo['tableValues']["$idField"];
+            $tableName = $item->tableInfo['tableName'];
+
             $query = "SELECT * FROM $tableName WHERE $idField=:$idField";
 
             $stmt = $pdo->prepare($query);
@@ -49,8 +51,11 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
+        } finally {
+            $pdo = null;
+            return null;
         }
     }
 
@@ -76,7 +81,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;
@@ -100,7 +105,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;
@@ -122,7 +127,7 @@ class Database
 
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;

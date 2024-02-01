@@ -9,7 +9,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Utils
 {
 
-
     public static function dbConnect(): PDO
     {
         $config = include(__DIR__ . "/../config.php");
@@ -54,7 +53,7 @@ class Utils
 
             // Enviar el correo
             $mail->send();
-            print 'sended';
+            print 'sent';
         } catch (\Exception $e) {
             print "Exception sending the mail";
         }
