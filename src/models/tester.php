@@ -13,7 +13,7 @@ class Tester
     {
         try {
             $pdo = Utils::dbConnect();
-            UserModel::updateUser($pdo, new User(2002,"null", "viagraenlatadaconatun@weed.weed", null, null));
+            UserModel::updateUser($pdo, new User(2003,"null", "viagraenlatadaconatun@weed.weed", null, false));
         } catch (Exception $e) {
             echo $e;
         }

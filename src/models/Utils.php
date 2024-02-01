@@ -100,7 +100,6 @@ class Utils
     public static function statementValueBinder($stmt, $item)
     {
         $tableInfo = $item->tableInfo;
-        print_r($tableInfo);
         $tableValues = $tableInfo['tableValues'];
         $tableFields = $tableInfo['tableFields'];
 
@@ -110,9 +109,6 @@ class Utils
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
                 var_dump($tableValues[$field]);
-                if ($field == "is_active") {
-                    
-                } 
                 $stmt->bindValue(":$field", $tableValues[$field] ?? 0);
             }
         }

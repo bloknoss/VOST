@@ -111,9 +111,7 @@ class Database
     {
         try {
 
-            print_r($item);
             $query = Utils::generateUpdateQuery($item);
-            print_r($item);
             $stmt = $pdo->prepare($query);
             $stmt = Utils::statementValueBinder($stmt, $item);
             $stmt->execute();
