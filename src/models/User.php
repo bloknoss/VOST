@@ -2,8 +2,6 @@
 
 namespace VOST\models;
 
-use VOST\models\Utils;
-
 include_once __DIR__ . '/Utils.php';
 
 class User
@@ -13,7 +11,7 @@ class User
     public $name;
     public $email;
     public $password;
-    public bool $is_active = false;
+    public $is_active;
     public $tableInfo;
 
 
