@@ -2,8 +2,6 @@
 
 namespace VOST\controllers;
 
-use JetBrains\PhpStorm\NoReturn;
-use PHPMailer\PHPMailer\PHPMailer;
 use VOST\models\User;
 use VOST\models\UserModel;
 use VOST\models\Utils;
@@ -16,59 +14,7 @@ class UserController
 
     private User $user;
 
-    public static function login(): void
-    {
-        if (isset($_SESSION["name"])) {
-            header('Location: http://localhost:80/user');
-            return;
-        }
-        if (!isset($_POST["email"])) {
-            require __DIR__ . '/../views/login.php';
-            return;
-        }
-        $tableIdentifier = self::validateLogin($_POST["email"]);
-
-        if ($tableIdentifier === -1) {
-            require __DIR__ . '/../views/login.php';
-            echo 'Inserte un email o username valido';
-            return;
-        }
-
-        try {
-            $pdo = Utils::dbConnect();
-            $user = User::constructLoginObject($_POST["email"], $tableIdentifier);
-            $user = UserModel::getUser($pdo, $user);
-
-
-            if (is_null($user)) {
-                require __DIR__ . '/../views/login.php';
-                echo '<h1>User not found</h1>';
-                return;
-            }
-
-
-            if (!password_verify($_POST["password"], $user->password)) {
-                echo 'Acceso denegado';
-                return;
-            }
-
-
-            if (!$user->isActive){
-                $_SESSION["user"] = $user;
-                self::sendCode();
-            }
-
-            $_SESSION["isLogged"] = true;
-            print '<h1> Sesion iniciada </h1>';
-            print '<a href="/">Ir a inicio </a>';
-        } catch (\Exception $e) {
-            die(500);
-        }
-
-    }
-
-
-    public static function get():void
+    public static function get(): void
     {
         if (!isset($_SESSION["isLogged"])) {
             exit(404);
@@ -82,6 +28,73 @@ class UserController
         echo "<li>Email : $email</li>";
         echo "<li>Name : $userName</li>";
         echo '</ul>';
+    }
+
+
+    public static function login(): void
+    {
+        //Comprobacion de que no este logueado y que se hayan enviado un name o username
+        if (isset($_SESSION["isLogged"])) {
+            header('Location: http://localhost:80/user');
+            return;
+        }
+
+        if (!isset($_POST["userName"]) && !isset($_POST["email"])) {
+            require __DIR__ . '/../views/login.php';
+            print '<h1>Inserte un Nombre o Email</h1>';
+            return;
+        }
+
+        //Obtener el nombre
+        $user = '';
+        if (isset($_POST["email"])) {
+            $email = Utils::validateData($_POST["email"]);
+            $user = self::loginFromEmail($email, $_POST["password"]);
+        } else
+            if (isset($_POST["userName"])) {
+                $name = Utils::validateData($_POST["userName"]);
+                $user = self::loginFromName($name, $_POST["password"]);
+        }
+
+        self::validateLogin($user, $_POST["password"]);
+
+        $_SESSION["isLogged"] = true;
+        print '<h1> Sesion iniciada </h1>';
+        print '<a href="/">Ir a inicio </a>';
+
+    }
+
+    private static function loginFromName($name, $password)
+    {
+        if (!self::validateName($name)) {
+            require __DIR__ . '/../views/login.php';
+            echo 'Inserte un nombre valido';
+            exit(400);
+        }
+        try {
+            $pdo = Utils::dbConnect();
+            return UserModel::getUserByName($pdo, $name);
+        } catch (\PDOException $exception) {
+            print 'Error interno del servidor';
+            die(500);
+        }
+    }
+
+    private static function loginFromEmail($email, $password)
+    {
+        if (!self::validateEmail($email)) {
+            require __DIR__ . '/../views/login.php';
+            echo 'Inserte un email valido';
+            exit(400);
+        }
+        try {
+            $pdo = Utils::dbConnect();
+            return UserModel::getUserByEmail($pdo, $email);
+        } catch (\PDOException $exception) {
+            print 'Error interno del servidor';
+            die(500);
+        }
+
     }
 
     public static function logOut(): void
@@ -157,18 +170,28 @@ class UserController
         $_SESSION["code"] = $code;
         $user = $_SESSION["user"];
         Utils::sendMail($user->email, $user->name, 'admin@vost.com', 'VostAdmin', 'Account Activation Code', "$code");
-        require __DIR__ . '/../views/activate.php';
-        exit(300);
     }
 
-    private static function validateLogin($email): int
+    private static function validateLogin($user, $password): int
     {
-        if (self::validateEmail($email))
-            return 0;
-        if (self::validateName($email))
-            return 1;
+        if (is_null($user)) {
+            require __DIR__ . '/../views/login.php';
+            echo '<h1>User not found</h1>';
+            die(400);
+        }
 
-        return -1;
+        if (!password_verify($password, $user->password)) {
+            echo '<h1>Contraseña incorrecta</h1>';
+            die(400);
+        }
+
+        if (!$user->is_active) {
+            $_SESSION["user"] = $user;
+            self::sendCode();
+            require __DIR__ . '/../views/activate.php';
+            exit(300);
+        }
+
     }
 
     private static function validateEmail($email): bool

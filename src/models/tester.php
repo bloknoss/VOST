@@ -13,7 +13,7 @@ class Tester
     {
         try {
             $pdo = Utils::dbConnect();
-            return UserModel::getUserOrders($pdo, 2227);
+            return UserModel::getUserByName($pdo, 'Eustaqui');
         } catch (Exception $e) {
             echo $e;
         }
