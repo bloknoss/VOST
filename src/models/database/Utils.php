@@ -9,7 +9,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Utils
 {
 
-
     public static function dbConnect(): PDO
     {
         $config = include(__DIR__ . "/../config.php");
@@ -54,7 +53,7 @@ class Utils
 
             // Enviar el correo
             $mail->send();
-            print 'sended';
+            print 'sent';
         } catch (\Exception $e) {
             print "Exception sending the mail";
         }
@@ -100,7 +99,6 @@ class Utils
     public static function statementValueBinder($stmt, $item)
     {
         $tableInfo = $item->tableInfo;
-        print_r($tableInfo);
         $tableValues = $tableInfo['tableValues'];
         $tableFields = $tableInfo['tableFields'];
 
@@ -110,9 +108,6 @@ class Utils
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
                 var_dump($tableValues[$field]);
-                if ($field == "is_active") {
-                    
-                } 
                 $stmt->bindValue(":$field", $tableValues[$field] ?? 0);
             }
         }

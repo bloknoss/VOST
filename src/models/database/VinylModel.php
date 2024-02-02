@@ -12,9 +12,9 @@ use VOST\models\Vinyl;
 class VinylModel
 {
 
-    public static function getVinyls($pdo)
+    public static function getVinyls($pdo) : array
     {
-        $tableName = "vinyls"; 
+        $tableName = "vinyls";
         $queryResults = Database::getItems($pdo, $tableName);
         foreach ($queryResults as $array)
             $abstractedObjects[] = Vinyl::constructFromArray($array);
@@ -22,7 +22,7 @@ class VinylModel
         return $abstractedObjects;
     }
 
-    public static function getVinyl($pdo, $vinyl)
+    public static function getVinyl($pdo, $vinyl) : Vinyl
     {
         $queryResults = \VOST\models\database\Database::getItem($pdo, $vinyl);
         $abstractedObject = Vinyl::constructFromArray($queryResults);
@@ -36,7 +36,7 @@ class VinylModel
         return $queryResults;
     }
 
-    public static function insertVinyl($pdo, $newVinyl)
+    public static function insertVinyl($pdo, $newVinyl) 
     {
         $queryResults = \VOST\models\database\Database::insertItem($pdo, $newVinyl);
         return $queryResults;
@@ -48,32 +48,28 @@ class VinylModel
         return $queryResults;
     }
 
-    public static function getVinylByName()
+    public static function getVinylByName($pdo, $name) : Vinyl | null
     {
         try {
 
-
-
-        } catch (PDOException $e) {
-
-        }
-    }
-
-    public static function getOrderedVinyls($pdo, $orderId)
-    {
-        try {
-            $query = "select vinyls.id_vinyl, name, stock, price, style, duration, max_duration from vinyls inner join vinyls_ordered on vinyls_ordered.id_vinyl = vinyls.id_vinyl where vinyls_ordered.id_order=:id_order;";
+            $query = "DELETE from vinyls where name=:name;";
             $stmt = $pdo->prepare($query);
-            $stmt->bindValue(":id_order", $orderId);
+            $stmt->bindValue(":name", $name);
             $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
-            echo $e;
+
+            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+        } finally {
+            $pdo = null;
+            return null;
         }
     }
 
-    public static function getHasSongs($pdo, $vinylId)
+    public static function getSongs($pdo, $vinylId) : array
     {
         try {
             $query = "select * from vinyls inner join has_songs on has_songs.id_vinyl=vinyls.id_vinyl where vinyls.id_vinyl=:id_vinyl";
@@ -82,8 +78,13 @@ class VinylModel
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
-            echo $e;
+            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+        } finally {
+            $pdo = null;
+            return [-1];
         }
     }
 
