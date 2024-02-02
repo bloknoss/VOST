@@ -3,7 +3,7 @@
 namespace VOST\models;
 
 include_once __DIR__ . '/User.php';
-include_once __DIR__ . '/Orders.php';
+include_once __DIR__ . '/Order.php';
 include_once __DIR__ . '/Address.php';
 include_once __DIR__ . '/Database.php';
 
