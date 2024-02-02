@@ -190,38 +190,14 @@
   padding: 24px;
 }
 
-/*Login*/
+/*Register*/
 
-.login {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.register {
+  background: #eee;
 }
 
-.login label {
-  margin: 5% 0 5%;
-}
-
-label {
-  color: #fff;
-  font-size: 2rem;
-  justify-content: center;
-  display: flex;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.5s ease-in-out;
-}
-
-.input {
-  width: 100%;
-  height: 40px;
-  font-size: 1rem;
-  background: #e0dede;
-  padding: 10px;
-  margin-top: 15px;
-  border: none;
-  outline: none;
-  border-radius: 4px;
+.register label {
+  color: #41788d;
 }
 
 /*Button*/
@@ -241,7 +217,7 @@ label {
 }
 
 .form button:hover {
-  background-color: #f5f5f5;
+  background-color: #41788d;
 }
 
 /*--------footer---------*/

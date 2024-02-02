@@ -4,4 +4,4 @@
 
 $rutaVistas = "../src/views/";
 
-require_once $rutaVistas . "inicioView.php";
+require_once $rutaVistas . "login.php";

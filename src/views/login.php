@@ -31,7 +31,7 @@
       <li><a href="#">hhhhhhh</a></li>
     </ul>
   </nav>
-  <a class="btn" href="#"><button>Inicia Sesión / Registrate</button></a>
+  <a class="btn" href="#"><button>Inicia Sesión</button><button>Registrate</button></a>
 
   <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
 
@@ -53,26 +53,17 @@
 <body>
   <div class="container">
     <div class="main">
-      <input type="checkbox" id="chk" aria-hidden="true" />
 
       <div class="login">
-        <form class="form" action="/login" method="post">
-          <label for="chk" aria-hidden="true">Iniciar sesión</label>
-          <input class="input" type="text" name="email" placeholder="Email/Nombre" required />
+        <form class="form" action="/login" method="post" id="loginForm">
+          <label for="identifier" aria-hidden="true">Iniciar sesión</label>
+          <input class="input" type="email" name="email" placeholder="Email/Nombre" id="identifier" required />
           <input class="input" type="password" name="pswd" placeholder="Contraseña" required />
           <button>Iniciar Sesión</button>
         </form>
+        <button onclick="changeIdentifier()">Change Ligin id</button>
       </div>
 
-      <div class="register" action="/register" method="post">
-        <form class="form">
-          <label for="chk" aria-hidden="true">Registrate</label>
-          <input class="input" type="text" name="user" placeholder="Nombre" required />
-          <input class="input" type="email" name="email" placeholder="Email" required />
-          <input class="input" type="password" name="pswd" placeholder="Contraseña" required />
-          <button>Registrarse</button>
-        </form>
-      </div>
     </div>
   </div>
 </body>
@@ -111,5 +102,20 @@
   </div>
 </footer>
 <script type="text/javascript" src="js/nav.js"></script>
+<script>
+  function changeIdentifier() {
+    console.log("???");
+    let input = document.getElementById("identifier");
+    if (input.name === "email") {
+      input.name = "userName";
+      input.type = "text";
+      input.placeholder = "Name";
+      return;
+    }
+    input.name = "email";
+    input.type = "email";
+    input.placeholder = "email";
+  }
+</script>
 
 </html>
