@@ -5,23 +5,23 @@ use vostdb;
 drop table if exists users;
 create table users
 (
-    id_user  int unique          not null auto_increment primary key,
-    name     varchar(255) unique not null,
-    email    varchar(255) unique not null,
-    password varchar(255)        not null,
-    is_active boolean not null default(false)
+    id_user   int unique          not null auto_increment primary key,
+    name      varchar(255) unique not null,
+    email     varchar(255) unique not null,
+    password  varchar(255)        not null,
+    is_active boolean             not null default (false)
 );
 
 drop table if exists vinyls;
 create table vinyls
 (
-    id_vinyl     int unique   not null auto_increment primary key,
+    id_vinyl     int unique not null auto_increment primary key,
     name         varchar(255) unique,
-    stock        int          not null,
-    price        int          not null,
+    stock        int        not null,
+    price        int        not null,
     style        varchar(255),
-    duration     int          not null,
-    max_duration int          not null
+    duration     int        not null,
+    max_duration int        not null
 );
 
 drop table if exists songs;
@@ -77,3 +77,12 @@ create table vinyls_ordered
     primary key (id_order, id_vinyl)
 );
 
+drop table if exists cart;
+create table cart
+(
+    id_vinyl int not null ,
+    id_user int not null ,
+    quantity int unsigned not null,
+    constraint foreign key (id_vinyl) references vinyls (id_vinyl),
+    constraint foreign key (id_user) references users (id_user)
+)
