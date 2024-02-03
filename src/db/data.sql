@@ -984,7 +984,7 @@ values  (11, 'Pannier', 87, 8, '', 25, 17),
         (20, 'Ventosanzap', 40, 32, '', 17, 19);
 
 
-insert into vostdb.address (id_address, postal_code, city, street, number, id_user)
+insert into vostdb.addresses (id_address, postal_code, city, street, number, id_user)
 values  (101, 413696, 'Lisieux', 'Anhalt', '31', 2289),
         (102, 567554, 'Red Hill', 'Steensland', '79', 2048),
         (103, 139590, 'Bungabon', 'Kropf', '765', 2455),

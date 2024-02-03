@@ -84,7 +84,6 @@ drop table if exists carts;
 create table carts (
     id_cart int not null,
     id_user int not null,
-    
     constraint foreign key (id_user) references users (id_user),
     primary key (id_cart, id_user)
 );
@@ -94,6 +93,7 @@ drop table if exists carts_vinyls;
 create table carts_vinyls (
     id_cart int not null,
     id_vinyl int not null,
+    quantity int not null,
     constraint foreign key (id_cart) references carts (id_cart),
     constraint foreign key (id_vinyl) references vinyls (id_vinyl),
     primary key (id_cart, id_vinyl)
