@@ -17,8 +17,9 @@ class CartModel
     }
 
     // TODO: Falta tener información de la base de datos.
-    public static function addToCart($pdo, $vinyl)
+    public static function addVinylToCart($pdo, $cartId, $vinylId)
     {
+
         try {
             $query = "";
         } catch (PDOException $e) {
