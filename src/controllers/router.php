@@ -22,6 +22,6 @@ switch ($routerInfo[0]){
 
     case FastRoute\Dispatcher::FOUND;
         $handler = $routerInfo[1];
-        $handler();
+        $handler($routerInfo[2]);
         break;
 }

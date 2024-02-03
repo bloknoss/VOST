@@ -5,6 +5,8 @@ namespace VOST\controllers;
 use VOST\models\User;
 use VOST\models\UserModel;
 use VOST\models\Utils;
+use VOST\models\Cart;
+use VOST\models\CartModel;
 
 require __DIR__ . '/../models/User.php';
 require __DIR__ . '/../models/UserModel.php';
@@ -88,7 +90,7 @@ class UserController
             }
 
             $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-            $user = new User(null, $_POST["name"], $_POST["email"], $password);
+            $user = new User(null, $_POST["userName"], $_POST["email"], $password);
             UserModel::insertUser($pdo, $user);
 
             echo 'Usuario creado con exito';
@@ -104,7 +106,7 @@ class UserController
 
     private static function validateRegister(): void
     {
-        if (!self::validateName($_POST["name"])) {
+        if (!self::validateName($_POST["userName"])) {
             echo "<h1>El nombre se usuario no es valido</h1>";
             require __DIR__ . '/../views/register.php';
             die(400);
@@ -211,6 +213,28 @@ class UserController
         }
     }
 
+    public static function addToCart()
+    {
+        if (!isset($_SESSION["isLogged"])){
+            header('Location: http://localhost:80/user/login');
+            exit(300);
+        }
+        if (!isset($_POST["id_vinyl"])){
+            header('Location: http://localhost:80/shop');
+            exit(300);
+        }
+        require __DIR__.'/../models/CartModel.php';
+        $id_vinyl = $_POST["id_vinyl"];
+        try {
+            $pdo = Utils::dbConnect();
+            CartModel::addVinylToCart($pdo, );
+
+        }catch (\PDOException $e) {
+            die(500);
+        }
+
+        exit(200);
+    }
     private static function sendCode(): void
     {
         $code = rand(100000, 999999);

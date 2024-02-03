@@ -4,7 +4,7 @@ use VOST\controllers\UserController;
 use VOST\controllers\VinylController;
 
 require __DIR__ . '/../../vendor/autoload.php';
-
+require __DIR__.'/VinylController.php';
 
 return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {
     $routeCollector->get('/',function (){
@@ -13,7 +13,9 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
     $routeCollector->addGroup('/user' , function (FastRoute\RouteCollector $routeCollector){
         require __DIR__ . '/UserController.php';
 
-
+        $routeCollector->get('', function () {
+            UserController::getUserInfo();
+        });
 
         $routeCollector->post('/login', function () {
             UserController::login();
@@ -34,31 +36,35 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
         $routeCollector->post('/register', function (){
             UserController::register();
         });
+
         $routeCollector->post('/activate', function (){
             UserController::validateActivation();
-        });
-
-        if (!isset($_SESSION["isLogged"])){
-
-        }
-
-        $routeCollector->get('', function () {
-            UserController::getUserInfo();
         });
 
         $routeCollector->post('/edit', function (){
             UserController::editUser();
         });
+
         $routeCollector->get('/orders', function (){
             UserController::getUserOrders();
         });
 
-    });
-    $routeCollector->addGroup('/vinyl', function (FastRoute\RouteCollector $routeCollector){
-        require __DIR__.'/VinylController.php';
+        $routeCollector->post('/cart', function (){
+            UserController::addToCart();
+        });
 
-        $routeCollector->get('', function (){
-            VinylController::getVinyls();
+    });
+
+    $routeCollector->get('/shop', function (){
+        VinylController::getVinyls();
+
+    });
+
+    $routeCollector->addGroup('/vinyl', function (FastRoute\RouteCollector $routeCollector){
+
+        $routeCollector->get('/{id:\d+}', function ($id){
+            print $id['id'];
+            VinylController::getVinyl($id['id']);
         });
     });
     

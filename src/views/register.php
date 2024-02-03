@@ -9,9 +9,9 @@
 </head>
 <body>
 <form action="/user/register" method="post">
-    <label for="name">
+    <label for="userName">
         User name
-        <input type="text" name="name" id="name">
+        <input type="text" name="userName" id="userName">
     </label>
     <label for="email">
         Email

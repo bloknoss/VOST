@@ -1,11 +1,7 @@
-<!doctype html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User Info</title>
+
     <style>
         * {
             font-family: 'Roboto', sans-serif;
@@ -49,6 +45,7 @@
     </style>
 </head>
 <body>
+
 <div class="container">
     <div>
         <h1>Your Profile</h1>
@@ -84,8 +81,8 @@
 
 
 <script>
-    function getOrders(){
-        fetch('http://localhost:80/user/orders' )
+    function getOrders(id){
+        fetch(`http://localhost:80/user/orders`)
             .then(data => data.text())
             .then(response => {
                 console.log(response)
