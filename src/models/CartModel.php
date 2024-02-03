@@ -2,6 +2,7 @@
 
 namespace VOST\models;
 
+use PDO;
 use PDOException;
 
 include_once 'Database.php';
@@ -21,24 +22,35 @@ class CartModel
     {
 
         try {
-            $query = "";
+            $query = "INSERT INTO carts_vinyls (cart_id, vinyl_id) VALUES (:cart_id, :vinyl_id)";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(":id_cart", $cartId);
+            $stmt->bindValue(":id_vinyl", $vinylId);
+            $stmt->execute();
+
+            return $stmt->rowCount();
         } catch (PDOException $e) {
         } finally {
         }
     }
 
-    public static function deleteFromCart($pdo, $vinyl)
+    public static function deleteFromCart($pdo, $cartId, $vinylId)
     {
         try {
-            $query = "";
+            $query = "DELETE FROM carts_vinyls WHERE id_cart=:id_cart AND id_vinyl=:id_vinyl;";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(":id_cart", $cartId);
+            $stmt->bindValue(":id_vinyl", $vinylId);
+            $stmt->execute();
+
+            return $stmt->rowCount();
         } catch (PDOException $e) {
         } finally {
         }
     }
 
-    public static function deleteCart($pdo, $cartId)
+    public static function deleteCart($pdo, $cart)
     {
-        // TODO: Aquí falta la clase del carrito, todo está a medias.
-        return Database::deleteItem($pdo, $cartId);
+        return Database::deleteItem($pdo, $cart);
     }
 }
