@@ -2,10 +2,15 @@
 
 namespace VOST\models;
 
-include_once __DIR__ . '/User.php';
-include_once __DIR__ . '/Order.php';
-include_once __DIR__ . '/Address.php';
-include_once __DIR__ . '/Database.php';
+use VOST\models\database\DatabaseUtils;
+use VOST\models\tables\User;
+use VOST\models\tables\Order;
+use VOST\models\tables\Address;
+
+include_once __DIR__ . '/tables/User.php';
+include_once __DIR__ . '/tables/Order.php';
+include_once __DIR__ . '/tables/Address.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 
 use PDO;
 use PDOException;
@@ -15,37 +20,36 @@ class UserModel
     public static function getUsers($pdo): array
     {
         $tableName = "users";
-        $queryResults = Database::getItems($pdo, $tableName);
+        $queryResults = DatabaseUtils::getItems($pdo, $tableName);
         $abstractedObjects = [];
         foreach ($queryResults as $array)
             $abstractedObjects[] = User::constructFromArray($array);
 
         return $abstractedObjects;
-
     }
 
     public static function getUser($pdo, $user): User|null
     {
-        $queryResults = Database::getItem($pdo, $user);
+        $queryResults = DatabaseUtils::getItem($pdo, $user);
         $user = User::constructFromArray($queryResults);
         return $user;
     }
 
     public static function deleteUser($pdo, $user)
     {
-        $queryResults = Database::deleteItem($pdo, $user);
+        $queryResults = DatabaseUtils::deleteItem($pdo, $user);
         return $queryResults;
     }
 
     public static function insertUser($pdo, $newUser)
     {
-        $queryResults = Database::insertItem($pdo, $newUser);
+        $queryResults = DatabaseUtils::insertItem($pdo, $newUser);
         return $queryResults;
     }
 
     public static function updateUser($pdo, $user)
     {
-        $queryResults = Database::updateTable($pdo, $user);
+        $queryResults = DatabaseUtils::updateTable($pdo, $user);
         return $queryResults;
     }
 
@@ -59,7 +63,6 @@ class UserModel
             $stmt->execute();
 
             return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
@@ -84,11 +87,9 @@ class UserModel
 
 
             return $abstractedObjects;
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             return null;
-
         } finally {
             $pdo = null;
         }
@@ -113,7 +114,6 @@ class UserModel
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             return null;
-
         } finally {
             $pdo = null;
         }
@@ -129,7 +129,6 @@ class UserModel
             $stmt->bindValue(':name', $name);
             $stmt->execute();
             return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
@@ -137,7 +136,5 @@ class UserModel
         } finally {
             $pdo = null;
         }
-
     }
-
 }

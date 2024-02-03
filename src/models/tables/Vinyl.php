@@ -1,11 +1,12 @@
 <?php
-namespace VOST\models;
+
+namespace VOST\models\tables;
 
 use PDO;
 use PDOException;
 use VOST\models\Utils;
 
-include_once 'Utils.php';
+include_once __DIR__ . '/Utils.php';
 
 class Vinyl
 {
@@ -45,9 +46,4 @@ class Vinyl
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'vinyls', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
-
-
-
 }
-
-

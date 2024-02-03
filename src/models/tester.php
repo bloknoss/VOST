@@ -1,11 +1,10 @@
 <?php
 
-use VOST\models\User;
-use VOST\models\UserModel;
+use VOST\models\tables\CartVinyls;
 use VOST\models\Utils;
 
 include_once __DIR__ . '/Utils.php';
-include_once 'VinylModel.php';
+include_once __DIR__ . '/tables/CartVinyls.php';
 
 class Tester
 {
@@ -13,7 +12,9 @@ class Tester
     {
         try {
             $pdo = Utils::dbConnect();
-            return UserModel::getUserOrders($pdo, 2227);
+            $testObject = (CartVinyls::constructIdObject(20));
+
+            return $testObject;
         } catch (Exception $e) {
             echo $e;
         }

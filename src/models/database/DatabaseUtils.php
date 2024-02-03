@@ -1,15 +1,34 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\database;
 
-use VOST\models\Utils;
+include_once __DIR__ . '/QueryUtils.php';
 
 use PDO;
 use PDOException;
 
 
-class Database
+class DatabaseUtils
 {
+    public static function dbConnect(): PDO
+    {
+        $config = include(__DIR__ . "/../../config.php");
+        $config = $config["db"];
+
+        // Sacamos las variables del archivo de configuración fuera para evitar añadir demasiado código más adelante
+        $dbname = $config["dbname"];
+        $hostname = $config["hostname"];
+
+        // Establecemos una conexión con el PDO haciendo uso de las variables de conexión.
+        try {
+            $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $config["username"], $config["password"]);
+        } catch (PDOException $e) {
+            error_log("An error has occured while establishing a connection with the database." . $e->getMessage());
+        }
+
+        return $pdo;
+    }
+
     public static function getItems($pdo, $tableName)
     {
         try {
@@ -49,7 +68,6 @@ class Database
             return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;
@@ -87,21 +105,40 @@ class Database
 
     public static function insertItem($pdo, $newItem)
     {
-
         try {
 
-            $query = Utils::generateInsertQuery($newItem);
+            $query = QueryUtils::generateInsertQuery($newItem);
 
             $stmt = $pdo->prepare($query);
 
-            $stmt = Utils::statementValueBinder($stmt, $newItem);
+            $stmt = QueryUtils::statementValueBinder($stmt, $newItem);
 
             $stmt->execute();
 
             return $stmt->rowCount();
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            die(500);
+        } finally {
+            $pdo = null;
+        }
+    }
+
+    public static function insertIntermediaryItem($pdo, $newItem)
+    {
+        try {
+
+            $query = QueryUtils::generateInsertQuery($newItem);
+
+            $stmt = $pdo->prepare($query);
+
+            $stmt = QueryUtils::statementValueBinder($stmt, $newItem);
+
+            $stmt->execute();
+
+            return $stmt->rowCount();
+        } catch (PDOException $e) {
+            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;
@@ -112,9 +149,9 @@ class Database
     {
         try {
 
-            $query = Utils::generateUpdateQuery($item);
+            $query = QueryUtils::generateUpdateQuery($item);
             $stmt = $pdo->prepare($query);
-            $stmt = Utils::statementValueBinder($stmt, $item);
+            $stmt = QueryUtils::statementValueBinder($stmt, $item);
             $stmt->execute();
 
             $affectedRows = $stmt->rowCount();
@@ -122,7 +159,6 @@ class Database
             return $affectedRows;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
         } finally {
             $pdo = null;

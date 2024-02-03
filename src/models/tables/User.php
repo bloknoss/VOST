@@ -1,8 +1,10 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\tables;
 
-include_once __DIR__ . '/Utils.php';
+use VOST\models\Utils;
+
+include_once __DIR__ . '/../Utils.php';
 
 class User
 {

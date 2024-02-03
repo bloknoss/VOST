@@ -4,34 +4,29 @@ namespace VOST\models;
 
 use PDO;
 use PDOException;
+use VOST\models\tables\CartVinyls;
+use VOST\models\database\DatabaseUtils;
 
-include_once 'Database.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
+include_once __DIR__ . '/CartVinyls.php';
 
 class CartModel
 {
 
-    public static function getCartVinyls($pdo, $cartId): array | null
+    public static function getCartVinyls($pdo): array | null
     {
+        $queryResults = DatabaseUtils::getItems($pdo, "cart_vinyls");
+        $cartVinyls = [];
+        foreach ($queryResults as $array)
+            $cartVinyls[] = CartVinyls::constructFromArray($array);
 
-        //TODO: Crear la clase abstracta de el carrito, una vez hecho devolver la clase construida.
-        return $reqResults;
+        return $cartVinyls;
     }
 
-    // TODO: Falta tener información de la base de datos.
-    public static function addVinylToCart($pdo, $cartId, $vinylId)
+
+    public static function addVinylToCart($pdo, $cartVinyls)
     {
-
-        try {
-            $query = "INSERT INTO carts_vinyls (id_user, id_vinyl) VALUES (:id_user, :id_vinyl)";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindValue(":id_cart", $cartId);
-            $stmt->bindValue(":id_vinyl", $vinylId);
-            $stmt->execute();
-
-            return $stmt->rowCount();
-        } catch (PDOException $e) {
-        } finally {
-        }
+        return DatabaseUtils::insertItem($pdo, $cartVinyls);
     }
 
     public static function deleteFromCart($pdo, $userId, $vinylId)
@@ -51,6 +46,6 @@ class CartModel
 
     public static function deleteCart($pdo, $cart)
     {
-        return Database::deleteItem($pdo, $cart);
+        return DatabaseUtils::deleteItem($pdo, $cart);
     }
 }

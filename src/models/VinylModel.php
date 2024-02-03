@@ -2,13 +2,13 @@
 
 namespace VOST\models;
 
-include_once 'Vinyl.php';
-include_once 'Database.php';
+include_once __DIR__ . '/tables/Vinyl.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 
 use PDO;
 use PDOException;
-use VOST\models\Vinyl;
-use VOST\models\Database;
+use VOST\models\tables\Vinyl;
+use VOST\models\database\DatabaseUtils;
 
 class VinylModel
 {
@@ -16,7 +16,7 @@ class VinylModel
     public static function getVinyls($pdo) : array
     {
         $tableName = "vinyls";
-        $queryResults = Database::getItems($pdo, $tableName);
+        $queryResults = DatabaseUtils::getItems($pdo, $tableName);
         foreach ($queryResults as $array)
             $abstractedObjects[] = Vinyl::constructFromArray($array);
 
@@ -25,7 +25,7 @@ class VinylModel
 
     public static function getVinyl($pdo, $vinyl) : Vinyl
     {
-        $queryResults = Database::getItem($pdo, $vinyl);
+        $queryResults = DatabaseUtils::getItem($pdo, $vinyl);
         $abstractedObject = Vinyl::constructFromArray($queryResults);
         return $abstractedObject;
 
@@ -33,19 +33,19 @@ class VinylModel
 
     public static function deleteVinyl($pdo, $vinyl)
     {
-        $queryResults = Database::deleteItem($pdo, $vinyl);
+        $queryResults = DatabaseUtils::deleteItem($pdo, $vinyl);
         return $queryResults;
     }
 
     public static function insertVinyl($pdo, $newVinyl) 
     {
-        $queryResults = Database::insertItem($pdo, $newVinyl);
+        $queryResults = DatabaseUtils::insertItem($pdo, $newVinyl);
         return $queryResults;
     }
 
     public static function updateVinyl($pdo, $vinyl)
     {
-        $queryResults = Database::updateTable($pdo, $vinyl);
+        $queryResults = DatabaseUtils::updateTable($pdo, $vinyl);
         return $queryResults;
     }
 

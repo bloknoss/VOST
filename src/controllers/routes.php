@@ -39,7 +39,7 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
         });
 
         $routeCollector->get('/test', function () {
-            require __DIR__ . '/../models/tester.php';
+            require __DIR__ . '/../models/Child.php';
         });
 
     });

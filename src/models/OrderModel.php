@@ -2,13 +2,13 @@
 
 namespace VOST\models;
 
-include_once 'Order.php';
-include_once 'Database.php';
+include_once __DIR__ . '/tables/Order.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 
 use PDO;
 use PDOException;
-use VOST\models\Order;
-use VOST\models\Database;
+use VOST\models\tables\Order;
+use VOST\models\database\DatabaseUtils;
 
 class OrderModel
 {
@@ -17,7 +17,7 @@ class OrderModel
     {
 
         $tableName = "orders";
-        $queryResults = Database::getItems($pdo, $tableName);
+        $queryResults = DatabaseUtils::getItems($pdo, $tableName);
         $abstractedObjects = [];
         foreach ($queryResults as $array)
             $abstractedObjects[] = Order::constructFromArray($array);
@@ -27,26 +27,26 @@ class OrderModel
 
     public static function getOrder($pdo, $order)
     {
-        $queryResults = Database::getItem($pdo, $order);
+        $queryResults = DatabaseUtils::getItem($pdo, $order);
         $abstractedObject = Order::constructFromArray($queryResults);
         return $abstractedObject;
     }
 
     public static function deleteOrder($pdo, $order)
     {
-        $queryResults = Database::deleteItem($pdo, $order);
+        $queryResults = DatabaseUtils::deleteItem($pdo, $order);
         return $queryResults;
     }
 
     public static function insertOrder($pdo, $newOrder)
     {
-        $queryResults = Database::insertItem($pdo, $newOrder);
+        $queryResults = DatabaseUtils::insertItem($pdo, $newOrder);
         return $queryResults;
     }
 
     public static function updateOrder($pdo, $order)
     {
-        $queryResults = Database::updateTable($pdo, $order);
+        $queryResults = DatabaseUtils::updateTable($pdo, $order);
         return $queryResults;
     }
 
