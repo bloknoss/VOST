@@ -1,4 +1,4 @@
-GET http://localhost:80/user
+POST http://localhost:80/user/activate
 Content-Type: application/x-www-form-urlencoded
 
 email=Ramon&

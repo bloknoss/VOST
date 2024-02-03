@@ -1,19 +1,19 @@
 <?php
 
 use VOST\controllers\UserController;
+use VOST\controllers\VinylController;
 
 require __DIR__ . '/../../vendor/autoload.php';
-require __DIR__ . '/UserController.php';
+
 
 return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {
-    $routeCollector->get('/', function () {
+    $routeCollector->get('/',function (){
         require __DIR__ . '/../views/index.php';
     });
-    $routeCollector->addGroup('/user', function (FastRoute\RouteCollector $routeCollector) {
+    $routeCollector->addGroup('/user' , function (FastRoute\RouteCollector $routeCollector){
+        require __DIR__ . '/UserController.php';
 
-        $routeCollector->get('', function () {
-            UserController::get();
-        });
+
 
         $routeCollector->post('/login', function () {
             UserController::login();
@@ -24,26 +24,44 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
         });
 
         $routeCollector->get('/logout', function () {
-            $_SESSION = [];
+            UserController::logOut();
         });
 
-        $routeCollector->get('/register', function () {
+        $routeCollector->get('/register', function (){
             require __DIR__ . '/../views/register.php';
         });
 
-        $routeCollector->post('/register', function () {
-            UserController::createUser();
+        $routeCollector->post('/register', function (){
+            UserController::register();
         });
-        $routeCollector->post('/activate', function () {
-            UserController::checkCode();
+        $routeCollector->post('/activate', function (){
+            UserController::validateActivation();
         });
 
-        $routeCollector->get('/test', function () {
-            require __DIR__ . '/../models/tester.php';
+        if (!isset($_SESSION["isLogged"])){
+
+        }
+
+        $routeCollector->get('', function () {
+            UserController::getUserInfo();
+        });
+
+        $routeCollector->post('/edit', function (){
+            UserController::editUser();
+        });
+        $routeCollector->get('/orders', function (){
+            UserController::getUserOrders();
         });
 
     });
+    $routeCollector->addGroup('/vinyl', function (FastRoute\RouteCollector $routeCollector){
+        require __DIR__.'/VinylController.php';
 
+        $routeCollector->get('', function (){
+            VinylController::getVinyls();
+        });
+    });
+    
 
 
 

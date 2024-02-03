@@ -14,20 +14,14 @@ class UserController
 
     private User $user;
 
-    public static function get(): void
+    public static function getUserInfo(): void
     {
         if (!isset($_SESSION["isLogged"])) {
-            exit(404);
+            require __DIR__ . '/../views/login.php';
+            exit(400);
         }
+        require __DIR__ . '/../views/profile.php';
 
-        $user = $_SESSION["user"];
-        $userName = $user->name;
-        $email = $user->email;
-        echo '<h1> User </h1>';
-        echo '<ul>';
-        echo "<li>Email : $email</li>";
-        echo "<li>Name : $userName</li>";
-        echo '</ul>';
     }
 
 
@@ -49,11 +43,11 @@ class UserController
         $user = '';
         if (isset($_POST["email"])) {
             $email = Utils::validateData($_POST["email"]);
-            $user = self::loginFromEmail($email, $_POST["password"]);
-        } else
-            if (isset($_POST["userName"])) {
-                $name = Utils::validateData($_POST["userName"]);
-                $user = self::loginFromName($name, $_POST["password"]);
+            $user = self::validateLoginEmail($email);
+        }
+        if (isset($_POST["userName"])) {
+            $name = Utils::validateData($_POST["userName"]);
+            $user = self::validateLoginName($name);
         }
 
         self::validateLogin($user, $_POST["password"]);
@@ -64,7 +58,192 @@ class UserController
 
     }
 
-    private static function loginFromName($name, $password)
+
+    public static function logOut(): void
+    {
+        $_SESSION = [];
+        session_unset();
+        session_destroy();
+        require __DIR__ . '/../views/index.php';
+    }
+
+
+    public static function register(): void
+    {
+        if (!isset($_POST["userName"]) || !isset($_POST["email"]) || !isset($_POST["password"])) {
+            echo "<h1>Debes introducir todos los campos</h1>";
+            require __DIR__ . '/../views/register.php';
+            die(400);
+        }
+        self::validateRegister();
+
+        try {
+            $pdo = Utils::dbConnect();
+            $user = UserModel::getUserByName($pdo, $_POST["userName"]);
+
+            $user = (is_null($user)) ? UserModel::getUserByEmail($pdo, $_POST["email"]) : $user;
+            if (!is_null($user)) {
+                echo "El usuario ya existe";
+                exit(400);
+            }
+
+            $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+            $user = new User(null, $_POST["name"], $_POST["email"], $password);
+            UserModel::insertUser($pdo, $user);
+
+            echo 'Usuario creado con exito';
+            require __DIR__ . '/../views/login.php';
+            die(200);
+
+        } catch (\PDOException $e) {
+            print 'Error Interno';
+            die(500);
+        }
+
+    }
+
+    private static function validateRegister(): void
+    {
+        if (!self::validateName($_POST["name"])) {
+            echo "<h1>El nombre se usuario no es valido</h1>";
+            require __DIR__ . '/../views/register.php';
+            die(400);
+        }
+        if (!self::validateEmail($_POST["email"])) {
+            echo "<h1>El email no es valido</h1>";
+            require __DIR__ . '/../views/register.php';
+            die(400);
+        }
+
+    }
+
+    public static function validateActivation(): void
+    {
+        if (!isset($_POST["activationCode"])) {
+            echo 'Inserta el codigo';
+            require __DIR__ . '/../views/login.php';
+            die(400);
+        }
+
+        if (!isset($_SESSION["code"])) {
+            print '<h1>No se ha enviado ningun correo<h1>';
+            require __DIR__ . '/../views/login.php';
+            die(400);
+        }
+
+        if ($_SESSION["code"] . '' === $_POST["activationCode"] . '') {
+            $user = $_SESSION["user"];
+            $pdo = Utils::dbConnect();
+            UserModel::updateUser($pdo, new User($user->id_user, null, null, null, true));
+            $_SESSION["isLogged"] = true;
+            echo 'Usuario activado';
+            require __DIR__ . '/../views/profile.php';
+            exit(200);
+        }
+
+        echo 'codigo incorrecto';
+        require __DIR__ . '/../views/login.php';
+        die(400);
+    }
+
+    public static function getUserOrders()
+    {
+        if (!isset($_SESSION["isLogged"])){
+            require __DIR__.'/../views/login.php';
+            exit(300);
+        }
+        try {
+            $pdo = Utils::dbConnect();
+            $orders = UserModel::getUserOrders($pdo, $_SESSION["user"]->id_user);
+            if (count($orders) === 0){
+                print '<span> No tiene sningun pedido</span>';
+            }
+            foreach ($orders as $order){
+                print '<div>';
+                print_r($order);
+                print '</div>';
+            }
+            exit(200);
+        }catch (\PDOException $exception){
+            print 'Internal server error';
+            die(500);
+        }
+    }
+    public static function editUser(): void
+    {
+        if (!isset($_SESSION["isLogged"])) {
+            print '<h1> Debes inicar sesion </h1>';
+            require __DIR__ . '/../views/login.php';
+            die(300);
+        }
+
+        $userName = $_POST["userName"];
+        $email = $_POST["email"];
+        $is_active = false;
+
+        if (!isset($userName) || !self::validateName($userName) || $_SESSION["user"]->name === $userName)
+            $userName = null;
+
+
+        if (!isset($email) || !self::validateEmail($email) || $_SESSION["user"]->email === $email) {
+            $email = null;
+            $is_active = null;
+        }
+
+        if (is_null($email) && is_null($userName)){
+            header('Location: http://localhost:80/user');
+            exit(200);
+        }
+        try {
+            $pdo = Utils::dbConnect();
+            $result = UserModel::updateUser($pdo, new User($_SESSION["user"]->id_user, $userName, $email, null, $is_active));
+            $_SESSION["user"]->name = (is_null($userName)) ? $_SESSION["user"]->name : $userName;
+            $_SESSION["user"]->email = (is_null($email)) ? $_SESSION["user"]->email : $email;
+            if ($result) {
+                print '<h1>El usuario se ha actualizado con exito</h1>';
+                header('Location: http://localhost:80/user');
+                exit(200);
+            }
+
+        } catch (\PDOException $exception) {
+            print '<h1>Error interno</h1>';
+            die(500);
+        }
+    }
+
+    private static function sendCode(): void
+    {
+        $code = rand(100000, 999999);
+        $_SESSION["code"] = $code;
+        $user = $_SESSION["user"];
+        Utils::sendMail($user->email, $user->name, 'admin@vost.com', 'VostAdmin', 'Account Activation Code', "$code");
+    }
+
+    private static function validateLogin($user, $password): void
+    {
+        if (is_null($user)) {
+            require __DIR__ . '/../views/login.php';
+            echo '<h1>User not found</h1>';
+            die(400);
+        }
+
+        if (!password_verify($password, $user->password)) {
+            echo '<h1>Contraseña incorrecta</h1>';
+            die(400);
+        }
+
+        $_SESSION["user"] = $user;
+
+        if (!$user->is_active) {
+            self::sendCode();
+            require __DIR__ . '/../views/activate.php';
+            exit(300);
+        }
+
+    }
+
+
+    private static function validateLoginName($name)
     {
         if (!self::validateName($name)) {
             require __DIR__ . '/../views/login.php';
@@ -80,7 +259,7 @@ class UserController
         }
     }
 
-    private static function loginFromEmail($email, $password)
+    private static function validateLoginEmail($email)
     {
         if (!self::validateEmail($email)) {
             require __DIR__ . '/../views/login.php';
@@ -93,103 +272,6 @@ class UserController
         } catch (\PDOException $exception) {
             print 'Error interno del servidor';
             die(500);
-        }
-
-    }
-
-    public static function logOut(): void
-    {
-        session_destroy();
-        session_abort();
-    }
-
-
-    public static function createUser()
-    {
-        $postNames = ["name", "email", "password"];
-        foreach ($postNames as $postName) {
-            if (!isset($_POST[$postName])) {
-                echo "Debes insertar tu $postName";
-                return;
-            }
-        }
-
-        if (!self::validateName($_POST["name"])) {
-            echo 'El nombre de ususario no es valido';
-            return;
-        }
-        if (!self::validateEmail($_POST["email"])) {
-            echo 'El email no es valido';
-            return;
-        }
-        try {
-
-            $pdo = Utils::dbConnect();
-            if (!is_null(UserModel::getUser($pdo, User::constructLoginObject($_POST["name"], 1)))) {
-                echo "El usuario ya existe";
-                return;
-            }
-
-            $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-            $user = new User(null, $_POST["name"], $_POST["email"], $password);
-            UserModel::insertUser($pdo, $user);
-            echo 'Usuario creado con exito';
-            require __DIR__.'/../views/login.php';
-
-        } catch (\PDOException $e) {
-            print 'Error al conectarse a la base de datos';
-        }
-
-    }
-
-    public static function checkCode()
-    {
-        if (!isset($_POST["activationCode"])) {
-            echo 'Inserta el codigo';
-            return ;
-        }
-        if (!isset($_SESSION["code"])) {
-            return;
-        }
-        if ($_SESSION["code"].'' === $_POST["activationCode"].''){
-            $user = $_SESSION["user"];
-            $user->isActive = true;
-            $pdo = Utils::dbConnect();
-            UserModel::activateUser($pdo,$user);
-            $_SESSION["isLogged"] = true;
-            echo 'Usuario activado';
-            exit(200);
-        }
-        echo 'codigo incorrecto';
-        exit(400);
-    }
-
-    private static function sendCode():void
-    {
-        $code = rand(100000, 999999);
-        $_SESSION["code"] = $code;
-        $user = $_SESSION["user"];
-        Utils::sendMail($user->email, $user->name, 'admin@vost.com', 'VostAdmin', 'Account Activation Code', "$code");
-    }
-
-    private static function validateLogin($user, $password): int
-    {
-        if (is_null($user)) {
-            require __DIR__ . '/../views/login.php';
-            echo '<h1>User not found</h1>';
-            die(400);
-        }
-
-        if (!password_verify($password, $user->password)) {
-            echo '<h1>Contraseña incorrecta</h1>';
-            die(400);
-        }
-
-        if (!$user->is_active) {
-            $_SESSION["user"] = $user;
-            self::sendCode();
-            require __DIR__ . '/../views/activate.php';
-            exit(300);
         }
 
     }

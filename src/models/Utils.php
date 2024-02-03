@@ -107,7 +107,6 @@ class Utils
 
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
-                var_dump($tableValues[$field]);
                 $stmt->bindValue(":$field", $tableValues[$field] ?? 0);
             }
         }
@@ -138,9 +137,22 @@ class Utils
 
     private static function wrapEmail($message): string
     {
-        $wrapper = '<h1> Codigo de activacion </h1> <br>';
-        $wrapper .= "<div style='padding: 15px;border-radius: 15px;color: whitesmoke;background: darkgrey; width: 100px; display: flex; justify-content: center; align-content: center;' class='code'><span> $message </span> </div>";
-        return $wrapper;
+        return $message = '
+<html>
+<head>
+    <title>Código de Activación en VOST</title>
+</head>
+<body>
+    <div style="padding: 1rem; background: #464450; color: whitesmoke; border-radius: 0.5rem; text-align: center">
+        <h1 style="color: white">Bienvenido a VOST - Vynils OST</h1>
+        <p style="color: lightgrey">Gracias por registrarte en VOST. Tu codigo de activacion es:</p>
+        <p style="font-size: 24px; font-weight: bold;">' . $message . '</p>
+        <p style="color: lightgrey">Ingresa este codigo en la plataforma para activar tu cuenta.</p>
+    </div>
+</body>
+</html>
+';
+
     }
 }
 
