@@ -66,5 +66,4 @@ class OrderModel
             die(500);
         }
     }
-
 }
