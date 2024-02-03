@@ -19,6 +19,19 @@ class QueryUtils
         return $baseQuery;
     }
 
+    public static function generateIntermediaryInsertQuery($item)
+    {
+        $tableInfo = $item->tableInfo;
+        $tableName = $tableInfo['tableName'];
+        $tableFields = $tableInfo['tableFields'];
+
+        array_splice($tableFields, -1, 1);
+
+        $baseQuery = "INSERT INTO $tableName (" . implode(',', $tableFields) . ") VALUES (:" . implode(',:', $tableFields) . ");";
+
+        return $baseQuery;
+    }
+
     public static function generateUpdateQuery($item)
     {
 

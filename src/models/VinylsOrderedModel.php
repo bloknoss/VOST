@@ -2,11 +2,11 @@
 
 namespace VOST\models;
 
-include_once 'Vinyl.php';
-include_once 'Database.php';
+include_once __DIR__ . '/Vinyl.php';
+include_once __DIR__ . '/Database.php';
 
-use VOST\models\VinylsOrdered;
-use VOST\models\Database;
+use VOST\models\tables\VinylsOrdered;
+use VOST\models\Database\DatabaseUtils;
 
 class VinylsOrderedModel
 {
@@ -15,7 +15,7 @@ class VinylsOrderedModel
     {
 
         $tableName = "vinyls_ordered";
-        $queryResults = Database::getItems($pdo, $tableName);
+        $queryResults = DatabaseUtils::getItems($pdo, $tableName);
         foreach ($queryResults as $array)
             $abstractedObjects[] = VinylsOrdered::constructFromArray($array);
 
@@ -24,26 +24,26 @@ class VinylsOrderedModel
 
     public static function getVinylOrdered($pdo, $vinylsOrdered)
     {
-        $queryResults = Database::getItem($pdo, $vinylsOrdered);
+        $queryResults = DatabaseUtils::getItem($pdo, $vinylsOrdered);
         $abstractedObject = VinylsOrdered::constructFromArray($queryResults);
         return $abstractedObject;
     }
 
     public static function deleteVinylOrdered($pdo, $vinylsOrdered)
     {
-        $queryResults = Database::deleteItem($pdo, $vinylsOrdered);
+        $queryResults = DatabaseUtils::deleteItem($pdo, $vinylsOrdered);
         return $queryResults;
     }
 
     public static function insertVinylOrdered($pdo, $newVinylsOrdered)
     {
-        $queryResults = Database::insertItem($pdo, $newVinylsOrdered);
+        $queryResults = DatabaseUtils::insertItem($pdo, $newVinylsOrdered);
         return $queryResults;
     }
 
     public static function updateVinylOrdered($pdo, $vinylsOrdered)
     {
-        $queryResults = Database::updateTable($pdo, $vinylsOrdered);
+        $queryResults = DatabaseUtils::updateTable($pdo, $vinylsOrdered);
         return $queryResults;
     }
 

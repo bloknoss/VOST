@@ -1,9 +1,9 @@
 <?php
 
 use VOST\models\tables\CartVinyls;
-use VOST\models\Utils;
+use VOST\models\database\DatabaseUtils;
 
-include_once __DIR__ . '/Utils.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 include_once __DIR__ . '/tables/CartVinyls.php';
 
 class Tester
@@ -11,8 +11,8 @@ class Tester
     public static function test()
     {
         try {
-            $pdo = Utils::dbConnect();
-            $testObject = (CartVinyls::constructIdObject(20));
+            $pdo = DatabaseUtils::dbConnect();
+            $testObject = DatabaseUtils::getItem($pdo,CartVinyls::constructIdObject(20));
 
             return $testObject;
         } catch (Exception $e) {

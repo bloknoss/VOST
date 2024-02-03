@@ -2,11 +2,11 @@
 
 namespace VOST\models;
 
-include_once 'Vinyl.php';
-include_once 'Database.php';
+include_once __DIR__ . '/tables/Vinyl.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 
-use VOST\models\HasSongs;
-use VOST\models\Database;
+use VOST\models\tables\HasSongs;
+use VOST\models\database\DatabaseUtils;
 
 class HasSongsModel
 {
@@ -14,7 +14,7 @@ class HasSongsModel
     public static function getHasSongs($pdo)
     {
         $tableName = "songs";
-        $queryResults = Database::getItems($pdo, $tableName);
+        $queryResults = DatabaseUtils::getItems($pdo, $tableName);
 
         foreach ($queryResults as $array)
             $abstractedObjects[] = HasSongs::constructFromArray($array);
@@ -24,27 +24,26 @@ class HasSongsModel
 
     public static function getHasSong($pdo, $hasSongs)
     {
-        $queryResults = Database::getItem($pdo, $hasSongs);
+        $queryResults = DatabaseUtils::getItem($pdo, $hasSongs);
         $abstractedObject = HasSongs::constructFromArray($queryResults);
         return $abstractedObject;
     }
 
     public static function deleteHasSong($pdo, $hasSongs)
     {
-        $queryResults = Database::deleteItem($pdo, $hasSongs);
+        $queryResults = DatabaseUtils::deleteItem($pdo, $hasSongs);
         return $queryResults;
     }
 
     public static function insertHasSong($pdo, $newHasSongs)
     {
-        $queryResults = Database::insertItem($pdo, $newHasSongs);
+        $queryResults = DatabaseUtils::insertItem($pdo, $newHasSongs);
         return $queryResults;
     }
 
     public static function updateHasSong($pdo, $hasSongs)
     {
-        $queryResults = Database::updateTable($pdo, $hasSongs);
+        $queryResults = DatabaseUtils::updateTable($pdo, $hasSongs);
         return $queryResults;
     }
-
 }
