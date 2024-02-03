@@ -36,5 +36,4 @@ class Order
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'orders', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
-
 }

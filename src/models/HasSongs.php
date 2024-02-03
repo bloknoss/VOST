@@ -1,4 +1,5 @@
 <?php
+
 namespace VOST\models;
 
 use VOST\models\Utils;
@@ -33,8 +34,4 @@ class HasSongs
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'has_songs', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
-
-
 }
-
-

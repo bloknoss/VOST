@@ -20,7 +20,6 @@ class Database
             $resultSet = $result->fetchAll(PDO::FETCH_ASSOC);
 
             return $resultSet;
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             die(500);
@@ -29,7 +28,7 @@ class Database
         }
     }
 
-    public static function getItem($pdo, $item) 
+    public static function getItem($pdo, $item)
     {
 
         try {
@@ -48,7 +47,6 @@ class Database
             $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $resultSet;
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
@@ -78,7 +76,6 @@ class Database
             $affectedRows = $stmt->rowCount();
 
             return $affectedRows;
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
@@ -102,7 +99,6 @@ class Database
             $stmt->execute();
 
             return $stmt->rowCount();
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
@@ -124,7 +120,6 @@ class Database
             $affectedRows = $stmt->rowCount();
 
             return $affectedRows;
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
@@ -133,5 +128,4 @@ class Database
             $pdo = null;
         }
     }
-
 }

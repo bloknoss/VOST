@@ -11,6 +11,7 @@ class Vinyl
 {
 
     public $id_vinyl;
+    public $name;
     public $stock;
     public $price;
     public $style;
@@ -31,9 +32,10 @@ class Vinyl
 
 
 
-    public function __construct($id_vinyl, $stock, $price, $style, $duration, $max_duration)
+    public function __construct($id_vinyl, $name, $stock, $price, $style, $duration, $max_duration)
     {
         $this->id_vinyl = $id_vinyl;
+        $this->name = $name;
         $this->stock = $stock;
         $this->price = $price;
         $this->style = $style;
