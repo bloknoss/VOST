@@ -9,7 +9,7 @@ include_once 'Database.php';
 class CartModel
 {
 
-    public static function getCartItems($pdo, $cartId) : array | null
+    public static function getCartItems($pdo, $cartId): array | null
     {
         $reqResults = Database::getItems($pdo, "carts");
         //TODO: Crear la clase abstracta de el carrito, una vez hecho devolver la clase construida.
@@ -20,20 +20,17 @@ class CartModel
     public static function addToCart($pdo, $vinyl)
     {
         try {
-
+            $query = "";
         } catch (PDOException $e) {
-
         } finally {
         }
     }
 
     public static function deleteFromCart($pdo, $vinyl)
     {
-
         try {
-
+            $query = "";
         } catch (PDOException $e) {
-
         } finally {
         }
     }
@@ -41,7 +38,6 @@ class CartModel
     public static function deleteCart($pdo, $cartId)
     {
         // TODO: Aquí falta la clase del carrito, todo está a medias.
-        Database::deleteItem($pdo, $cartId);
+        return Database::deleteItem($pdo, $cartId);
     }
-
 }
