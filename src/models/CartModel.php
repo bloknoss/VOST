@@ -10,9 +10,9 @@ include_once 'Database.php';
 class CartModel
 {
 
-    public static function getCartItems($pdo, $cartId): array | null
+    public static function getCartVinyls($pdo, $cartId): array | null
     {
-        $reqResults = Database::getItems($pdo, "carts");
+
         //TODO: Crear la clase abstracta de el carrito, una vez hecho devolver la clase construida.
         return $reqResults;
     }
@@ -22,7 +22,7 @@ class CartModel
     {
 
         try {
-            $query = "INSERT INTO carts_vinyls (cart_id, vinyl_id) VALUES (:cart_id, :vinyl_id)";
+            $query = "INSERT INTO carts_vinyls (id_user, id_vinyl) VALUES (:id_user, :id_vinyl)";
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(":id_cart", $cartId);
             $stmt->bindValue(":id_vinyl", $vinylId);
@@ -34,12 +34,12 @@ class CartModel
         }
     }
 
-    public static function deleteFromCart($pdo, $cartId, $vinylId)
+    public static function deleteFromCart($pdo, $userId, $vinylId)
     {
         try {
-            $query = "DELETE FROM carts_vinyls WHERE id_cart=:id_cart AND id_vinyl=:id_vinyl;";
+            $query = "DELETE FROM carts_vinyls WHERE id_user=:id_user AND id_vinyl=:id_vinyl;";
             $stmt = $pdo->prepare($query);
-            $stmt->bindValue(":id_cart", $cartId);
+            $stmt->bindValue(":id_user", $userId);
             $stmt->bindValue(":id_vinyl", $vinylId);
             $stmt->execute();
 
