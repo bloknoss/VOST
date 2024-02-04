@@ -36,7 +36,7 @@ class VinylModel
      * @param  mixed $vinyl
      * @return Vinyl
      */
-    public static function getVinyl($pdo, $vinyl): Vinyl
+    public static function getVinyl($pdo, $vinyl): Vinyl|null
     {
         $queryResults = DatabaseUtils::getItem($pdo, $vinyl);
         $abstractedObject = Vinyl::constructFromArray($queryResults);

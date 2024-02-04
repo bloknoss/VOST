@@ -46,11 +46,12 @@
                 <input style="display: none" type="text" name="id_vinyl" value="<?= $vinyls[$i]->id_vinyl ?>">
                 <button id="addButton<?= $i?>" type="submit">Añadir al carrito</button>
             </form>
-            <button>Ver mas</button>
+            <button><a href="/vinyl/<?=$vinyls[$i]->id_vinyl?>">Ver mas</a></button>
         </div>
     </div>
 <?php endfor ?>
 <script>
+
     for (let i = 0; i < <?=count($vinyls)?>; i++) {
         let form = document.getElementById(`form${i}`);
         form.addEventListener('submit', async (ev) => {

@@ -16,7 +16,7 @@ class CartVinyls
     public $id_vinyl;
     public $quantity;
     public $tableInfo;
-    
+
     /**
      * constructFromArray
      *
@@ -28,7 +28,7 @@ class CartVinyls
         $values = array_values($arr);
         return new CartVinyls(...$values);
     }
-    
+
     /**
      * constructIdObject
      *
@@ -40,7 +40,7 @@ class CartVinyls
         return new CartVinyls($id, ...[null, null, null, null, null, null]);
     }
 
-    public function __construct($id_user, $id_vinyl, $quantity)
+    public function __construct($id_user, $id_vinyl, $quantity = 1)
     {
         $this->id_user = $id_user;
         $this->id_vinyl = $id_vinyl;

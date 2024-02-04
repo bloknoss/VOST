@@ -2,15 +2,18 @@
 
 use VOST\controllers\UserController;
 use VOST\controllers\VinylController;
+use VOST\controllers\CartController;
 
 require __DIR__ . '/../../vendor/autoload.php';
-require __DIR__.'/VinylController.php';
+require __DIR__ . '/VinylController.php';
+require __DIR__ . '/CartController.php';
 
 return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {
-    $routeCollector->get('/',function (){
+    $routeCollector->get('/', function () {
         require __DIR__ . '/../views/index.php';
     });
-    $routeCollector->addGroup('/user' , function (FastRoute\RouteCollector $routeCollector){
+
+    $routeCollector->addGroup('/user', function (FastRoute\RouteCollector $routeCollector) {
         require __DIR__ . '/UserController.php';
 
         $routeCollector->get('', function () {
@@ -29,46 +32,59 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
             UserController::logOut();
         });
 
-        $routeCollector->get('/register', function (){
+        $routeCollector->get('/register', function () {
             require __DIR__ . '/../views/register.php';
         });
 
-        $routeCollector->post('/register', function (){
+        $routeCollector->post('/register', function () {
             UserController::register();
         });
 
-        $routeCollector->post('/activate', function (){
+        $routeCollector->post('/activate', function () {
             UserController::validateActivation();
         });
 
-        $routeCollector->post('/edit', function (){
+        $routeCollector->post('/edit', function () {
             UserController::editUser();
         });
 
-        $routeCollector->get('/orders', function (){
+        $routeCollector->get('/orders', function () {
             UserController::getUserOrders();
         });
 
-        $routeCollector->post('/cart', function (){
-            UserController::addToCart();
+        $routeCollector->addGroup('/cart', function (FastRoute\RouteCollector $routeCollector) {
+
+            $routeCollector->post('', function () {
+                CartController::addToCart();
+            });
+
+            $routeCollector->get('', function () {
+                CartController::getCart();
+            });
+
+            $routeCollector->delete('/{id:\d+}', function ($idVinyl){
+                CartController::deleteCart($idVinyl);
+            });
+
+            $routeCollector->put('/{id:\d+}', function ($idVinyl){
+                CartController::updateCart($idVinyl);
+            });
         });
+
 
     });
 
-    $routeCollector->get('/shop', function (){
+    $routeCollector->get('/shop', function () {
         VinylController::getVinyls();
 
     });
 
-    $routeCollector->addGroup('/vinyl', function (FastRoute\RouteCollector $routeCollector){
+    $routeCollector->addGroup('/vinyl', function (FastRoute\RouteCollector $routeCollector) {
 
-        $routeCollector->get('/{id:\d+}', function ($id){
-            print $id['id'];
+        $routeCollector->get('/{id:\d+}', function ($id) {
             VinylController::getVinyl($id['id']);
         });
     });
-    
-
 
 
 });

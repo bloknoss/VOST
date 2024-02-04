@@ -100,7 +100,7 @@ class DatabaseUtils
      * @param  mixed $item
      * @return int
      */
-    public static function deleteItem($pdo, $item): int | int
+    public static function deleteItem($pdo, $item): int
     {
         try {
 
@@ -172,7 +172,6 @@ class DatabaseUtils
             $stmt = $pdo->prepare($query);
 
             $stmt = QueryUtils::statementValueBinder($stmt, $newItem);
-            var_dump($stmt);
 
             $stmt->execute();
 

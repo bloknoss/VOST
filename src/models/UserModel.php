@@ -122,18 +122,16 @@ class UserModel
     public static function getUserOrders($pdo, $idUser): array | null
     {
         try {
-            $query = "select orders.id_order, orders.date_time, orders.id_address from orders inner join address on address.id_address=orders.id_address inner join users on users.id_user=address.id_user where users.id_user=:id_user;";
+            $query = "select orders.id_order, orders.date_time, orders.id_address from orders inner join addresses on addresses.id_address=orders.id_address inner join users on users.id_user=addresses.id_user where users.id_user=:id_user;";
 
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(":id_user", $idUser);
             $stmt->execute();
-
             $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $abstractedObjects = [];
             foreach ($orders as $order)
                 $abstractedObjects[] = Order::constructFromArray($order);
-
 
             return $abstractedObjects;
         } catch (PDOException $e) {

@@ -6,7 +6,7 @@ use PDO;
 use PDOException;
 use VOST\models\Utils;
 
-include_once __DIR__ . '/Utils.php';
+include_once __DIR__ . '/../Utils.php';
 
 class Vinyl
 {
@@ -19,42 +19,44 @@ class Vinyl
     public $duration;
     public $max_duration;
     public $tableInfo;
-    
+
     /**
      * constructFromArray
      *
-     * @param  mixed $arr
+     * @param mixed $arr
      * @return Vinyl
      */
-    public static function constructFromArray($arr) : Vinyl 
+    public static function constructFromArray($arr): Vinyl|null
     {
+        if ($arr === 0 || $arr === -1)
+            return null;
+
         $values = array_values($arr);
         return new Vinyl(...$values);
     }
-    
+
     /**
      * constructIdObject
      *
-     * @param  mixed $id
+     * @param mixed $id
      * @return Vinyl
      */
-    public static function constructIdObject($id) : Vinyl
+    public static function constructIdObject($id): Vinyl
     {
         return new Vinyl($id, ...[null, null, null, null, null, null]);
     }
 
 
-    
     /**
      * __construct
      *
-     * @param  mixed $id_vinyl
-     * @param  mixed $name
-     * @param  mixed $stock
-     * @param  mixed $price
-     * @param  mixed $style
-     * @param  mixed $duration
-     * @param  mixed $max_duration
+     * @param mixed $id_vinyl
+     * @param mixed $name
+     * @param mixed $stock
+     * @param mixed $price
+     * @param mixed $style
+     * @param mixed $duration
+     * @param mixed $max_duration
      * @return void
      */
     public function __construct($id_vinyl, $name, $stock, $price, $style, $duration, $max_duration)

@@ -68,8 +68,8 @@ class User
         $this->password = $password;
         $this->is_active = $is_active;
 
-        $_values = database\Utils::getValuesArray($this);
-        $this->tableInfo = ['tableName' => 'users', 'tableFields' => database\Utils::getTableFields($_values), 'tableValues' => $_values];
+        $_values = Utils::getValuesArray($this);
+        $this->tableInfo = ['tableName' => 'users', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 
     //Getters & Setters

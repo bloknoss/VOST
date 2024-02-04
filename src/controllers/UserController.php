@@ -2,13 +2,12 @@
 
 namespace VOST\controllers;
 
-use VOST\models\User;
+use VOST\models\tables\User;
 use VOST\models\UserModel;
-use VOST\models\Utils;
-use VOST\models\Cart;
-use VOST\models\CartModel;
+use VOST\models\database\DatabaseUtils as DbUtils;
+use VOST\models\Utils as utils;
 
-require __DIR__ . '/../models/User.php';
+require __DIR__ . '/../models/tables/User.php';
 require __DIR__ . '/../models/UserModel.php';
 
 class UserController
@@ -80,7 +79,7 @@ class UserController
         self::validateRegister();
 
         try {
-            $pdo = Utils::dbConnect();
+            $pdo = DbUtils::dbConnect();
             $user = UserModel::getUserByName($pdo, $_POST["userName"]);
 
             $user = (is_null($user)) ? UserModel::getUserByEmail($pdo, $_POST["email"]) : $user;
@@ -135,7 +134,7 @@ class UserController
 
         if ($_SESSION["code"] . '' === $_POST["activationCode"] . '') {
             $user = $_SESSION["user"];
-            $pdo = Utils::dbConnect();
+            $pdo = DbUtils::dbConnect();
             UserModel::updateUser($pdo, new User($user->id_user, null, null, null, true));
             $_SESSION["isLogged"] = true;
             echo 'Usuario activado';
@@ -155,7 +154,7 @@ class UserController
             exit(300);
         }
         try {
-            $pdo = Utils::dbConnect();
+            $pdo = DbUtils::dbConnect();
             $orders = UserModel::getUserOrders($pdo, $_SESSION["user"]->id_user);
             if (count($orders) === 0){
                 print '<span> No tiene sningun pedido</span>';
@@ -197,7 +196,7 @@ class UserController
             exit(200);
         }
         try {
-            $pdo = Utils::dbConnect();
+            $pdo = DbUtils::dbConnect();
             $result = UserModel::updateUser($pdo, new User($_SESSION["user"]->id_user, $userName, $email, null, $is_active));
             $_SESSION["user"]->name = (is_null($userName)) ? $_SESSION["user"]->name : $userName;
             $_SESSION["user"]->email = (is_null($email)) ? $_SESSION["user"]->email : $email;
@@ -213,28 +212,7 @@ class UserController
         }
     }
 
-    public static function addToCart()
-    {
-        if (!isset($_SESSION["isLogged"])){
-            header('Location: http://localhost:80/user/login');
-            exit(300);
-        }
-        if (!isset($_POST["id_vinyl"])){
-            header('Location: http://localhost:80/shop');
-            exit(300);
-        }
-        require __DIR__.'/../models/CartModel.php';
-        $id_vinyl = $_POST["id_vinyl"];
-        try {
-            $pdo = Utils::dbConnect();
-            CartModel::addVinylToCart($pdo, );
 
-        }catch (\PDOException $e) {
-            die(500);
-        }
-
-        exit(200);
-    }
     private static function sendCode(): void
     {
         $code = rand(100000, 999999);
@@ -275,7 +253,7 @@ class UserController
             exit(400);
         }
         try {
-            $pdo = Utils::dbConnect();
+            $pdo = DbUtils::dbConnect();
             return UserModel::getUserByName($pdo, $name);
         } catch (\PDOException $exception) {
             print 'Error interno del servidor';
@@ -291,7 +269,7 @@ class UserController
             exit(400);
         }
         try {
-            $pdo = Utils::dbConnect();
+            $pdo = DbUtils::dbConnect();
             return UserModel::getUserByEmail($pdo, $email);
         } catch (\PDOException $exception) {
             print 'Error interno del servidor';

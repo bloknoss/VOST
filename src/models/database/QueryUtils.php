@@ -92,7 +92,8 @@ class QueryUtils
 
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
-                $curatedValue = Utils::validateData($tableFields[$field]);
+
+                $curatedValue = Utils::validateData($tableValues[$field]);
                 $stmt->bindValue(":$field", $curatedValue);
             }
         }

@@ -6,10 +6,13 @@ use PDO;
 use PDOException;
 use VOST\models\tables\CartVinyls;
 use VOST\models\database\DatabaseUtils;
+use VOST\models\tables\Vinyl;
+use VOST\models\VinylItem;
+
 
 include_once __DIR__ . '/database/DatabaseUtils.php';
 include_once __DIR__ . '/tables/CartVinyls.php';
-
+include_once __DIR__ . '/VinylItem.php';
 class CartModel
 {
 
@@ -23,7 +26,7 @@ class CartModel
     public static function getCartVinyls($pdo, $userId): array | null
     {
         try {
-            $query = "SELECT * FROM carts_vinyls WHERE  id_user=:id_user";
+            $query = "SELECT vinyls.id_vinyl, name, stock, price, style, duration, max_duration, cv.quantity FROM vinyls INNER JOIN vostdb.carts_vinyls cv on vinyls.id_vinyl = cv.id_vinyl where id_user =:id_user;";
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(":id_user", $userId);
             $stmt->execute();
@@ -32,8 +35,10 @@ class CartModel
 
 
             $cartVinyls = [];
-            foreach ($queryResults as $cartVinyl)
-                $cartVinyls[] = CartVinyls::constructFromArray($cartVinyl);
+            foreach ($queryResults as $cartVinyl){
+                $lastItem = array_splice($cartVinyl,-1 );
+                $cartVinyls[] = new VinylItem(Vinyl::constructFromArray($cartVinyl), $lastItem["quantity"]);
+            }
 
             return $cartVinyls;
         } catch (PDOException $e) {

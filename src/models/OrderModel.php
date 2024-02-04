@@ -106,7 +106,6 @@ class OrderModel
             foreach ($queryResults as $array)
                 $vinyls[] = Vinyl::constructFromArray($array);
 
-
             return $vinyls;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
