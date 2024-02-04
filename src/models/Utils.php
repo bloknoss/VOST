@@ -2,33 +2,23 @@
 
 namespace VOST\models;
 
-use PDO;
-use PDOException;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class Utils
 {
 
-    public static function dbConnect(): PDO
-    {
-        $config = include(__DIR__ . "/../config.php");
-        $config = $config["db"];
-
-        // Sacamos las variables del archivo de configuración fuera para evitar añadir demasiado código más adelante
-        $dbname = $config["dbname"];
-        $hostname = $config["hostname"];
-
-        // Establecemos una conexión con el PDO haciendo uso de las variables de conexión.
-        try {
-            $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $config["username"], $config["password"]);
-        } catch (PDOException $e) {
-            error_log("An error has occured while establishing a connection with the database." . $e->getMessage());
-        }
-
-        return $pdo;
-    }
-
-    public static function sendMail($target, $targetName, $sender, $senderName, $about, $message)
+    /**
+     * sendMail
+     *
+     * @param  mixed $target
+     * @param  mixed $targetName
+     * @param  mixed $sender
+     * @param  mixed $senderName
+     * @param  mixed $about
+     * @param  mixed $message
+     * @return void
+     */
+    public static function sendMail($target, $targetName, $sender, $senderName, $about, $message): void
     {
         $config = require __DIR__ . '/../config.php';
         $config = $config["smtp"];
@@ -60,7 +50,13 @@ class Utils
     }
 
 
-    public static function validateData($string)
+    /**
+     * validateData
+     *
+     * @param  mixed $string
+     * @return string
+     */
+    public static function validateData($string): string
     {
         $data = trim($string);
         $data = stripslashes($data);
@@ -69,17 +65,35 @@ class Utils
         return $data;
     }
 
-    public static function getValuesArray($object)
+    /**
+     * getValuesArray
+     *
+     * @param  mixed $object
+     * @return array
+     */
+    public static function getValuesArray($object): array
     {
         $tableValues = get_object_vars($object);
         return ($tableValues);
     }
 
-    public static function getTableFields($table)
+    /**
+     * getTableFields
+     *
+     * @param  mixed $table
+     * @return array
+     */
+    public static function getTableFields($table): array
     {
         return array_keys($table);
     }
 
+    /**
+     * wrapEmail
+     *
+     * @param  mixed $message
+     * @return string
+     */
     private static function wrapEmail($message): string
     {
         $wrapper = '<h1> Codigo de activacion </h1> <br>';

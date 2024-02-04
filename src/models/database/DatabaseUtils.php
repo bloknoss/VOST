@@ -10,6 +10,11 @@ use PDOException;
 
 class DatabaseUtils
 {
+    /**
+     * dbConnect
+     *
+     * @return PDO
+     */
     public static function dbConnect(): PDO
     {
         $config = include(__DIR__ . "/../../config.php");
@@ -29,7 +34,14 @@ class DatabaseUtils
         return $pdo;
     }
 
-    public static function getItems($pdo, $tableName)
+    /**
+     * getItems
+     *
+     * @param  mixed $pdo
+     * @param  mixed $tableName
+     * @return array
+     */
+    public static function getItems($pdo, $tableName): array | null
     {
         try {
 
@@ -41,13 +53,20 @@ class DatabaseUtils
             return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die(500);
+            return null;
         } finally {
             $pdo = null;
         }
     }
 
-    public static function getItem($pdo, $item)
+    /**
+     * getItem
+     *
+     * @param  mixed $pdo
+     * @param  mixed $item
+     * @return array
+     */
+    public static function getItem($pdo, $item): array | null
     {
 
         try {
@@ -68,14 +87,20 @@ class DatabaseUtils
             return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die(500);
+            return null;
         } finally {
             $pdo = null;
-            return null;
         }
     }
 
-    public static function deleteItem($pdo, $item)
+    /**
+     * deleteItem
+     *
+     * @param  mixed $pdo
+     * @param  mixed $item
+     * @return int
+     */
+    public static function deleteItem($pdo, $item): int | null
     {
         try {
 
@@ -96,14 +121,21 @@ class DatabaseUtils
             return $affectedRows;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die(500);
+            return null;
         } finally {
             $pdo = null;
         }
     }
 
-    public static function insertItem($pdo, $newItem)
+
+    /**
+     * insertItem
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newItem
+     * @return int
+     */
+    public static function insertItem($pdo, $newItem): int | null
     {
         try {
 
@@ -118,34 +150,49 @@ class DatabaseUtils
             return $stmt->rowCount();
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die(500);
+            return null;
         } finally {
             $pdo = null;
         }
     }
 
-    public static function insertIntermediaryItem($pdo, $newItem)
+    /**
+     * insertIntermediaryItem
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newItem
+     * @return int
+     */
+    public static function insertIntermediaryItem($pdo, $newItem): int | null
     {
         try {
 
-            $query = QueryUtils::generateInsertQuery($newItem);
+            $query = QueryUtils::generateIntermediaryInsertQuery($newItem);
 
             $stmt = $pdo->prepare($query);
 
             $stmt = QueryUtils::statementValueBinder($stmt, $newItem);
+            var_dump($stmt);
 
             $stmt->execute();
 
             return $stmt->rowCount();
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die(500);
+            return null;
         } finally {
             $pdo = null;
         }
     }
 
-    public static function updateTable($pdo, $item)
+    /**
+     * updateTable
+     *
+     * @param  mixed $pdo
+     * @param  mixed $item
+     * @return int
+     */
+    public static function updateTable($pdo, $item): int | null
     {
         try {
 
@@ -154,12 +201,10 @@ class DatabaseUtils
             $stmt = QueryUtils::statementValueBinder($stmt, $item);
             $stmt->execute();
 
-            $affectedRows = $stmt->rowCount();
-
-            return $affectedRows;
+            return  $stmt->rowCount();
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            die(500);
+            return null;
         } finally {
             $pdo = null;
         }

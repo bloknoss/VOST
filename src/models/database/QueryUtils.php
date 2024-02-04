@@ -2,11 +2,20 @@
 
 namespace VOST\models\database;
 
+use PDOStatement;
+use VOST\models\Utils;
+
 include_once __DIR__ . '/DatabaseUtils.php';
 
 class QueryUtils
 {
-    public static function generateInsertQuery($item)
+    /**
+     * generateInsertQuery
+     *
+     * @param  mixed $item
+     * @return string
+     */
+    public static function generateInsertQuery($item): string
     {
         $tableInfo = $item->tableInfo;
         $tableName = $tableInfo['tableName'];
@@ -19,7 +28,13 @@ class QueryUtils
         return $baseQuery;
     }
 
-    public static function generateIntermediaryInsertQuery($item)
+    /**
+     * generateIntermediaryInsertQuery
+     *
+     * @param  mixed $item
+     * @return string
+     */
+    public static function generateIntermediaryInsertQuery($item): string
     {
         $tableInfo = $item->tableInfo;
         $tableName = $tableInfo['tableName'];
@@ -32,7 +47,13 @@ class QueryUtils
         return $baseQuery;
     }
 
-    public static function generateUpdateQuery($item)
+    /**
+     * generateUpdateQuery
+     *
+     * @param  mixed $item
+     * @return string
+     */
+    public static function generateUpdateQuery($item): string
     {
 
         $tableInfo = $item->tableInfo;
@@ -49,14 +70,18 @@ class QueryUtils
             if (isset($tableValues[$field]))
                 $updateFields[] = "$field=:$field";
         }
-        echo "hello";
-
-
 
         return ($baseQuery . implode(', ', $updateFields) . " WHERE $idField=:$idField");
     }
 
-    public static function statementValueBinder($stmt, $item)
+    /**
+     * statementValueBinder
+     *
+     * @param  mixed $stmt
+     * @param  mixed $item
+     * @return PDOStatement
+     */
+    public static function statementValueBinder($stmt, $item): PDOStatement
     {
         $tableInfo = $item->tableInfo;
         $tableValues = $tableInfo['tableValues'];
@@ -67,8 +92,8 @@ class QueryUtils
 
         foreach ($tableFields as $field) {
             if (isset($tableValues[$field])) {
-                var_dump($tableValues[$field]);
-                $stmt->bindValue(":$field", $tableValues[$field] ?? 0);
+                $curatedValue = Utils::validateData($tableFields[$field]);
+                $stmt->bindValue(":$field", $curatedValue);
             }
         }
 

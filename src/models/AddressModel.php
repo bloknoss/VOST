@@ -1,49 +1,78 @@
 <?php
 
 namespace VOST\models;
+
 use VOST\models\tables\Address;
 use VOST\models\database\DatabaseUtils;
 
-include_once __DIR__ . '/Address.php';
+include_once __DIR__ . '/tables/Address.php';
 include_once __DIR__ . '/database/DatabaseUtils.php';
 
 class AddressModel
 {
-
-    public static function getAddresses($pdo)
+    
+    /**
+     * getAddresses
+     *
+     * @param  mixed $pdo
+     * @return array
+     */
+    public static function getAddresses($pdo): array
     {
-        $tableName = "addresses";
-        $queryResults = DatabaseUtils::getItems($pdo, $tableName);
-        $abstractedObjects = [];
+        $queryResults = DatabaseUtils::getItems($pdo, "addresses");
+        $addresses = [];
         foreach ($queryResults as $array)
-            $abstractedObjects[] = Address::constructFromArray($array);
+            $addresses[] = Address::constructFromArray($array);
 
-        return $abstractedObjects;
+        return $addresses;
     }
-
-    public static function getAddress($pdo, $address)
+    
+    /**
+     * getAddress
+     *
+     * @param  mixed $pdo
+     * @param  mixed $address
+     * @return Address
+     */
+    public static function getAddress($pdo, $address): Address
     {
         $queryResults = DatabaseUtils::getItem($pdo, $address);
-        $abstractedObject = Address::constructFromArray($queryResults);
-        return $abstractedObject;
+        return Address::constructFromArray($queryResults);
     }
-
-    public static function deleteAddress($pdo, $address)
+    
+    /**
+     * deleteAddress
+     *
+     * @param  mixed $pdo
+     * @param  mixed $address
+     * @return int
+     */
+    public static function deleteAddress($pdo, $address): int
     {
-        $queryResults = DatabaseUtils::deleteItem($pdo, $address);
-        return $queryResults;
+        return DatabaseUtils::deleteItem($pdo, $address);
     }
-
-    public static function insertAddress($pdo, $newAddress)
+    
+    /**
+     * insertAddress
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newAddress
+     * @return int
+     */
+    public static function insertAddress($pdo, $newAddress): int
     {
-        $queryResults = DatabaseUtils::insertItem($pdo, $newAddress);
-        return $queryResults;
+        return  DatabaseUtils::insertItem($pdo, $newAddress);
     }
-
-    public static function updateAddress($pdo, $address)
+    
+    /**
+     * updateAddress
+     *
+     * @param  mixed $pdo
+     * @param  mixed $address
+     * @return int
+     */
+    public static function updateAddress($pdo, $address) : int
     {
-        $queryResults = DatabaseUtils::updateTable($pdo, $address);
-        return $queryResults;
+        return  DatabaseUtils::updateTable($pdo, $address);
     }
-
 }

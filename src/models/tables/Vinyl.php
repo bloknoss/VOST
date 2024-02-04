@@ -19,20 +19,44 @@ class Vinyl
     public $duration;
     public $max_duration;
     public $tableInfo;
-
-    public static function constructFromArray($arr)
+    
+    /**
+     * constructFromArray
+     *
+     * @param  mixed $arr
+     * @return Vinyl
+     */
+    public static function constructFromArray($arr) : Vinyl 
     {
         $values = array_values($arr);
         return new Vinyl(...$values);
     }
-
-    public static function constructIdObject($id)
+    
+    /**
+     * constructIdObject
+     *
+     * @param  mixed $id
+     * @return Vinyl
+     */
+    public static function constructIdObject($id) : Vinyl
     {
         return new Vinyl($id, ...[null, null, null, null, null, null]);
     }
 
 
-
+    
+    /**
+     * __construct
+     *
+     * @param  mixed $id_vinyl
+     * @param  mixed $name
+     * @param  mixed $stock
+     * @param  mixed $price
+     * @param  mixed $style
+     * @param  mixed $duration
+     * @param  mixed $max_duration
+     * @return void
+     */
     public function __construct($id_vinyl, $name, $stock, $price, $style, $duration, $max_duration)
     {
         $this->id_vinyl = $id_vinyl;

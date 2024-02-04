@@ -11,37 +11,41 @@ use VOST\models\database\DatabaseUtils;
 class HasSongsModel
 {
 
-    public static function getHasSongs($pdo)
-    {
-        $tableName = "songs";
-        $queryResults = DatabaseUtils::getItems($pdo, $tableName);
-
-        foreach ($queryResults as $array)
-            $abstractedObjects[] = HasSongs::constructFromArray($array);
-
-        return $abstractedObjects;
-    }
-
-    public static function getHasSong($pdo, $hasSongs)
-    {
-        $queryResults = DatabaseUtils::getItem($pdo, $hasSongs);
-        $abstractedObject = HasSongs::constructFromArray($queryResults);
-        return $abstractedObject;
-    }
-
-    public static function deleteHasSong($pdo, $hasSongs)
+    
+    /**
+     * deleteHasSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $hasSongs
+     * @return int
+     */
+    public static function deleteHasSong($pdo, $hasSongs) : int
     {
         $queryResults = DatabaseUtils::deleteItem($pdo, $hasSongs);
         return $queryResults;
     }
-
-    public static function insertHasSong($pdo, $newHasSongs)
+    
+    /**
+     * insertHasSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newHasSongs
+     * @return int
+     */
+    public static function insertHasSong($pdo, $newHasSongs) : int
     {
-        $queryResults = DatabaseUtils::insertItem($pdo, $newHasSongs);
+        $queryResults = DatabaseUtils::insertIntermediaryItem($pdo, $newHasSongs);
         return $queryResults;
     }
-
-    public static function updateHasSong($pdo, $hasSongs)
+    
+    /**
+     * updateHasSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $hasSongs
+     * @return int
+     */
+    public static function updateHasSong($pdo, $hasSongs) : int
     {
         $queryResults = DatabaseUtils::updateTable($pdo, $hasSongs);
         return $queryResults;

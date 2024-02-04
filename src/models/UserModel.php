@@ -17,17 +17,30 @@ use PDOException;
 
 class UserModel
 {
+    /**
+     * getUsers
+     *
+     * @param  mixed $pdo
+     * @return array
+     */
     public static function getUsers($pdo): array
     {
         $tableName = "users";
         $queryResults = DatabaseUtils::getItems($pdo, $tableName);
-        $abstractedObjects = [];
+        $users = [];
         foreach ($queryResults as $array)
-            $abstractedObjects[] = User::constructFromArray($array);
+            $users[] = User::constructFromArray($array);
 
-        return $abstractedObjects;
+        return $users;
     }
 
+    /**
+     * getUser
+     *
+     * @param  mixed $pdo
+     * @param  mixed $user
+     * @return User
+     */
     public static function getUser($pdo, $user): User|null
     {
         $queryResults = DatabaseUtils::getItem($pdo, $user);
@@ -35,25 +48,53 @@ class UserModel
         return $user;
     }
 
-    public static function deleteUser($pdo, $user)
+    /**
+     * deleteUser
+     *
+     * @param  mixed $pdo
+     * @param  mixed $user
+     * @return int
+     */
+    public static function deleteUser($pdo, $user): int
     {
         $queryResults = DatabaseUtils::deleteItem($pdo, $user);
         return $queryResults;
     }
 
-    public static function insertUser($pdo, $newUser)
+    /**
+     * insertUser
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newUser
+     * @return int
+     */
+    public static function insertUser($pdo, $newUser): int
     {
         $queryResults = DatabaseUtils::insertItem($pdo, $newUser);
         return $queryResults;
     }
 
-    public static function updateUser($pdo, $user)
+    /**
+     * updateUser
+     *
+     * @param  mixed $pdo
+     * @param  mixed $user
+     * @return int
+     */
+    public static function updateUser($pdo, $user): int
     {
         $queryResults = DatabaseUtils::updateTable($pdo, $user);
         return $queryResults;
     }
 
-    public static function getUserByEmail($pdo, $email)
+    /**
+     * getUserByEmail
+     *
+     * @param  mixed $pdo
+     * @param  mixed $email
+     * @return User
+     */
+    public static function getUserByEmail($pdo, $email): User | null
     {
         try {
             $query = "select * from users where email=:email";
@@ -65,12 +106,20 @@ class UserModel
             return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            return null;
         } finally {
             $pdo = null;
         }
     }
-    public static function getUserOrders($pdo, $idUser): array|null
+
+    /**
+     * getUserOrders
+     *
+     * @param  mixed $pdo
+     * @param  mixed $idUser
+     * @return array
+     */
+    public static function getUserOrders($pdo, $idUser): array | null
     {
         try {
             $query = "select orders.id_order, orders.date_time, orders.id_address from orders inner join address on address.id_address=orders.id_address inner join users on users.id_user=address.id_user where users.id_user=:id_user;";
@@ -95,6 +144,13 @@ class UserModel
         }
     }
 
+    /**
+     * getUserAddresses
+     *
+     * @param  mixed $pdo
+     * @param  mixed $idUser
+     * @return array
+     */
     public static function getUserAddresses($pdo, $idUser): array|null
     {
         try {
@@ -119,6 +175,13 @@ class UserModel
         }
     }
 
+    /**
+     * getUserByName
+     *
+     * @param  mixed $pdo
+     * @param  mixed $name
+     * @return User
+     */
     public static function getUserByName($pdo, $name): User|null
     {
         try {
@@ -131,7 +194,6 @@ class UserModel
             return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             return null;
         } finally {
             $pdo = null;

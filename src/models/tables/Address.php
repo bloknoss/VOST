@@ -16,20 +16,43 @@ class Address
     public $number;
     public $tableInfo;
 
-
-    public static function constructFromArray($arr)
+    
+    /**
+     * constructFromArray
+     *
+     * @param  mixed $arr
+     * @return Address
+     */
+    public static function constructFromArray($arr) : Address
     {
         $values = array_values($arr);
         return new Address(...$values);
     }
-
-    public static function constructIdObject($id)
+    
+    /**
+     * constructIdObject
+     *
+     * @param  mixed $id
+     * @return Address
+     */
+    public static function constructIdObject($id) : Address
     {
         return new Address($id, ...[null, null, null, null, null, null]);
     }
 
 
-
+    
+    /**
+     * __construct
+     *
+     * @param  mixed $id_address
+     * @param  mixed $id_user
+     * @param  mixed $postal_code
+     * @param  mixed $city
+     * @param  mixed $street
+     * @param  mixed $number
+     * @return void
+     */
     public function __construct($id_address, $id_user, $postal_code, $city, $street, $number)
     {
         $this->id_address = $id_address;

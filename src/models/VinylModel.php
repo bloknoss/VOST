@@ -12,8 +12,14 @@ use VOST\models\database\DatabaseUtils;
 
 class VinylModel
 {
-
-    public static function getVinyls($pdo) : array
+    
+    /**
+     * getVinyls
+     *
+     * @param  mixed $pdo
+     * @return array
+     */
+    public static function getVinyls($pdo): array
     {
         $tableName = "vinyls";
         $queryResults = DatabaseUtils::getItems($pdo, $tableName);
@@ -22,34 +28,68 @@ class VinylModel
 
         return $abstractedObjects;
     }
-
-    public static function getVinyl($pdo, $vinyl) : Vinyl
+    
+    /**
+     * getVinyl
+     *
+     * @param  mixed $pdo
+     * @param  mixed $vinyl
+     * @return Vinyl
+     */
+    public static function getVinyl($pdo, $vinyl): Vinyl
     {
         $queryResults = DatabaseUtils::getItem($pdo, $vinyl);
         $abstractedObject = Vinyl::constructFromArray($queryResults);
         return $abstractedObject;
-
     }
-
-    public static function deleteVinyl($pdo, $vinyl)
+    
+    /**
+     * deleteVinyl
+     *
+     * @param  mixed $pdo
+     * @param  mixed $vinyl
+     * @return int
+     */
+    public static function deleteVinyl($pdo, $vinyl): int
     {
         $queryResults = DatabaseUtils::deleteItem($pdo, $vinyl);
         return $queryResults;
     }
-
-    public static function insertVinyl($pdo, $newVinyl) 
+    
+    /**
+     * insertVinyl
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newVinyl
+     * @return int
+     */
+    public static function insertVinyl($pdo, $newVinyl): int
     {
         $queryResults = DatabaseUtils::insertItem($pdo, $newVinyl);
         return $queryResults;
     }
-
-    public static function updateVinyl($pdo, $vinyl)
+    
+    /**
+     * updateVinyl
+     *
+     * @param  mixed $pdo
+     * @param  mixed $vinyl
+     * @return int
+     */
+    public static function updateVinyl($pdo, $vinyl): int
     {
         $queryResults = DatabaseUtils::updateTable($pdo, $vinyl);
         return $queryResults;
     }
-
-    public static function getVinylByName($pdo, $name) : Vinyl | null
+    
+    /**
+     * getVinylByName
+     *
+     * @param  mixed $pdo
+     * @param  mixed $name
+     * @return Vinyl
+     */
+    public static function getVinylByName($pdo, $name): Vinyl | null
     {
         try {
 
@@ -59,35 +99,35 @@ class VinylModel
             $stmt->execute();
 
             return $stmt->fetch(PDO::FETCH_ASSOC);
-
         } catch (PDOException $e) {
-
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            return null;
         } finally {
             $pdo = null;
-            return null;
         }
     }
-
-    public static function getSongs($pdo, $vinylId) : array
+    
+    /**
+     * getSongs
+     *
+     * @param  mixed $pdo
+     * @param  mixed $vinylId
+     * @return array
+     */
+    public static function getSongs($pdo, $vinylId): array | null
     {
         try {
-            $query = "select * from vinyls inner join has_songs on has_songs.id_vinyl=vinyls.id_vinyl where vinyls.id_vinyl=:id_vinyl";
+            $query = "select songs.artist as artist, songs.compositor as compositor, songs.name as name, songs.genre as genre, songs.duration as duration from vinyls inner join has_songs on has_songs.id_vinyl=vinyls.id_vinyl inner join songs on has_songs.id_song = songs.id_song where vinyls.id_vinyl=:id_vinyl";
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(":id_vinyl", $vinylId);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            return null;
         } finally {
             $pdo = null;
-            return [-1];
         }
     }
-
-
 }

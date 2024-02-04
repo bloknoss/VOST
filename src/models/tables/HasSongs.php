@@ -1,19 +1,18 @@
 <?php
 
-namespace VOST\models\tables;
+namespace VOST\models;
 
+use VOST\models\tables\Song;
 use VOST\models\Utils;
 
-include_once __DIR__ . '/Utils.php';
+include_once __DIR__ . '/../Utils.php';
+include_once __DIR__ . '/Song.php';
 
-class Song
+class HasSongs
 {
+
+    public $id_vinyl;
     public $id_song;
-    public $artist;
-    public $compositor;
-    public $name;
-    public $genre;
-    public $duration;
     public $tableInfo;
     
     /**
@@ -44,24 +43,16 @@ class Song
     /**
      * __construct
      *
+     * @param  mixed $id_vinyl
      * @param  mixed $id_song
-     * @param  mixed $artist
-     * @param  mixed $compositor
-     * @param  mixed $name
-     * @param  mixed $genre
-     * @param  mixed $duration
      * @return void
      */
-    public function __construct($id_song, $artist, $compositor, $name, $genre, $duration)
+    public function __construct($id_vinyl, $id_song)
     {
+        $this->id_vinyl = $id_vinyl;
         $this->id_song = $id_song;
-        $this->artist = $artist;
-        $this->compositor = $compositor;
-        $this->name = $name;
-        $this->genre = $genre;
-        $this->duration = $duration;
 
         $_values = Utils::getValuesArray($this);
-        $this->tableInfo = ['tableName' => 'songs', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
+        $this->tableInfo = ['tableName' => 'has_songs', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 }

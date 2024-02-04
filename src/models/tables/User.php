@@ -16,7 +16,13 @@ class User
     public $is_active;
     public $tableInfo;
 
-
+    
+    /**
+     * constructFromArray
+     *
+     * @param  mixed $arr
+     * @return User
+     */
     public static function constructFromArray($arr): User|null
     {
         if (!$arr) {
@@ -25,12 +31,25 @@ class User
         $values = array_values($arr);
         return new User(...$values);
     }
-
+    
+    /**
+     * constructIdObject
+     *
+     * @param  mixed $id
+     * @return User
+     */
     public static function constructIdObject($id): User
     {
         return new User($id, ...[null, null, null]);
     }
-
+    
+    /**
+     * constructLoginObject
+     *
+     * @param  mixed $value
+     * @param  mixed $tableIdentifier
+     * @return User
+     */
     public static function constructLoginObject($value, $tableIdentifier): User
     {
         $tables = ['email', 'name'];
