@@ -1,5 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap");
+body {
+  background-color: #ffffff;
+  font-family: Helvetica Neue, Helvetica;
+  font-size: 10px;
+  background: url("/public/assets/images/discos.jpg");
+  background-size: cover;
+}
 
+/*----------------------*/
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +14,6 @@
   font-family: "Nunito", sans-serif;
   font-size: 20px;
 }
-
 .header {
   background-color: #41788d;
   display: flex;
@@ -46,7 +52,6 @@
 }
 
 .header .nav-links a {
-  font-size: 20px;
   color: #eceff1;
   text-decoration: none;
 }
@@ -56,7 +61,6 @@
 }
 
 .header .btn button {
-  font-weight: 20px;
   color: #41788d;
   padding: 9px 25px;
   background: #eceff1;
@@ -76,9 +80,8 @@
 }
 
 .header .btn button,
-    /**/.header .menu button {
+          /**/.header .menu button {
   margin-left: 20px;
-  font-weight: 20px;
   color: #41788d;
   padding: 9px 25px;
   background: #eceff1;
@@ -89,7 +92,7 @@
 }
 
 .header .btn button:hover,
-    /**/.header .menu button:hover {
+          /**/.header .menu button:hover {
   background-color: #e2f1f8;
   color: #179aca;
   transform: scale(1.1);
@@ -135,7 +138,6 @@
   font-size: 36px;
   display: block;
   transition: all 0.3s ease 0s;
-  font-weight: 700;
   color: #eceff1;
 }
 
@@ -161,7 +163,7 @@
     right: 35px;
   }
 }
-
+/*---------------*/
 /*--------------GRID---------------*/
 .container {
   width: 100%;
@@ -170,7 +172,9 @@
   align-items: center;
   justify-content: center;
 }
-
+.container h1 {
+  font-size: 40px;
+}
 .main {
   position: relative;
   display: flex;
@@ -190,38 +194,14 @@
   padding: 24px;
 }
 
-/*Login*/
+/*Register*/
 
-.login {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.register {
+  background: #eee;
 }
 
-.login label {
-  margin: 5% 0 5%;
-}
-
-label {
-  color: #fff;
-  font-size: 2rem;
-  justify-content: center;
-  display: flex;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.5s ease-in-out;
-}
-
-.input {
-  width: 100%;
-  height: 40px;
-  font-size: 1rem;
-  background: #e0dede;
-  padding: 10px;
-  margin-top: 15px;
-  border: none;
-  outline: none;
-  border-radius: 4px;
+.register label {
+  color: #41788d;
 }
 
 /*Button*/
@@ -230,8 +210,8 @@ label {
   width: 70%;
   height: 40px;
   margin: 15px auto 10%;
-  color: #6eabd4;
-  background: #031015;
+  color: #fff;
+  background: #41788d;
   font-size: 1rem;
   font-weight: bold;
   border: none;
@@ -241,10 +221,9 @@ label {
 }
 
 .form button:hover {
-  background-color: #c42e2e;
+  background-color: #7eb9d1;
 }
-
-/*--------footer---------*/
+/*----------*/
 footer {
   background: #41788d;
   padding: 60px 0 30px 0;
