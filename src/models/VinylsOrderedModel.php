@@ -2,7 +2,7 @@
 
 namespace VOST\models;
 
-include_once __DIR__ . '/database/Database.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 
 use VOST\models\Database\DatabaseUtils;
 
