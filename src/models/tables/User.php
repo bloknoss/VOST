@@ -1,8 +1,10 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\tables;
 
-include_once __DIR__ . '/Utils.php';
+use VOST\models\Utils;
+
+include_once __DIR__ . '/../Utils.php';
 
 class User
 {
@@ -14,7 +16,13 @@ class User
     public $is_active;
     public $tableInfo;
 
-
+    
+    /**
+     * constructFromArray
+     *
+     * @param  mixed $arr
+     * @return User
+     */
     public static function constructFromArray($arr): User|null
     {
         if (!$arr) {
@@ -23,12 +31,25 @@ class User
         $values = array_values($arr);
         return new User(...$values);
     }
-
+    
+    /**
+     * constructIdObject
+     *
+     * @param  mixed $id
+     * @return User
+     */
     public static function constructIdObject($id): User
     {
         return new User($id, ...[null, null, null]);
     }
-
+    
+    /**
+     * constructLoginObject
+     *
+     * @param  mixed $value
+     * @param  mixed $tableIdentifier
+     * @return User
+     */
     public static function constructLoginObject($value, $tableIdentifier): User
     {
         $tables = ['email', 'name'];
@@ -49,6 +70,58 @@ class User
 
         $_values = database\Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'users', 'tableFields' => database\Utils::getTableFields($_values), 'tableValues' => $_values];
+    }
+
+    //Getters & Setters
+
+    public function getIdUser()
+    {
+        return $this->id_user;
+    }
+
+    public function setIdUser($id_user)
+    {
+        $this->id_user = $id_user;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getIsActive()
+    {
+        return $this->is_active;
+    }
+
+    public function setIsActive($is_active)
+    {
+        $this->is_active = $is_active;
     }
 
 }

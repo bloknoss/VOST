@@ -1,50 +1,84 @@
 <?php
 
-namespace VOST\models\database;
+namespace VOST\models;
 
-include_once 'Song.php';
-include_once 'Database.php';
+include_once __DIR__ . '/tables/Song.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 
-use VOST\models\Song;
+use VOST\models\tables\Song;
+use VOST\models\database\DatabaseUtils;
 
 class SongModel
 {
 
-    public static function getSongs($pdo)
+    /**
+     * getSongs
+     *
+     * @param  mixed $pdo
+     * @return array
+     */
+    public static function getSongs($pdo): array
     {
-        $tableName = "songs";
-        $queryResults = Database::getItems($pdo, $tableName);
+        $queryResults = DatabaseUtils::getItems($pdo, "songs");
+
+        $songs = [];
 
         foreach ($queryResults as $array)
-            $abstractedObjects[] = Song::constructFromArray($array);
+            $songs[] = Song::constructFromArray($array);
 
-        return $abstractedObjects;
-
+        return $songs;
     }
 
-    public static function getSong($pdo, $song)
+    /**
+     * getSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $song
+     * @return Song
+     */
+    public static function getSong($pdo, $song): Song
     {
-        $queryResults = Database::getItem($pdo, $song);
+        $queryResults = DatabaseUtils::getItem($pdo, $song);
         $abstractedObject = Song::constructFromArray($queryResults);
         return $abstractedObject;
     }
 
-    public static function deleteSong($pdo, $song)
+    /**
+     * deleteSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $song
+     * @return int
+     */
+    public static function deleteSong($pdo, $song): int
     {
-        $queryResults = Database::deleteItem($pdo, $song);
+        $queryResults = DatabaseUtils::deleteItem($pdo, $song);
         return $queryResults;
     }
 
-    public static function insertSong($pdo, $newSong)
+    /**
+     * insertSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newSong
+     * @return int
+     */
+    public static function insertSong($pdo, $newSong): int
     {
-        $queryResults = Database::insertItem($pdo, $newSong);
+        $queryResults = DatabaseUtils::insertItem($pdo, $newSong);
         return $queryResults;
     }
 
-    public static function updateSong($pdo, $song)
+    /**
+     * updateSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $song
+     * @return int
+     */
+    public static function updateSong($pdo, $song): int
     {
-        $queryResults = Database::updateTable($pdo, $song);
+        $queryResults = DatabaseUtils::updateTable($pdo, $song);
         return $queryResults;
     }
-
 }

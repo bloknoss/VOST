@@ -2,5 +2,5 @@
 *.xml
 *.http
 composer.lock
-tester.php
+src/models/tester.php
 vendor

@@ -7,7 +7,7 @@ use VOST\models\database\UserModel;
 use VOST\models\database\Utils;
 use VOST\models\User;
 
-require __DIR__ . '/../models/User.php';
+require __DIR__ . '/../models/tables/User.php';
 require __DIR__ . '/../models/UserModel.php';
 
 class UserController

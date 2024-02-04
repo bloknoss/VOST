@@ -2,54 +2,99 @@
 
 namespace VOST\models;
 
-include_once __DIR__ . '/User.php';
-include_once __DIR__ . '/Order.php';
-include_once __DIR__ . '/Address.php';
-include_once __DIR__ . '/Database.php';
+use VOST\models\database\DatabaseUtils;
+use VOST\models\tables\User;
+use VOST\models\tables\Order;
+use VOST\models\tables\Address;
+
+include_once __DIR__ . '/tables/User.php';
+include_once __DIR__ . '/tables/Order.php';
+include_once __DIR__ . '/tables/Address.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 
 use PDO;
 use PDOException;
 
 class UserModel
 {
+    /**
+     * getUsers
+     *
+     * @param  mixed $pdo
+     * @return array
+     */
     public static function getUsers($pdo): array
     {
         $tableName = "users";
-        $queryResults = Database::getItems($pdo, $tableName);
-        $abstractedObjects = [];
+        $queryResults = DatabaseUtils::getItems($pdo, $tableName);
+        $users = [];
         foreach ($queryResults as $array)
-            $abstractedObjects[] = User::constructFromArray($array);
+            $users[] = User::constructFromArray($array);
 
-        return $abstractedObjects;
-
+        return $users;
     }
 
+    /**
+     * getUser
+     *
+     * @param  mixed $pdo
+     * @param  mixed $user
+     * @return User
+     */
     public static function getUser($pdo, $user): User|null
     {
-        $queryResults = Database::getItem($pdo, $user);
+        $queryResults = DatabaseUtils::getItem($pdo, $user);
         $user = User::constructFromArray($queryResults);
         return $user;
     }
 
-    public static function deleteUser($pdo, $user)
+    /**
+     * deleteUser
+     *
+     * @param  mixed $pdo
+     * @param  mixed $user
+     * @return int
+     */
+    public static function deleteUser($pdo, $user): int
     {
-        $queryResults = Database::deleteItem($pdo, $user);
+        $queryResults = DatabaseUtils::deleteItem($pdo, $user);
         return $queryResults;
     }
 
-    public static function insertUser($pdo, $newUser)
+    /**
+     * insertUser
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newUser
+     * @return int
+     */
+    public static function insertUser($pdo, $newUser): int
     {
-        $queryResults = Database::insertItem($pdo, $newUser);
+        $queryResults = DatabaseUtils::insertItem($pdo, $newUser);
         return $queryResults;
     }
 
-    public static function updateUser($pdo, $user)
+    /**
+     * updateUser
+     *
+     * @param  mixed $pdo
+     * @param  mixed $user
+     * @return int
+     */
+    public static function updateUser($pdo, $user): int
     {
-        $queryResults = Database::updateTable($pdo, $user);
+        $queryResults = DatabaseUtils::updateTable($pdo, $user);
         return $queryResults;
     }
 
-    public static function getUserByEmail($pdo, $email)
+    /**
+     * getUserByEmail
+     *
+     * @param  mixed $pdo
+     * @param  mixed $email
+     * @return User
+     */
+    public static function getUserByEmail($pdo, $email): User | null
     {
         try {
             $query = "select * from users where email=:email";
@@ -59,15 +104,22 @@ class UserModel
             $stmt->execute();
 
             return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
+            return null;
         } finally {
             $pdo = null;
         }
     }
-    public static function getUserOrders($pdo, $idUser): array|null
+
+    /**
+     * getUserOrders
+     *
+     * @param  mixed $pdo
+     * @param  mixed $idUser
+     * @return array
+     */
+    public static function getUserOrders($pdo, $idUser): array | null
     {
         try {
             $query = "select orders.id_order, orders.date_time, orders.id_address from orders inner join address on address.id_address=orders.id_address inner join users on users.id_user=address.id_user where users.id_user=:id_user;";
@@ -84,16 +136,21 @@ class UserModel
 
 
             return $abstractedObjects;
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             return null;
-
         } finally {
             $pdo = null;
         }
     }
 
+    /**
+     * getUserAddresses
+     *
+     * @param  mixed $pdo
+     * @param  mixed $idUser
+     * @return array
+     */
     public static function getUserAddresses($pdo, $idUser): array|null
     {
         try {
@@ -113,12 +170,18 @@ class UserModel
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             return null;
-
         } finally {
             $pdo = null;
         }
     }
 
+    /**
+     * getUserByName
+     *
+     * @param  mixed $pdo
+     * @param  mixed $name
+     * @return User
+     */
     public static function getUserByName($pdo, $name): User|null
     {
         try {
@@ -129,15 +192,11 @@ class UserModel
             $stmt->bindValue(':name', $name);
             $stmt->execute();
             return User::constructFromArray($stmt->fetch(PDO::FETCH_ASSOC));
-
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            echo ("An error has occured while executing the SQL query in the database." . $e->getMessage());
             return null;
         } finally {
             $pdo = null;
         }
-
     }
-
 }

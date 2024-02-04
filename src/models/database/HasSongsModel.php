@@ -1,49 +1,53 @@
 <?php
 
-namespace VOST\models\database;
+namespace VOST\models;
 
-include_once 'Vinyl.php';
-include_once 'Database.php';
+include_once __DIR__ . '/tables/Vinyl.php';
+include_once __DIR__ . '/database/DatabaseUtils.php';
 
-use VOST\models\HasSongs;
+use VOST\models\tables\HasSongs;
+use VOST\models\database\DatabaseUtils;
 
 class HasSongsModel
 {
 
-    public static function getHasSongs($pdo)
+    
+    /**
+     * deleteHasSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $hasSongs
+     * @return int
+     */
+    public static function deleteHasSong($pdo, $hasSongs) : int
     {
-        $tableName = "songs";
-        $queryResults = Database::getItems($pdo, $tableName);
-
-        foreach ($queryResults as $array)
-            $abstractedObjects[] = HasSongs::constructFromArray($array);
-
-        return $abstractedObjects;
-    }
-
-    public static function getHasSong($pdo, $hasSongs)
-    {
-        $queryResults = Database::getItem($pdo, $hasSongs);
-        $abstractedObject = HasSongs::constructFromArray($queryResults);
-        return $abstractedObject;
-    }
-
-    public static function deleteHasSong($pdo, $hasSongs)
-    {
-        $queryResults = Database::deleteItem($pdo, $hasSongs);
+        $queryResults = DatabaseUtils::deleteItem($pdo, $hasSongs);
         return $queryResults;
     }
-
-    public static function insertHasSong($pdo, $newHasSongs)
+    
+    /**
+     * insertHasSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $newHasSongs
+     * @return int
+     */
+    public static function insertHasSong($pdo, $newHasSongs) : int
     {
-        $queryResults = \VOST\models\database\Database::insertItem($pdo, $newHasSongs);
+        $queryResults = DatabaseUtils::insertIntermediaryItem($pdo, $newHasSongs);
         return $queryResults;
     }
-
-    public static function updateHasSong($pdo, $hasSongs)
+    
+    /**
+     * updateHasSong
+     *
+     * @param  mixed $pdo
+     * @param  mixed $hasSongs
+     * @return int
+     */
+    public static function updateHasSong($pdo, $hasSongs) : int
     {
-        $queryResults = Database::updateTable($pdo, $hasSongs);
+        $queryResults = DatabaseUtils::updateTable($pdo, $hasSongs);
         return $queryResults;
     }
-
 }
