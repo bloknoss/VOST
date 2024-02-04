@@ -55,4 +55,26 @@ class HasSongs
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'has_songs', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
+
+    // Getters & Setters
+
+    public function getIdVinyl()
+    {
+        return $this->id_vinyl;
+    }
+    
+    public function setIdVinyl($id_vinyl)
+    {
+        $this->id_vinyl = $id_vinyl;
+    }
+
+    public function getIdSong()
+    {
+        return $this->id_song;
+    }
+    
+    public function setIdSong($id_song)
+    {
+        $this->id_song = $id_song;
+    }
 }

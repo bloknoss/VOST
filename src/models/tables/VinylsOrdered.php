@@ -50,4 +50,36 @@ class VinylsOrdered
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'vinyls_ordered', 'tableValues' => $_values, 'tableFields' => Utils::getTableFields(($_values)),];
     }
+
+    // Getters & Setters
+
+    public function getIdVinyl()
+    {
+        return $this->id_vinyl;
+    }
+
+    public function getIdOrder()
+    {
+        return $this->id_order;
+    }
+
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    public function setIdVinyl($id_vinyl)
+    {
+        $this->id_vinyl = $id_vinyl;
+    }
+
+    public function setIdOrder($id_order)
+    {
+        $this->id_order = $id_order;
+    }
+
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
 }

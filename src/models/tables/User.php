@@ -72,4 +72,56 @@ class User
         $this->tableInfo = ['tableName' => 'users', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
 
+    //Getters & Setters
+
+    public function getIdUser()
+    {
+        return $this->id_user;
+    }
+
+    public function setIdUser($id_user)
+    {
+        $this->id_user = $id_user;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getIsActive()
+    {
+        return $this->is_active;
+    }
+
+    public function setIsActive($is_active)
+    {
+        $this->is_active = $is_active;
+    }
+
 }

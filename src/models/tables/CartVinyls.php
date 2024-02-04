@@ -49,4 +49,37 @@ class CartVinyls
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'carts_vinyls', 'tableValues' => $_values, 'tableFields' => Utils::getTableFields(($_values)),];
     }
+
+
+    //Gettes & Setters
+
+    public function getId_user()
+    {
+        return $this->id_user;
+    }
+
+    public function setId_user($id_user)
+    {
+        $this->id_user = $id_user;
+    }
+
+    public function getId_vinyl()
+    {
+        return $this->id_vinyl;
+    }
+
+    public function setId_vinyl($id_vinyl)
+    {
+        $this->id_vinyl = $id_vinyl;
+    }
+
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
 }

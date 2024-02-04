@@ -64,4 +64,66 @@ class Song
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'songs', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
+
+    //Getters & Setters
+
+    public function getIdSong()
+    {
+        return $this->id_song;
+    }
+    
+    public function setIdSong($id_song)
+    {
+        $this->id_song = $id_song;
+    }
+    
+    public function getArtist()
+    {
+        return $this->artist;
+    }
+    
+    public function setArtist($artist)
+    {
+        $this->artist = $artist;
+    }
+    
+    public function getCompositor()
+    {
+        return $this->compositor;
+    }
+    
+    public function setCompositor($compositor)
+    {
+        $this->compositor = $compositor;
+    }
+    
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+    
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+    }
+    
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+    
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    }
 }

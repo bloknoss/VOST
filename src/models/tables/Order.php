@@ -56,4 +56,35 @@ class Order
         $_values = Utils::getValuesArray($this);
         $this->tableInfo = ['tableName' => 'orders', 'tableFields' => Utils::getTableFields($_values), 'tableValues' => $_values];
     }
+
+    // Getters & Setters
+    public function getIdOrder()
+    {
+        return $this->id_order;
+    }
+
+    public function getId_address()
+    {
+        return $this->id_address;
+    }
+
+    public function getDate_time()
+    {
+        return $this->date_time;
+    }
+
+    public function setId_order($id_order)
+    {
+        $this->id_order = $id_order;
+    }
+
+    public function setId_address($id_address)
+    {
+        $this->id_address = $id_address;
+    }
+
+    public function setDate_time($date_time)
+    {
+        $this->date_time = $date_time;
+    }// G
 }

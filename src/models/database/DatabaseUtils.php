@@ -41,7 +41,7 @@ class DatabaseUtils
      * @param  mixed $tableName
      * @return array
      */
-    public static function getItems($pdo, $tableName): array | null
+    public static function getItems($pdo, $tableName): array | int
     {
         try {
 
@@ -53,7 +53,7 @@ class DatabaseUtils
             return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return null;
+            return -1;
         } finally {
             $pdo = null;
         }
@@ -66,7 +66,7 @@ class DatabaseUtils
      * @param  mixed $item
      * @return array
      */
-    public static function getItem($pdo, $item): array | null
+    public static function getItem($pdo, $item): array | int
     {
 
         try {
@@ -87,7 +87,7 @@ class DatabaseUtils
             return $resultSet;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return null;
+            return -1;
         } finally {
             $pdo = null;
         }
@@ -100,7 +100,7 @@ class DatabaseUtils
      * @param  mixed $item
      * @return int
      */
-    public static function deleteItem($pdo, $item): int | null
+    public static function deleteItem($pdo, $item): int | int
     {
         try {
 
@@ -121,7 +121,7 @@ class DatabaseUtils
             return $affectedRows;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return null;
+            return -1;
         } finally {
             $pdo = null;
         }
@@ -135,7 +135,7 @@ class DatabaseUtils
      * @param  mixed $newItem
      * @return int
      */
-    public static function insertItem($pdo, $newItem): int | null
+    public static function insertItem($pdo, $newItem): int 
     {
         try {
 
@@ -150,7 +150,7 @@ class DatabaseUtils
             return $stmt->rowCount();
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return null;
+            return -1;
         } finally {
             $pdo = null;
         }
@@ -163,7 +163,7 @@ class DatabaseUtils
      * @param  mixed $newItem
      * @return int
      */
-    public static function insertIntermediaryItem($pdo, $newItem): int | null
+    public static function insertIntermediaryItem($pdo, $newItem): int
     {
         try {
 
@@ -179,7 +179,7 @@ class DatabaseUtils
             return $stmt->rowCount();
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return null;
+            return -1;
         } finally {
             $pdo = null;
         }
@@ -192,7 +192,7 @@ class DatabaseUtils
      * @param  mixed $item
      * @return int
      */
-    public static function updateTable($pdo, $item): int | null
+    public static function updateTable($pdo, $item): int 
     {
         try {
 
@@ -204,7 +204,7 @@ class DatabaseUtils
             return  $stmt->rowCount();
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return null;
+            return -1;
         } finally {
             $pdo = null;
         }
