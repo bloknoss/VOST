@@ -7,7 +7,7 @@
     <title>VOST</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="/css/inicioview.css" />
+    <link rel="stylesheet" href="/css/tienda.css" />
     <link rel="shortcut icon" href="/public/assets/images/logo.png" type="image/x-icon" />
 </head>
 <header class="header">
