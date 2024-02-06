@@ -61,7 +61,7 @@
           <input class="input" type="password" name="pswd" placeholder="Contraseña" required />
           <button>Iniciar Sesión</button>
         </form>
-        <div class="change"><center><button onclick="changeIdentifier()">Change Login id</button></center></div>
+        <div class="change"><center><button onclick="changeIdentifier()">Cambiar login id</button></center></div>
       </div>
 
     </div>

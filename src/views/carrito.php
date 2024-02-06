@@ -24,7 +24,7 @@
             <li><a href="#">Carrito</a></li>
             </ul>
         </nav>
-        <a class="btn" href="#"><button>Inicia Sesión / Registrate</button></a>
+        <a class="btn" href="#"><button>Inicia Sesión</button><button>Registrate</button></a>
 
         <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
 

@@ -231,7 +231,7 @@ label {
   height: 40px;
   margin: 15px auto 10%;
   color: #6eabd4;
-  background: #031015;
+  background: #589ab4;
   font-size: 1rem;
   font-weight: bold;
   border: none;
@@ -241,7 +241,7 @@ label {
 }
 
 .form button:hover {
-  background-color: #c42e2e;
+  background-color: #41788d;
 }
 
 /*--------footer---------*/
