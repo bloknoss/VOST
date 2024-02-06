@@ -59,7 +59,7 @@
                     <input class="input" type="text" name="user" placeholder="Nombre" required />
                     <input class="input" type="email" name="email" placeholder="Email" required />
                     <input class="input" type="password" name="pswd" placeholder="Contraseña" required />
-                    <button>Registrarse</button>
+                    <a href="/src/views/activacion.php"><button>Registrarse</button></a>
                 </form>
             </div>
         </div>

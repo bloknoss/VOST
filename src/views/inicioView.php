@@ -53,12 +53,12 @@
                 </div>
                 <div class="product-content">
                     <div class="product-txt">
-                        <span>80€</span>
-                        <h3>Vinilo "El círculo"</h3>
+                        <span>30€</span>
+                        <h3>Vinilo "Avida Dollars"</h3>
                         <p></p>
                     </div>
                     <div class="product-img">
-                        <img src="/public/assets/images/kaseo.jpg" alt="" />
+                        <img src="/public/assets/images/avida.webp" alt="" />
                     </div>
                 </div>
                 <a href="#" class="btn-1">Comprar</a>
@@ -71,12 +71,12 @@
                 </div>
                 <div class="product-content">
                     <div class="product-txt">
-                        <span>80€</span>
-                        <h3>Vinilo "El círculo"</h3>
+                        <span>30€</span>
+                        <h3>Vinilo "Inkebran<br>table"</h3>
                         <p></p>
                     </div>
                     <div class="product-img">
-                        <img src="/public/assets/images/kaseo.jpg" alt="" />
+                        <img src="/public/assets/images/sfdk.png" alt="" />
                     </div>
                 </div>
                 <a href="#" class="btn-1">Comprar</a>
@@ -89,12 +89,12 @@
                 </div>
                 <div class="product-content">
                     <div class="product-txt">
-                        <span>80€</span>
-                        <h3>Vinilo "El círculo"</h3>
+                        <span>35€</span>
+                        <h3>Vinilo "Divide"</h3>
                         <p></p>
                     </div>
                     <div class="product-img">
-                        <img src="/public/assets/images/kaseo.jpg" alt="" />
+                        <img src="/public/assets/images/divide.jpg" alt="" />
                     </div>
                 </div>
                 <a href="#" class="btn-1">Comprar</a>
@@ -107,12 +107,12 @@
                 </div>
                 <div class="product-content">
                     <div class="product-txt">
-                        <span>80€</span>
-                        <h3>Vinilo "El círculo"</h3>
+                        <span>25€</span>
+                        <h3>Vinilo "Thriller"</h3>
                         <p></p>
                     </div>
                     <div class="product-img">
-                        <img src="/public/assets/images/kaseo.jpg" alt="" />
+                        <img src="/public/assets/images/mj.webp" alt="" />
                     </div>
                 </div>
                 <a href="#" class="btn-1">Comprar</a>
@@ -125,25 +125,7 @@
                 </div>
                 <div class="product-content">
                     <div class="product-txt">
-                        <span>80€</span>
-                        <h3>Vinilo "El círculo"</h3>
-                        <p></p>
-                    </div>
-                    <div class="product-img">
-                        <img src="/public/assets/images/kaseo.jpg" alt="" />
-                    </div>
-                </div>
-                <a href="#" class="btn-1">Comprar</a>
-            </div>
-            <div class="swiper-slide">
-                <div class="icons">
-                    <i class="fa-solid fa-circle-arrow-left"></i>
-                    <img src="/public/assets/images/logo.png" alt="" />
-                    <i class="fa-regular fa-heart"></i>
-                </div>
-                <div class="product-content">
-                    <div class="product-txt">
-                        <span>80€</span>
+                        <span>30€</span>
                         <h3>Vinilo "El círculo"</h3>
                         <p></p>
                     </div>
