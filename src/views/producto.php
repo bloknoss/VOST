@@ -11,34 +11,34 @@
   <link rel="shortcut icon" href="/public/assets/images/logo.png" type="image/x-icon" />
 </head>
 <header class="header">
-  <div class="logo">
-    <!---->
-    <img src="/public/assets/images/logo.png" alt="Logo de la marca" />
-  </div>
-  <nav>
-    <ul class="nav-links">
-    <li><a href="#">Inicio</a></li>
-            <li><a href="#">Tienda</a></li>
-            <li><a href="#">Carrito</a></li>
-    </ul>
-  </nav>
-  <a class="btn" href="#"><button>Inicia Sesión</button><button>Registrate</button></a>
-
-  <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
-
-  <div id="mobile-menu" class="overlay">
-    <a onclick="closeNav()" href="" class="close">&times;</a>
-
-    <div class="overlay-content">
-    <a href="#">Inicio</a>
-
-<a href="#">Tienda</a>
-
-<a href="#">Carrito</a>
-
-<a href="#">Cuenta</a>
+<div class="logo">
+        <!---->
+        <img src="/public/assets/images/logo.png" alt="Logo de la marca" />
     </div>
-  </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/src/views/inicioView.php">Inicio</a></li>
+            <li><a href="/src/views/tienda.php">Tienda</a></li>
+            <li><a href="/src/views/carrito.php">Carrito</a></li>
+        </ul>
+    </nav>
+    <a class="btn" href="/src/views/registro.php"><button>Inicia Sesión</button><button>Registrate</button></a>
+
+    <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
+
+    <div id="mobile-menu" class="overlay">
+        <a onclick="closeNav()" href="" class="close">&times;</a>
+
+        <div class="overlay-content">
+            <a href="/src/views/inicioView.php">Inicio</a>
+
+            <a href="/src/views/tienda.php">Tienda</a>
+
+            <a href="/src/views/carrito.php">Carrito</a>
+
+            <a href="#">Cuenta</a>
+        </div>
+    </div>
 </header>
 
 <body>
