@@ -2,8 +2,8 @@
 
 namespace VOST\controllers;
 
-use VOST\models\database\DatabaseUtils as DbUtils;
 use VOST\models\CartModel;
+use VOST\models\database\DatabaseUtils as DbUtils;
 use VOST\models\tables\CartVinyls;
 
 
@@ -22,7 +22,6 @@ class CartController
         try {
             $pdo = DbUtils::dbConnect();
             $cart = CartModel::getCartVinyls($pdo, $_SESSION["user"]->id_user);
-
             require __DIR__ . '/../views/cart.php';
             exit(200);
         } catch (\PDOException $exception) {
@@ -52,7 +51,8 @@ class CartController
 
         exit(200);
     }
-    public static function deleteCartItem($idVinyl)
+
+    public static function deleteCartItem($idVinyl): never
     {
         if (!isset($_SESSION["isLogged"])) {
             header('Location: http://localhost:80/user/login');
@@ -73,11 +73,11 @@ class CartController
     {
         if (!isset($_SESSION["isLogged"])) {
             header('Location: http://localhost:80/user/login');
-            exit(300);
+            exit(301);
         }
         if (!isset($body->quantity)){
             print 'Debes enviar un cuerpo con la request';
-            exit(200);
+            exit(400);
         }
         $quantity = intval( $body->quantity);
 
@@ -89,7 +89,7 @@ class CartController
             $pdo = DbUtils::dbConnect();
             $respons = CartModel::updateVinylQuantity($pdo, new CartVinyls($_SESSION["user"]->id_user, $idVinyl, $quantity) );
             print $respons;
-            die(200);
+            die(202);
         }catch (\PDOException $e){
             die(500);
         }

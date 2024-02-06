@@ -2,12 +2,10 @@
 
 namespace VOST\controllers;
 
+use VOST\models\AddressModel;
 use VOST\models\database\DatabaseUtils as DbUtils;
 use VOST\models\tables\Address;
-use VOST\models\AddressModel;
-use VOST\controllers\Validator;
 
-require __DIR__ . '/Validator.php';
 require __DIR__ . '/../models/AddressModel.php';
 
 class AddressController
@@ -24,9 +22,11 @@ class AddressController
             die(500);
         }
     }
-    public static function deleteAddress($id_address)
+
+    public static function deleteAddress($id_address): never
     {
         Validator::isLogged();
+
     }
 
     public static function addAddress()

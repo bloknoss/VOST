@@ -79,11 +79,14 @@
 
     function deleteItem(id) {
         console.log(id)
-        throw fetch(`http://localhost:80/user/cart/${id}`, {
+        fetch(`http://localhost:80/user/cart/${id}`, {
             method: 'DELETE'
         }).then(res => {
             return res.text();
-        }).then(res => console.log(res))
+        }).then(res => {
+            console.log(res)
+            location.reload()
+        })
     }
 </script>
 </body>

@@ -2,9 +2,9 @@
 
 namespace VOST\controllers;
 
+use VOST\models\database\DatabaseUtils as DbUtils;
 use VOST\models\tables\User;
 use VOST\models\UserModel;
-use VOST\models\database\DatabaseUtils as DbUtils;
 use VOST\models\Utils as utils;
 
 require __DIR__ . '/../models/tables/User.php';
@@ -13,44 +13,30 @@ require __DIR__ . '/../models/UserModel.php';
 class UserController
 {
 
-    private User $user;
+    private static $regex = [
+        "email" => '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+        "userName" => '/^[a-zA-Z0-9_]{3,16}$/',
+        "password" => null,
+        "activationCode" => '/^\d{6}$/'
+    ];
+
 
     public static function getUserInfo(): void
     {
-        if (!isset($_SESSION["isLogged"])) {
-            require __DIR__ . '/../views/login.php';
-            exit(400);
-        }
+        Validator::isLogged();
         require __DIR__ . '/../views/profile.php';
-
     }
 
 
     public static function login(): void
     {
-        //Comprobacion de que no este logueado y que se hayan enviado un name o username
-        if (isset($_SESSION["isLogged"])) {
-            header('Location: http://localhost:80/user');
-            return;
-        }
-
         if (!isset($_POST["userName"]) && !isset($_POST["email"])) {
-            require __DIR__ . '/../views/login.php';
             print '<h1>Inserte un Nombre o Email</h1>';
-            return;
+            require __DIR__ . '/../views/login.php';
+            die(400);
         }
 
-        //Obtener el nombre
-        $user = '';
-        if (isset($_POST["email"])) {
-            $email = Utils::validateData($_POST["email"]);
-            $user = self::validateLoginEmail($email);
-        }
-        if (isset($_POST["userName"])) {
-            $name = Utils::validateData($_POST["userName"]);
-            $user = self::validateLoginName($name);
-        }
-
+        $user = self::validateLoginName() ?? self::validateLoginEmail();
         self::validateLogin($user, $_POST["password"]);
 
         $_SESSION["isLogged"] = true;
@@ -71,27 +57,20 @@ class UserController
 
     public static function register(): void
     {
-        if (!isset($_POST["userName"]) || !isset($_POST["email"]) || !isset($_POST["password"])) {
-            echo "<h1>Debes introducir todos los campos</h1>";
+        $fields = ['email', 'userName', 'password'];
+        Validator::validateFields($fields, self::$regex, function () {
             require __DIR__ . '/../views/register.php';
             die(400);
-        }
-        self::validateRegister();
+        });
 
         try {
             $pdo = DbUtils::dbConnect();
-            $user = UserModel::getUserByName($pdo, $_POST["userName"]);
+            $user = UserModel::getUserByName($pdo, $_POST["userName"]) ?? UserModel::getUserByEmail($pdo, $_POST["email"]);
 
-            $user = (is_null($user)) ? UserModel::getUserByEmail($pdo, $_POST["email"]) : $user;
-            if (!is_null($user)) {
-                echo "El usuario ya existe";
-                exit(400);
-            }
+            $user = self::validateRegister($user);
+            $result = UserModel::insertUser($pdo, $user);
 
-            $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-            $user = new User(null, $_POST["userName"], $_POST["email"], $password);
-            UserModel::insertUser($pdo, $user);
-
+            echo $result;
             echo 'Usuario creado con exito';
             require __DIR__ . '/../views/login.php';
             die(200);
@@ -103,56 +82,82 @@ class UserController
 
     }
 
-    private static function validateRegister(): void
-    {
-        if (!self::validateName($_POST["userName"])) {
-            echo "<h1>El nombre se usuario no es valido</h1>";
-            require __DIR__ . '/../views/register.php';
-            die(400);
-        }
-        if (!self::validateEmail($_POST["email"])) {
-            echo "<h1>El email no es valido</h1>";
-            require __DIR__ . '/../views/register.php';
-            die(400);
-        }
-
-    }
-
     public static function validateActivation(): void
     {
-        if (!isset($_POST["activationCode"])) {
-            echo 'Inserta el codigo';
-            require __DIR__ . '/../views/login.php';
-            die(400);
-        }
+        Validator::validateFields(['activationCode'], self::$regex, function () {
+            print 'Debes enviar el codigo de activacion';
+            require __DIR__ . '/../views/activate.php';
+            exit(301);
+        });
 
         if (!isset($_SESSION["code"])) {
-            print '<h1>No se ha enviado ningun correo<h1>';
+            print '<h1>No has iniciado sesion para activar tu cuenta<h1>';
             require __DIR__ . '/../views/login.php';
             die(400);
         }
 
-        if ($_SESSION["code"] . '' === $_POST["activationCode"] . '') {
+        if ($_SESSION["code"] . '' !== $_POST["activationCode"] . '') {
+            echo 'codigo incorrecto';
+            require __DIR__ . '/../views/login.php';
+            die(400);
+        }
+        self::activateUser();
+    }
+    public static function editUser(): void
+    {
+        Validator::isLogged();
+        $fields = self::validateEdit();
+        $email = $fields[0];
+        $userName = $fields[1];
+        $is_active = isset($userName);
+
+        try {
+            $pdo = DbUtils::dbConnect();
+            $result = UserModel::updateUser($pdo, new User($_SESSION["user"]->id_user, $userName, $email, null, $is_active));
+            switch ($result) {
+                case 1 :
+                    print '<h1>El usuario se ha actualizado con exito</h1>';
+                    $_SESSION["user"]->name = $userName ?? $_SESSION["user"]->name;
+                    $_SESSION["user"]->email = $email ?? $_SESSION["user"]->email;
+                    http_response_code(202);
+                    break;
+                case -1 :
+                    print '<h1>El nombre/email ya existe pruebe otro</h1>';
+                    http_response_code(400);
+                    break;
+                default:
+                    print 'Error inesperado';
+                    http_response_code(500);
+            };
+            require __DIR__ . '/../views/profile.php';
+            exit();
+
+        } catch (\PDOException $exception) {
+            print '<h1>Error interno</h1>';
+            die(500);
+        }
+    }
+
+    private static function activateUser(): never
+    {
+        try {
             $user = $_SESSION["user"];
             $pdo = DbUtils::dbConnect();
+
             UserModel::updateUser($pdo, new User($user->id_user, null, null, null, true));
             $_SESSION["isLogged"] = true;
+
             echo 'Usuario activado';
             require __DIR__ . '/../views/profile.php';
             exit(200);
+        } catch (\PDOException $e) {
+            die(500);
         }
-
-        echo 'codigo incorrecto';
-        require __DIR__ . '/../views/login.php';
-        die(400);
     }
 
     public static function getUserOrders()
     {
-        if (!isset($_SESSION["isLogged"])){
-            require __DIR__.'/../views/login.php';
-            exit(300);
-        }
+        Validator::isLogged();
         try {
             $pdo = DbUtils::dbConnect();
             $orders = UserModel::getUserOrders($pdo, $_SESSION["user"]->id_user);
@@ -170,48 +175,25 @@ class UserController
             die(500);
         }
     }
-    public static function editUser(): void
+
+
+    private static function validateEdit()
     {
-        if (!isset($_SESSION["isLogged"])) {
-            print '<h1> Debes inicar sesion </h1>';
-            require __DIR__ . '/../views/login.php';
-            die(300);
-        }
+        $fields = ["email", "userName"];
 
-        $userName = $_POST["userName"];
-        $email = $_POST["email"];
-        $is_active = false;
+        $isValidEmail = Validator::validateFields(["email"], self::$regex);
+        $isValidName = Validator::validateFields(["userName"], self::$regex);
 
-        if (!isset($userName) || !self::validateName($userName) || $_SESSION["user"]->name === $userName)
-            $userName = null;
+        $userName = ($isValidName && $_POST["userName"] !== $_SESSION["user"]->name) ? $_POST["userName"] : null;
+        $email = ($isValidEmail && $_POST["email"] !== $_SESSION["user"]->email) ? $_POST["email"] : null;
+        $is_active = isset($email);
 
-
-        if (!isset($email) || !self::validateEmail($email) || $_SESSION["user"]->email === $email) {
-            $email = null;
-            $is_active = null;
-        }
-
-        if (is_null($email) && is_null($userName)){
-            header('Location: http://localhost:80/user');
+        if (!isset($userName) && !isset($email)) {
+            require __DIR__ . '/../views/profile.php';
             exit(200);
         }
-        try {
-            $pdo = DbUtils::dbConnect();
-            $result = UserModel::updateUser($pdo, new User($_SESSION["user"]->id_user, $userName, $email, null, $is_active));
-            $_SESSION["user"]->name = (is_null($userName)) ? $_SESSION["user"]->name : $userName;
-            $_SESSION["user"]->email = (is_null($email)) ? $_SESSION["user"]->email : $email;
-            if ($result) {
-                print '<h1>El usuario se ha actualizado con exito</h1>';
-                header('Location: http://localhost:80/user');
-                exit(200);
-            }
-
-        } catch (\PDOException $exception) {
-            print '<h1>Error interno</h1>';
-            die(500);
-        }
+        return [$email, $userName, $is_active];
     }
-
 
     private static function sendCode(): void
     {
@@ -223,13 +205,19 @@ class UserController
 
     private static function validateLogin($user, $password): void
     {
-        if (is_null($user)) {
+        if (!isset($user)) {
+            require __DIR__ . '/../views/login.php';
+            print 'Email o nombre invalido';
+            exit(400);
+        }
+        if ($user === 'not_found') {
             require __DIR__ . '/../views/login.php';
             echo '<h1>User not found</h1>';
             die(400);
         }
 
         if (!password_verify($password, $user->password)) {
+            require __DIR__ . '/../views/login.php';
             echo '<h1>Contraseña incorrecta</h1>';
             die(400);
         }
@@ -241,36 +229,32 @@ class UserController
             require __DIR__ . '/../views/activate.php';
             exit(300);
         }
-
     }
 
 
-    private static function validateLoginName($name)
+    private static function validateLoginName(): ?User
     {
-        if (!self::validateName($name)) {
-            require __DIR__ . '/../views/login.php';
-            echo 'Inserte un nombre valido';
-            exit(400);
+        if (!Validator::validateFields(["userName", "password"], self::$regex)) {
+            return null;
         }
         try {
             $pdo = DbUtils::dbConnect();
-            return UserModel::getUserByName($pdo, $name);
+            return UserModel::getUserByName($pdo, $_POST["userName"]) ?? 'not_found';
         } catch (\PDOException $exception) {
             print 'Error interno del servidor';
             die(500);
         }
     }
 
-    private static function validateLoginEmail($email)
+    private static function validateLoginEmail(): ?User
     {
-        if (!self::validateEmail($email)) {
-            require __DIR__ . '/../views/login.php';
-            echo 'Inserte un email valido';
-            exit(400);
+        if (!Validator::validateFields(["email", "password"], self::$regex)) {
+            return null;
         }
         try {
             $pdo = DbUtils::dbConnect();
-            return UserModel::getUserByEmail($pdo, $email);
+            $user = UserModel::getUserByEmail($pdo, $_POST["email"]) ?? 'not_found';
+            return $user;
         } catch (\PDOException $exception) {
             print 'Error interno del servidor';
             die(500);
@@ -278,15 +262,16 @@ class UserController
 
     }
 
-    private static function validateEmail($email): bool
+    private static function validateRegister($user): User
     {
-        $regexEmail = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-        return preg_match($regexEmail, $email);
+        if (isset($user)) {
+            echo "El usuario ya existe";
+            require __DIR__ . '/../views/register.php';
+            exit(400);
+        }
+
+        $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+        return new User(null, $_POST["userName"], $_POST["email"], $password);
     }
 
-    private static function validateName($email): bool
-    {
-        $regexUsername = '/^[a-zA-Z0-9_]{3,16}$/';
-        return preg_match($regexUsername, $email);
-    }
 }

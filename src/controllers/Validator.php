@@ -4,24 +4,30 @@ namespace VOST\controllers;
 
 class Validator
 {
-    public static function validateFields($fields, $regex, $handler)
+    public static function validateFields($fields, $regex, $handler = null)
     {
+        if (!isset($handler)) {
+            $handler = fn() => false;
+        }
+        
         foreach ($fields as $field) {
             if (!isset($_POST[$field])) {
-                print 'Debes incluir todos los campos';
-                $handler();
+                return $handler();
             }
             if (strlen($_POST[$field]) > 255) {
                 print 'Los atributos dados son demasiado largos';
-                $handler();
+                return $handler();
             }
+            
+            if (is_null($regex[$field])) continue;
+
             if (!preg_match($regex[$field],$_POST[$field])){
                 print $_POST[$field]. ' invalido';
-                $handler();
+                return $handler();
             }
         }
+        return true;
     }
-
 
     public static function isLogged()
     {
