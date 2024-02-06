@@ -11,7 +11,7 @@
 </ul>
 <?php endfor; ?>
 <h1>New address</h1>
-<form action="/user/address" method="post">
+<form action="/user/address" method="post" id="addAddress">
     <label for="postal">Codigo postal
         <input type="number" max="99999" min="10000" name="postal_code" id="postal">
     </label>
@@ -38,8 +38,23 @@
         })
           .then(res =>{
               console.log(res)
+              location.reload()
           })
     }
+    let form = document.getElementById('addAddress')
+    form.addEventListener('submit', (ev)=>{
+        ev.preventDefault();
+        let data = new FormData(form)
+
+        fetch('http://localhost:80/user/address', {
+            method: 'POST',
+            body : data
+        }).then(res => res.text())
+            .then(res => {
+                console.log(res)
+                location.reload()
+            })
+    })
 </script>
 </body>
 <?php

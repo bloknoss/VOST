@@ -11,8 +11,8 @@ class Order
 {
 
     public $id_order;
-    public $id_address;
     public $date_time;
+    public $id_address;
     public $tableInfo;
     
     /**
@@ -47,7 +47,7 @@ class Order
      * @param  mixed $date_time
      * @return void
      */
-    public function __construct($id_order, $id_address, $date_time)
+    public function __construct($id_order, $date_time, $id_address)
     {
         $this->id_order = $id_order;
         $this->id_address = $id_address;

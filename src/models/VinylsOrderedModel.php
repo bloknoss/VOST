@@ -3,6 +3,7 @@
 namespace VOST\models;
 
 include_once __DIR__ . '/database/DatabaseUtils.php';
+include_once __DIR__ . '/tables/VinylsOrdered.php';
 
 use VOST\models\Database\DatabaseUtils;
 
@@ -31,7 +32,7 @@ class VinylsOrderedModel
      */
     public static function insertVinylOrdered($pdo, $newVinylsOrdered) : int
     {
-        $queryResults = DatabaseUtils::insertItem($pdo, $newVinylsOrdered);
+        $queryResults = DatabaseUtils::insertIntermediaryItem($pdo, $newVinylsOrdered);
         return $queryResults;
     }
     

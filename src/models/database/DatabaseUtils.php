@@ -109,7 +109,8 @@ class DatabaseUtils
             $fieldValue = $item->tableInfo['tableValues'][$fieldId];
 
             $query = "DELETE from $tableName where $fieldId=:$fieldId;";
-
+            print_r($fieldValue);
+            print_r($query);
             $stmt = $pdo->prepare($query);
 
             $stmt->bindValue(":$fieldId", $fieldValue);
@@ -144,7 +145,7 @@ class DatabaseUtils
             $stmt = $pdo->prepare($query);
 
             $stmt = QueryUtils::statementValueBinder($stmt, $newItem);
-
+            print_r($stmt);
             $stmt->execute();
 
             return $stmt->rowCount();

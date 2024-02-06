@@ -42,8 +42,9 @@
         <h2>Stock: <?= $vinyls[$i]->stock ?></h2>
         <h2>Stock: <?= $vinyls[$i]->duration ?></h2>
         <div>
+            <span style="display: none" id="id_vinyl<?= $i?>"><?= $vinyls[$i]->id_vinyl ?></span>
             <form id="form<?= $i?>" action="/user/cart" method="post" target="_blank">
-                <input style="display: none" type="text" name="id_vinyl" value="<?= $vinyls[$i]->id_vinyl ?>">
+                <input style="display: none" type="number" name="quantity" value="<?= $vinyls[$i]->id_vinyl ?>">
                 <button id="addButton<?= $i?>" type="submit">Añadir al carrito</button>
             </form>
             <button><a href="/vinyl/<?=$vinyls[$i]->id_vinyl?>">Ver mas</a></button>
@@ -57,8 +58,9 @@
         form.addEventListener('submit', async (ev) => {
             ev.preventDefault()
             let data = new FormData(form);
+            let id_vinyl = document.getElementById('id_vinyl' + i).innerText
             let button = document.getElementById(`addButton${i}`)
-            fetch('http://localhost:80/user/cart', {method: 'POST', body: data })
+            fetch(`http://localhost:80/user/cart/${id_vinyl}`, {method: 'POST', body: data })
                 .then(response => {
                     if (response.status === 200)
                         button.innerHTML = 'Añadido'
