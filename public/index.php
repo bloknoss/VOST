@@ -4,4 +4,4 @@
 
 $rutaVistas = "../src/views/";
 
-require_once $rutaVistas . "producto.php";
+require_once $rutaVistas . "tienda.php";

@@ -50,6 +50,21 @@
 
     <div class="productos">
         <div class="carta">
+            <div class="card-img"><img src="/public/assets/images/avida.webp" alt="" /></div>
+            <div class="info-card">
+                <div class="text-product">
+                    <h3>Avida Dollars</h3>
+                    <p class="category">C.Tangana</p>
+                </div>
+                <div class="price">
+                    <h3>30€</h3>
+                </div>
+            </div>
+            <div class="comprar">
+                <button>Ver más</button>
+            </div>
+        </div>
+        <div class="carta">
             <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
             <div class="info-card">
                 <div class="text-product">
@@ -58,6 +73,51 @@
                 </div>
                 <div class="price">
                     <h3>30€</h3>
+                </div>
+            </div>
+            <div class="comprar">
+                <button>Ver más</button>
+            </div>
+        </div>
+        <div class="carta">
+            <div class="card-img"><img src="/public/assets/images/kaseo.jpg" height="400px" /></div>
+            <div class="info-card">
+                <div class="text-product">
+                    <h3>El Círculo</h3>
+                    <p class="category">Kase.O</p>
+                </div>
+                <div class="price">
+                    <h3>30€</h3>
+                </div>
+            </div>
+            <div class="comprar">
+                <button>Ver más</button>
+            </div>
+        </div>
+        <div class="carta">
+            <div class="card-img"><img src="/public/assets/images/mj.webp" height="400px" /></div>
+            <div class="info-card">
+                <div class="text-product">
+                    <h3>Thriller</h3>
+                    <p class="category">Michael Jackson</p>
+                </div>
+                <div class="price">
+                    <h3>25€</h3>
+                </div>
+            </div>
+            <div class="comprar">
+                <button>Ver más</button>
+            </div>
+        </div>
+        <div class="carta">
+            <div class="card-img"><img src="/public/assets/images/divide.jpg" height="400px" /></div>
+            <div class="info-card">
+                <div class="text-product">
+                    <h3>Divide</h3>
+                    <p class="category">Ed Sheran</p>
+                </div>
+                <div class="price">
+                    <h3>35€</h3>
                 </div>
             </div>
             <div class="comprar">
@@ -124,111 +184,7 @@
                 <button>Ver más</button>
             </div>
         </div>
-        <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
-            <div class="info-card">
-                <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
-                </div>
-                <div class="price">
-                    <h3>30€</h3>
-                </div>
-            </div>
-            <div class="comprar">
-                <button>Ver más</button>
-            </div>
-        </div>
-        <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
-            <div class="info-card">
-                <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
-                </div>
-                <div class="price">
-                    <h3>30€</h3>
-                </div>
-            </div>
-            <div class="comprar">
-                <button>Ver más</button>
-            </div>
-        </div>
-        <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
-            <div class="info-card">
-                <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
-                </div>
-                <div class="price">
-                    <h3>30€</h3>
-                </div>
-            </div>
-            <div class="comprar">
-                <button>Ver más</button>
-            </div>
-        </div>
-        <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
-            <div class="info-card">
-                <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
-                </div>
-                <div class="price">
-                    <h3>30€</h3>
-                </div>
-            </div>
-            <div class="comprar">
-                <button>Ver más</button>
-            </div>
-        </div>
-        <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
-            <div class="info-card">
-                <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
-                </div>
-                <div class="price">
-                    <h3>30€</h3>
-                </div>
-            </div>
-            <div class="comprar">
-                <button>Ver más</button>
-            </div>
-        </div>
-        <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
-            <div class="info-card">
-                <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
-                </div>
-                <div class="price">
-                    <h3>30€</h3>
-                </div>
-            </div>
-            <div class="comprar">
-                <button>Ver más</button>
-            </div>
-        </div>
-        <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
-            <div class="info-card">
-                <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
-                </div>
-                <div class="price">
-                    <h3>30€</h3>
-                </div>
-            </div>
-            <div class="comprar">
-                <button>Ver más</button>
-            </div>
-        </div>
+
     </div>
 </body>
 <footer>
