@@ -9,6 +9,7 @@ session_start();
 $method = $_SERVER["REQUEST_METHOD"];
 $uri = $_SERVER["REQUEST_URI"];
 
+
 $routerInfo = $dispatcher->dispatch($method, $uri);
 
 switch ($routerInfo[0]){
@@ -17,8 +18,7 @@ switch ($routerInfo[0]){
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED;
         echo 'Method not allowed';
-        http_response_code(400);
-        break;
+        exit(405);
 
     case FastRoute\Dispatcher::FOUND;
         $handler = $routerInfo[1];

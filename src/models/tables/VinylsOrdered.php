@@ -1,12 +1,11 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\tables;
 
 use VOST\models\Utils;
 use VOST\models\tables\Vinyl;
 
 include_once __DIR__ . '/Vinyl.php';
-include_once __DIR__ . '/../Utils.php';
 
 class VinylsOrdered
 {

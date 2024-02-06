@@ -142,36 +142,6 @@ class UserModel
         }
     }
 
-    /**
-     * getUserAddresses
-     *
-     * @param  mixed $pdo
-     * @param  mixed $idUser
-     * @return array
-     */
-    public static function getUserAddresses($pdo, $idUser): array|null
-    {
-        try {
-            $query = "select id_address, postal_code, city, street, number, address.id_user from address inner join users on users.id_user=address.id_user where users.id_user=:id_user;";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindValue(":id_user", $idUser);
-            $stmt->execute();
-
-            $addresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $abstractedObjects = [];
-
-            foreach ($addresses as $address)
-                $abstractedObjects[] = Address::constructFromArray($address);
-
-            return $abstractedObjects;
-        } catch (PDOException $e) {
-            error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
-            return null;
-        } finally {
-            $pdo = null;
-        }
-    }
 
     /**
      * getUserByName

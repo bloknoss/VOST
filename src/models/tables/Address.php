@@ -4,8 +4,6 @@ namespace VOST\models\tables;
 
 use VOST\models\Utils;
 
-include_once __DIR__ . '/../Utils.php';
-
 class Address
 {
     public $id_address;
@@ -35,7 +33,7 @@ class Address
      * @param  mixed $id
      * @return Address
      */
-    public static function constructIdObject($id) : Address
+    public static function  constructIdObject($id) : Address
     {
         return new Address($id, ...[null, null, null, null, null, null]);
     }

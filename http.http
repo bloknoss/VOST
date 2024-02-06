@@ -1,7 +1,5 @@
-POST http://localhost:80/user/activate
-Content-Type: application/x-www-form-urlencoded
+POST http://localhost:80/
 
-email=Ramon&
-password=123
+
 
 

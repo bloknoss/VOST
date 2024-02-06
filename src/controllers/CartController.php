@@ -12,6 +12,24 @@ require __DIR__ . '/../models/CartModel.php';
 
 class CartController
 {
+    public static function getCart()
+    {
+        if (!isset($_SESSION["isLogged"])) {
+            header('Location: http://localhost:80/user/login');
+            exit(300);
+        }
+
+        try {
+            $pdo = DbUtils::dbConnect();
+            $cart = CartModel::getCartVinyls($pdo, $_SESSION["user"]->id_user);
+
+            require __DIR__ . '/../views/cart.php';
+            exit(200);
+        } catch (\PDOException $exception) {
+            die(500);
+        }
+
+    }
     public static function addToCart()
     {
         if (!isset($_SESSION["isLogged"])) {
@@ -34,27 +52,7 @@ class CartController
 
         exit(200);
     }
-
-    public static function getCart()
-    {
-        if (!isset($_SESSION["isLogged"])) {
-            header('Location: http://localhost:80/user/login');
-            exit(300);
-        }
-
-        try {
-            $pdo = DbUtils::dbConnect();
-            $cart = CartModel::getCartVinyls($pdo, $_SESSION["user"]->id_user);
-
-            require __DIR__ . '/../views/cart.php';
-            exit(200);
-        } catch (\PDOException $exception) {
-            die(500);
-        }
-
-    }
-
-    public static function deleteCart($idVinyl)
+    public static function deleteCartItem($idVinyl)
     {
         if (!isset($_SESSION["isLogged"])) {
             header('Location: http://localhost:80/user/login');
@@ -71,15 +69,27 @@ class CartController
         }
     }
 
-    public static function updateCart($idVinyl)
+    public static function updateCart($idVinyl, $body)
     {
         if (!isset($_SESSION["isLogged"])) {
             header('Location: http://localhost:80/user/login');
             exit(300);
         }
+        if (!isset($body->quantity)){
+            print 'Debes enviar un cuerpo con la request';
+            exit(200);
+        }
+        $quantity = intval( $body->quantity);
+
+        if ($quantity <= 0){
+            print 'No puedes tener menos de 1 vinilo en el carrito';
+        }
 
         try {
-
+            $pdo = DbUtils::dbConnect();
+            $respons = CartModel::updateVinylQuantity($pdo, new CartVinyls($_SESSION["user"]->id_user, $idVinyl, $quantity) );
+            print $respons;
+            die(200);
         }catch (\PDOException $e){
             die(500);
         }

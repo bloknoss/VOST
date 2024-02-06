@@ -3,11 +3,18 @@
 use VOST\controllers\UserController;
 use VOST\controllers\VinylController;
 use VOST\controllers\CartController;
+use VOST\controllers\AddressController;
+use VOST\models\Utils;
 
 require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/VinylController.php';
 require __DIR__ . '/CartController.php';
+require __DIR__ . '/AddressController.php';
+require __DIR__ . '/../models/Utils.php';
 
+foreach ($_POST as $postField => $post) {
+    $_POST[$postField] = Utils::validateData($post);
+}
 return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {
     $routeCollector->get('/', function () {
         require __DIR__ . '/../views/index.php';
@@ -47,10 +54,24 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
         $routeCollector->post('/edit', function () {
             UserController::editUser();
         });
-
-        $routeCollector->get('/orders', function () {
-            UserController::getUserOrders();
+        $routeCollector->addGroup('/address', function (FastRoute\RouteCollector $routeCollector){
+            $routeCollector->get('', function (){
+                AddressController::getAdresses();
+            });
+            $routeCollector->post('', function () {
+                AddressController::addAddress();
+            });
         });
+
+        $routeCollector->addGroup('/orders', function (FastRoute\RouteCollector $routeCollector) {
+            $routeCollector->get('', function () {
+                UserController::getUserOrders();
+            });
+            $routeCollector->post('', function () {
+
+            });
+        });
+
 
         $routeCollector->addGroup('/cart', function (FastRoute\RouteCollector $routeCollector) {
 
@@ -62,12 +83,13 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
                 CartController::getCart();
             });
 
-            $routeCollector->delete('/{id:\d+}', function ($idVinyl){
-                CartController::deleteCart($idVinyl);
+            $routeCollector->delete('/{id:\d+}', function ($idVinyl) {
+                CartController::deleteCartItem($idVinyl);
             });
 
-            $routeCollector->put('/{id:\d+}', function ($idVinyl){
-                CartController::updateCart($idVinyl);
+            $routeCollector->put('/{id:\d+}', function ($idVinyl) {
+                $body = file_get_contents('php://input');
+                CartController::updateCart($idVinyl['id'], json_decode($body));
             });
         });
 

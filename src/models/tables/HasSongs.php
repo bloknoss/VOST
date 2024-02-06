@@ -1,11 +1,10 @@
 <?php
 
-namespace VOST\models;
+namespace VOST\models\tables;
 
 use VOST\models\tables\Song;
 use VOST\models\Utils;
 
-include_once __DIR__ . '/../Utils.php';
 include_once __DIR__ . '/Song.php';
 
 class HasSongs
