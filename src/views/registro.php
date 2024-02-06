@@ -26,9 +26,9 @@
     </div>
     <nav>
         <ul class="nav-links">
-            <li><a href="#">Generos</a></li>
-            <li><a href="#">hhhhhhh</a></li>
-            <li><a href="#">hhhhhhh</a></li>
+        <li><a href="#">Inicio</a></li>
+            <li><a href="#">Tienda</a></li>
+            <li><a href="#">Carrito</a></li>
         </ul>
     </nav>
     <a class="btn" href="#"><button>Inicia Sesión</button><button>Registrate</button></a>
@@ -39,13 +39,13 @@
         <a onclick="closeNav()" href="" class="close">&times;</a>
 
         <div class="overlay-content">
-            <a href="#">Generos</a>
+        <a href="#">Inicio</a>
 
-            <a href="#">hhhhhhh</a>
+<a href="#">Tienda</a>
 
-            <a href="#">hhhhhhh</a>
+<a href="#">Carrito</a>
 
-            <a href="#">Contacto</a>
+<a href="#">Cuenta</a>
         </div>
     </div>
 </header>

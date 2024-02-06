@@ -13,7 +13,7 @@
 <header class="header">
     <div class="logo">
         <!---->
-        <img src="img/logo.png" alt="Logo de la marca" />
+        <img src="/public/assets/images/logo.png" alt="Logo de la marca" />
     </div>
     <nav>
         <ul class="nav-links">
