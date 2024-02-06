@@ -125,11 +125,11 @@
             </div>
         </div>
         <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
+            <div class="card-img"><img src="/public/assets/images/br.jpg" alt="" /></div>
             <div class="info-card">
                 <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
+                    <h3>Bohemian Rhapsody</h3>
+                    <p class="category">Queen</p>
                 </div>
                 <div class="price">
                     <h3>30€</h3>
@@ -140,11 +140,11 @@
             </div>
         </div>
         <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
+            <div class="card-img"><img src="/public/assets/images/adele.jpg" alt="" /></div>
             <div class="info-card">
                 <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
+                    <h3>Someone like you</h3>
+                    <p class="category">Adele</p>
                 </div>
                 <div class="price">
                     <h3>30€</h3>
@@ -155,11 +155,11 @@
             </div>
         </div>
         <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
+            <div class="card-img"><img src="/public/assets/images/mmcd.webp" height="400px"alt="" /></div>
             <div class="info-card">
                 <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
+                    <h3>Me Muevo Con Dios</h3>
+                    <p class="category">Cruz Cafuné</p>
                 </div>
                 <div class="price">
                     <h3>30€</h3>
@@ -170,14 +170,14 @@
             </div>
         </div>
         <div class="carta">
-            <div class="card-img"><img src="/public/assets/images/sfdk.png" alt="" /></div>
+            <div class="card-img"><img src="/public/assets/images/foyone.png"  /></div>
             <div class="info-card">
                 <div class="text-product">
-                    <h3>Inkebrantable</h3>
-                    <p class="category">SFDK</p>
+                    <h3>Presidente</h3>
+                    <p class="category">Foyone</p>
                 </div>
                 <div class="price">
-                    <h3>30€</h3>
+                    <h3>20€</h3>
                 </div>
             </div>
             <div class="comprar">
