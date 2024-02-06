@@ -191,36 +191,36 @@
             </div>
             <div class="card">
                 <div class="card-img">
-                    <img src="/public/assets/images/sfdk.jpg" alt="producto-2" />
+                    <img src="/public/assets/images/mj.webp" alt="producto-2" />
                 </div>
                 <div class="info-card">
                     <div class="text-product">
-                        <h3>Inkebrantable</h3>
-                        <p class="category">SFDK</p>
+                        <h3>Thriller</h3>
+                        <p class="category">Michael Jackson</p>
                     </div>
                     <div class="price"></div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-img">
-                    <img src="/public/assets/images/sfdk.jpg" alt="producto-3" />
+                    <img src="/public/assets/images/avida.webp" alt="producto-3" />
                 </div>
                 <div class="info-card">
                     <div class="text-product">
-                        <h3>Inkebrantable</h3>
-                        <p class="category">SFDK</p>
+                        <h3>Avida Dollars</h3>
+                        <p class="category">C.tangana</p>
                     </div>
                     <div class="price"></div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-img">
-                    <img src="/public/assets/images/sfdk.jpg" alt="producto-4" />
+                    <img src="/public/assets/images/divide.jpg" alt="producto-4" />
                 </div>
                 <div class="info-card">
                     <div class="text-product">
-                        <h3>Inkebrantable</h3>
-                        <p class="category">SFDK</p>
+                        <h3>Divide</h3>
+                        <p class="category">Ed Sheran</p>
                     </div>
                     <div class="price"></div>
                 </div>
