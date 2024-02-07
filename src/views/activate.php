@@ -45,8 +45,8 @@
 
     <div class="container">
         <div class="main">
-            <div class="activation" action="/activation" method="post">
-                <form class="form">
+            <div class="activation">
+                <form class="form" action="/user/activate" method="post">
                     <center>
                         <h1>Activación</h1>
                     </center>

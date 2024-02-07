@@ -23,12 +23,12 @@ class CartController
             $pdo = DbUtils::dbConnect();
             $cart = CartModel::getCartVinyls($pdo, $_SESSION["user"]->id_user);
             $addresses = AddressModel::getUserAddresses($pdo, $_SESSION["user"]->id_user);
+    
             require __DIR__ . '/../views/cart.php';
             exit(202);
         } catch (\PDOException $exception) {
             die(500);
         }
-
     }
 
     public static function addToCart($id_vinyl): never
@@ -50,7 +50,6 @@ class CartController
         } catch (\PDOException $e) {
             die(500);
         }
-
     }
 
     public static function deleteCartItem($id_vinyl): never
@@ -67,7 +66,7 @@ class CartController
         }
     }
 
-    public static function deleteCart():never
+    public static function deleteCart(): never
     {
         Validator::isLogged();
 
@@ -78,7 +77,6 @@ class CartController
             print $result;
             $result = ($result > 1) ? 1 : $result;
             exit(Validator::$statusCode[$result]);
-
         } catch (\PDOException $exception) {
             die(500);
         }

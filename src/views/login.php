@@ -58,7 +58,7 @@
                 <form class="form" action="/user/login" method="post" id="loginForm">
                     <label for="identifier" aria-hidden="true">Iniciar sesión</label>
                     <input class="input" type="email" name="email" placeholder="Email/Nombre" id="identifier" required />
-                    <input class="input" type="password" name="pswd" placeholder="Contraseña" required />
+                    <input class="input" type="password" name="password" placeholder="Contraseña" required />
                     <button>Iniciar Sesión</button>
                 </form>
                 <div class="change">

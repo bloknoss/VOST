@@ -53,13 +53,13 @@
 <body>
     <div class="container">
         <div class="main">
-            <div class="register" action="/register" method="post">
-                <form class="form">
+            <div class="register">
+                <form class="form" action="/user/register" method="post">
                     <label for="chk" aria-hidden="true"><b>Registrate</b></label>
-                    <input class="input" type="text" name="user" placeholder="Nombre" required />
+                    <input class="input" type="text" name="userName" placeholder="Nombre" required />
                     <input class="input" type="email" name="email" placeholder="Email" required />
-                    <input class="input" type="password" name="pswd" placeholder="Contraseña" required />
-                    <a href="/src/views/activacion.php"><button>Registrarse</button></a>
+                    <input class="input" type="password" name="password" placeholder="Contraseña" required />
+                    <button type="submit">Registrarse</button>
                 </form>
             </div>
         </div>

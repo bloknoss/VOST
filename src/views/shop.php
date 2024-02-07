@@ -1,66 +1,138 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VOST</title>
-    <style>
-        body {
-            display: flex;
-            flex-flow: column;
-            gap: 3rem;
-            align-items: center;
 
-        }
-
-        .vinyl {
-            align-items: center;
-            padding: 1rem;
-            background: #464450;
-            color: whitesmoke;
-            display: flex;
-            flex-flow: column wrap;
-            width: 30vw;
-            border-radius: 1rem;
-            gap: 0.5rem;
-        }
-
-        .vinyl > div {
-            display: flex;
-            gap: 0.2rem;
-            background: #464450;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/css/tienda.css" />
+    <link rel="shortcut icon" href="/public/assets/images/logo.png" type="image/x-icon" />
 </head>
-<body>
-<?php for ($i = 0; $i < count($vinyls); $i++): ?>
-    <div class="vinyl">
-        <h2>Nomnbre: <?= $vinyls[$i]->name ?></h2>
-        <h2>Precio: <?= $vinyls[$i]->price ?>€</h2>
-        <h2>Stock: <?= $vinyls[$i]->stock ?></h2>
-        <h2>Stock: <?= $vinyls[$i]->duration ?></h2>
-        <div>
-            <span style="display: none" id="id_vinyl<?= $i?>"><?= $vinyls[$i]->id_vinyl ?></span>
-            <form id="form<?= $i?>" action="/user/cart" method="post" target="_blank">
-                <input style="display: none" type="number" name="quantity" value="<?= $vinyls[$i]->id_vinyl ?>">
-                <button id="addButton<?= $i?>" type="submit">Añadir al carrito</button>
-            </form>
-            <button><a href="/vinyl/<?=$vinyls[$i]->id_vinyl?>">Ver mas</a></button>
+<header class="header">
+    <div class="logo">
+        <!---->
+        <img src="/public/assets/images/logo.png" alt="Logo de la marca" />
+    </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/src/views/inicioView.php">Inicio</a></li>
+            <li><a href="/src/views/tienda.php">Tienda</a></li>
+            <li><a href="/src/views/carrito.php">Carrito</a></li>
+        </ul>
+    </nav>
+    <a class="btn" href="/src/views/registro.php"><button>Inicia Sesión</button><button>Registrate</button></a>
+
+    <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
+
+    <div id="mobile-menu" class="overlay">
+        <a onclick="closeNav()" href="" class="close">&times;</a>
+
+        <div class="overlay-content">
+            <a href="/src/views/inicioView.php">Inicio</a>
+
+            <a href="/src/views/tienda.php">Tienda</a>
+
+            <a href="/src/views/carrito.php">Carrito</a>
+
+            <a href="#">Cuenta</a>
         </div>
     </div>
-<?php endfor ?>
-<script>
+</header>
 
-    for (let i = 0; i < <?=count($vinyls)?>; i++) {
+<body>
+    <div class="container">
+        <div class="lineas"></div>
+        <h1>TIENDA</h1>
+        <div class="lineas"></div>
+    </div>
+
+    <div class="productos">
+        <?php
+        $j = 0;
+        use VOST\models\tables\Vinyl;
+
+        foreach ($vinyls as $vinyl) : ?>
+            <div class="carta">
+                <div class="card-img"><img src="/public/assets/images/avida.webp" alt="" /></div>
+                <div class="info-card">
+                    <div class="text-product">
+                        <h3><?= $vinyl->name ?></h3>
+                    </div>
+                    <div class="price">
+                        <h3><?= $vinyl->price ?> €</h3>
+                    </div>
+                </div>
+                <div class="comprar">
+                    <button><a href="/vinyl/<?=$vinyl->id_vinyl?>">Ver mas</a></button>
+                </div>
+                <div>
+                <input style="display: none;" type="number" value="<?=$vinyl->id_vinyl?>" id="id_vinyl<?=$j?>" name="id_vinyl">
+                <form action="" id="form<?=$j?>" method="post">
+                    <input style="display: none;" type="number" value="1" name="quantity">
+                    <button type="submit" id="addButton<?=$j?>">
+                        Añadir al carrito
+                    </button>
+                    </form>
+                </div>
+            </div>
+            <?php $j++?>
+        <?php endforeach ?>
+
+    </div>
+</body>
+<footer>
+    <div class="contenedor-footer">
+        <div class="content-foo">
+            <h4>Atención al cliente</h4>
+            <ul>
+                <li><a href="#">Q&A</a></li>
+                <li><a href="#">Envíos y pagos</a></li>
+                <li><a href="#">Cambios y devoluciones</a></li>
+                <li><a href="#">vostMusic@gmail.com</a></li>
+            </ul>
+        </div>
+        <div class="content-foo">
+            <h4>Empresa</h4>
+            <ul>
+                <li><a href="#">Sobre nosotros</a></li>
+                <li><a href="#">Política de privacidad</a></li>
+                <li><a href="#">Política de cookies</a></li>
+                <li><a href="#">Condiciones generales</a></li>
+            </ul>
+        </div>
+        <div class="content-foo">
+            <h4>Redes sociales</h4>
+            <div class="social-links">
+                <a href="#"><img src="/public/assets/images/fb.png" alt="Logo de la marca" height="40px" /></a>
+                <a href="#"><img src="/public/assets/images/tw.png" alt="Logo de la marca" height="40px" /></a>
+                <a href="#"><img src="/public/assets/images/ig.png" alt="Logo de la marca" height="40px" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="content-fooo">
+        <h2 class="titulo-final">&copy; VOST</h2>
+        <img src="/public/assets/images/metpago.png" alt="metpago" height="40px" />
+    </div>
+</footer>
+
+<!---->
+<script type="text/javascript" src="nav.js"></script>
+
+<script>
+    for (let i = 0; i < <?= count($vinyls) ?>; i++) {
         let form = document.getElementById(`form${i}`);
         form.addEventListener('submit', async (ev) => {
             ev.preventDefault()
             let data = new FormData(form);
-            let id_vinyl = document.getElementById('id_vinyl' + i).innerText
+            let id_vinyl = document.getElementById('id_vinyl' + i).value
             let button = document.getElementById(`addButton${i}`)
-            fetch(`http://localhost:80/user/cart/${id_vinyl}`, {method: 'POST', body: data })
+            console.log(id_vinyl);
+            fetch(`http://localhost:80/user/cart/${id_vinyl}`, {
+                    method: 'POST',
+                    body: data
+                })
                 .then(response => {
                     if (response.status === 200)
                         button.innerHTML = 'Añadido'
@@ -68,10 +140,9 @@
                         button.innerHTML = 'Bad request'
                     return response.text()
                 })
-                .then(res => console.log(res))
+                .then(res => console.log())
         })
     }
-
 </script>
 </body>
 

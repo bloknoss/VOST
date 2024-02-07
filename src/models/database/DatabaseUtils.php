@@ -136,7 +136,7 @@ class DatabaseUtils
      * @param  mixed $newItem
      * @return int
      */
-    public static function insertItem($pdo, $newItem): int 
+    public static function insertItem($pdo, $newItem): int
     {
         try {
 
@@ -145,7 +145,7 @@ class DatabaseUtils
             $stmt = $pdo->prepare($query);
 
             $stmt = QueryUtils::statementValueBinder($stmt, $newItem);
-            print_r($stmt);
+
             $stmt->execute();
 
             return $stmt->rowCount();
@@ -192,7 +192,7 @@ class DatabaseUtils
      * @param  mixed $item
      * @return int
      */
-    public static function updateTable($pdo, $item): int 
+    public static function updateTable($pdo, $item): int
     {
         try {
 

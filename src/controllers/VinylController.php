@@ -19,7 +19,7 @@ class VinylController
         try {
             $pdo = Utils::dbConnect();
             $vinyls = VinylModel::getVinyls($pdo);
-            require __DIR__.'/../views/vinyl.php';
+            require __DIR__.'/../views/shop.php';
             die(200);
         }catch (\PDOException $exception){
             die(500);
@@ -31,12 +31,12 @@ class VinylController
 
         try {
             $pdo = Utils::dbConnect();
-            $vinyl = VinylModel::getVinyl($pdo, Vinyl::constructIdObject(intval($id)));
-            if (is_null($vinyl)){
+            $vinyls = VinylModel::getVinyl($pdo, Vinyl::constructIdObject(intval($id)));
+            if (is_null($vinyls)){
                 print 'not found';
                 die(200);
             }
-            $songs = VinylModel::getSongs($pdo, $vinyl->id_vinyl);
+            $songs = VinylModel::getSongs($pdo, $vinyls->id_vinyl);
             require __DIR__.'/../views/vinyl.php';
             die(200);
         }catch (\PDOException $exception){

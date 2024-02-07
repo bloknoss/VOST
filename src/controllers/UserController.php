@@ -72,7 +72,6 @@ class UserController
             require __DIR__ . '/../views/register.php';
             die(400);
         });
-
         try {
             $pdo = DbUtils::dbConnect();
             $user = UserModel::getUserByName($pdo, $_POST["userName"]) ?? UserModel::getUserByEmail($pdo, $_POST["email"]);
@@ -215,7 +214,6 @@ class UserController
     {
         if (!isset($user)) {
             require __DIR__ . '/../views/login.php';
-            print 'Email o nombre invalido';
             exit(400);
         }
         if ($user === 'not_found') {
@@ -240,7 +238,7 @@ class UserController
     }
 
 
-    private static function validateLoginName(): ?User
+    private static function validateLoginName(): User|string|null
     {
         if (!Validator::validateFields(["userName", "password"], self::$regex)) {
             return null;
@@ -254,7 +252,7 @@ class UserController
         }
     }
 
-    private static function validateLoginEmail(): ?User
+    private static function validateLoginEmail(): User|string|null
     {
         if (!Validator::validateFields(["email", "password"], self::$regex)) {
             return null;

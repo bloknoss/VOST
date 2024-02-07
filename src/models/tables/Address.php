@@ -7,39 +7,39 @@ use VOST\models\Utils;
 class Address
 {
     public $id_address;
-    public $id_user;
     public $postal_code;
     public $city;
     public $street;
     public $number;
+    public $id_user;
     public $tableInfo;
 
-    
+
     /**
      * constructFromArray
      *
      * @param  mixed $arr
      * @return Address
      */
-    public static function constructFromArray($arr) : Address
+    public static function constructFromArray($arr): Address
     {
         $values = array_values($arr);
         return new Address(...$values);
     }
-    
+
     /**
      * constructIdObject
      *
      * @param  mixed $id
      * @return Address
      */
-    public static function  constructIdObject($id) : Address
+    public static function  constructIdObject($id): Address
     {
         return new Address($id, ...[null, null, null, null, null, null]);
     }
 
 
-    
+
     /**
      * __construct
      *
@@ -51,7 +51,7 @@ class Address
      * @param  mixed $number
      * @return void
      */
-    public function __construct($id_address, $id_user, $postal_code, $city, $street, $number)
+    public function __construct($id_address, $postal_code, $city, $street, $number, $id_user)
     {
         $this->id_address = $id_address;
         $this->id_user = $id_user;
