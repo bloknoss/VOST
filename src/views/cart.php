@@ -63,7 +63,10 @@
 
         </div>
     <?php endfor ?>
-    <?php $j = 0; ?>
+    <?php
+    $j = 0;
+    
+    ?>
     <?php foreach ($addresses as $address): ?>
         <label for="address<?= $j ?>">
             <h2>Ciudad: <?= $address->city ?></h2>
@@ -97,8 +100,8 @@
             })
     }
 
-    function deleteItems() {
-        fetch('http://localhost:80/user/cart', {
+    function deleteItems(id) {
+        fetch(`http://localhost:80/user/cart/${id}`, {
             method: 'DELETE'
         }).then(res => res.text())
             .then(res => {

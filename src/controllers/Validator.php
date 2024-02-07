@@ -26,7 +26,7 @@ class Validator
 
 
             if (!preg_match($regex[$field], $_POST[$field])) {
-                print $_POST[$field] . ' invalido';
+                print $field . ' invalido';
                 return $handler();
             }
         }

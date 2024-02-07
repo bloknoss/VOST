@@ -145,7 +145,7 @@ class DatabaseUtils
             $stmt = $pdo->prepare($query);
 
             $stmt = QueryUtils::statementValueBinder($stmt, $newItem);
-            print_r($stmt);
+            
             $stmt->execute();
 
             return $stmt->rowCount();

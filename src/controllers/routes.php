@@ -21,7 +21,6 @@ foreach ($_POST as $postField => $post) {
     $_POST[$postField] = is_string($post) ? Utils::validateData($post) : $post;
 }
 
-session_start();
 Validator::isInactive();
 
 return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {

@@ -4,11 +4,14 @@ namespace VOST\models;
 
 include_once __DIR__ . '/tables/Vinyl.php';
 include_once __DIR__ . '/database/DatabaseUtils.php';
+include_once __DIR__ . '/tables/Song.php';
+
 
 use PDO;
 use PDOException;
 use VOST\models\tables\Vinyl;
 use VOST\models\database\DatabaseUtils;
+use VOST\models\tables\Song;
 
 class VinylModel
 {
@@ -117,12 +120,17 @@ class VinylModel
     public static function getSongs($pdo, $vinylId): array | null
     {
         try {
-            $query = "select songs.artist as artist, songs.compositor as compositor, songs.name as name, songs.genre as genre, songs.duration as duration from vinyls inner join has_songs on has_songs.id_vinyl=vinyls.id_vinyl inner join songs on has_songs.id_song = songs.id_song where vinyls.id_vinyl=:id_vinyl";
+            $query = "select songs.id_song, songs.artist as artist, songs.compositor as compositor, songs.name as name, songs.genre as genre, songs.duration as duration from vinyls inner join has_songs on has_songs.id_vinyl=vinyls.id_vinyl inner join songs on has_songs.id_song = songs.id_song where vinyls.id_vinyl=:id_vinyl";
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(":id_vinyl", $vinylId);
             $stmt->execute();
+            $resSet = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $songs = [];
+            foreach ($resSet as $song){
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $songs[] = Song::constructFromArray($song);
+            }
+            return $songs;
         } catch (PDOException $e) {
             error_log("An error has occured while executing the SQL query in the database." . $e->getMessage());
             return null;

@@ -62,7 +62,6 @@ class OrderController
                     print "Demasiadas unidades de $vinyl->name";
                     continue;
                 }
-                print '//'. $id_vinyl .'//'. $order.'//'.$quantity .'//';
                 $result = VinylsOrderedModel::insertVinylOrdered($pdo, new VinylsOrdered($id_vinyl, $order, $quantity));
 
                 VinylModel::updateVinyl($pdo, new Vinyl($id_vinyl, null, $vinyl->stock - $quantity, null, null, null, null));
