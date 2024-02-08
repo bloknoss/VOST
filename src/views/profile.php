@@ -1,5 +1,5 @@
-
 <html lang="en">
+
 <head>
 
     <style>
@@ -44,55 +44,45 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div>
-        <h1>Your Profile</h1>
-        <h2>User Name : <?= $_SESSION["user"]->name ?></h2>
-        <h2>User Email : <?= $_SESSION["user"]->email ?></h2>
-    </div>
-    <div>
-        <form action="/user/edit" method="post" id="editForm" target="">
-            <label for="userName">User Name
-                <input type="text" name="userName" id="userName" value="<?= $_SESSION["user"]->name ?>">
-            </label>
-            <label for="email">Email
-                <input type="email" name="email" id="email" value="<?= $_SESSION["user"]->email ?>">
-            </label>
-            <button type="submit">
-                Save
+    <div class="container">
+        <div>
+            <h1>Your Profile</h1>
+            <h2>User Name : <?= $_SESSION["user"]->name ?></h2>
+            <h2>User Email : <?= $_SESSION["user"]->email ?></h2>
+        </div>
+        <div>
+            <form action="/user/edit" method="post" id="editForm" target="">
+                <label for="userName">User Name
+                    <input type="text" name="userName" id="userName" value="<?= $_SESSION["user"]->name ?>">
+                </label>
+                <label for="email">Email
+                    <input type="email" name="email" id="email" value="<?= $_SESSION["user"]->email ?>">
+                </label>
+                <button type="submit">
+                    Save
+                </button>
+            </form>
+            <button onclick="edit()">
+                Edit
             </button>
-        </form>
-        <button onclick="edit()">
-            Edit
-        </button>
 
+        </div>
+        <div id="orders">
+            <button onclick="getOrders()">
+                See orders
+            </button>
+
+        </div>
     </div>
-    <div id="orders">
-        <button onclick="getOrders()">
-            See orders
-        </button>
-
-    </div>
-</div>
 
 
 
 
-<script>
-    function getOrders(id){
-        fetch(`http://localhost:80/user/orders`)
-            .then(data => data.text())
-            .then(response => {
-                console.log(response)
-                document.getElementById('orders').innerHTML += response
-            })
-    }
-    function edit() {
-        document.getElementById('editForm').style.display = 'flex'
-    }
-</script>
+    <script src="/js/funciones.js"></script>
 </body>
+
 </html>
 <?php

@@ -17,12 +17,12 @@
     </div>
     <nav>
         <ul class="nav-links">
-            <li><a href="/src/views/inicioView.php">Inicio</a></li>
-            <li><a href="/src/views/tienda.php">Tienda</a></li>
-            <li><a href="/src/views/carrito.php">Carrito</a></li>
+            <li><a href="/shop">Inicio</a></li>
+            <li><a href="/shop">Tienda</a></li>
+            <li><a href="/user/cart">Carrito</a></li>
         </ul>
     </nav>
-    <a class="btn" href="/src/views/registro.php"><button>Inicia Sesión</button><button>Registrate</button></a>
+    <a class="btn" href=""><button>Inicia Sesión</button></a><a href="/user/register"><button>Registrate</button></a>
 
     <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
 
@@ -30,11 +30,11 @@
         <a onclick="closeNav()" href="" class="close">&times;</a>
 
         <div class="overlay-content">
-            <a href="/src/views/inicioView.php">Inicio</a>
+            <a href="/shop">Inicio</a>
 
-            <a href="/src/views/tienda.php">Tienda</a>
+            <a href="/shop">Tienda</a>
 
-            <a href="/src/views/carrito.php">Carrito</a>
+            <a href="/user/cart">Carrito</a>
 
             <a href="#">Cuenta</a>
         </div>
@@ -51,6 +51,7 @@
     <div class="productos">
         <?php
         $j = 0;
+
         use VOST\models\tables\Vinyl;
 
         foreach ($vinyls as $vinyl) : ?>
@@ -65,19 +66,19 @@
                     </div>
                 </div>
                 <div class="comprar">
-                    <button><a href="/vinyl/<?=$vinyl->id_vinyl?>">Ver mas</a></button>
+                    <button><a href="/vinyl/<?= $vinyl->id_vinyl ?>">Ver mas</a></button>
                 </div>
                 <div>
-                <input style="display: none;" type="number" value="<?=$vinyl->id_vinyl?>" id="id_vinyl<?=$j?>" name="id_vinyl">
-                <form action="" id="form<?=$j?>" method="post">
-                    <input style="display: none;" type="number" value="1" name="quantity">
-                    <button type="submit" id="addButton<?=$j?>">
-                        Añadir al carrito
-                    </button>
+                    <input style="display: none;" type="number" value="<?= $vinyl->id_vinyl ?>" id="id_vinyl<?= $j ?>" name="id_vinyl">
+                    <form action="" id="form<?= $j ?>" method="post">
+                        <input style="display: none;" type="number" value="1" name="quantity">
+                        <button type="submit" id="addButton<?= $j ?>">
+                            Añadir al carrito
+                        </button>
                     </form>
                 </div>
             </div>
-            <?php $j++?>
+            <?php $j++ ?>
         <?php endforeach ?>
 
     </div>
