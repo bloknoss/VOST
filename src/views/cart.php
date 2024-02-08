@@ -64,7 +64,7 @@
         <?php endfor ?>
         <?php
         $j = 0;
-       
+
         ?>
         <?php foreach ($addresses as $address) : ?>
             <label style="color: black;" for="address<?= $j ?>">
@@ -81,47 +81,7 @@
     <button onclick="deleteItems()">
         borrar todo
     </button>
-    <script>
-        function updateQuantity(index, id_vinyl) {
-            fetch(`http://localhost:80/user/cart/${id_vinyl}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        quantity: document.getElementById(`quantity${index}`).value
-                    })
-
-                })
-                .then(res => res.text())
-                .then(res => {
-                    console.log(res)
-                    location.reload();
-                })
-        }
-
-        function deleteItems(id) {
-            fetch(`http://localhost:80/user/cart/${id}`, {
-                    method: 'DELETE'
-                }).then(res => res.text())
-                .then(res => {
-                    console.log(res)
-                    location.reload()
-                })
-        }
-
-        function deleteItem(id) {
-            console.log(id)
-            fetch(`http://localhost:80/user/cart/${id}`, {
-                    method: 'DELETE'
-                }).then(res => res.text())
-                .then(res => {
-                    console.log(res)
-                    location.reload()
-                })
-        }
-    </script>
+    <script src="/js/funciones.js"></script>
 </body>
 
 </html>
