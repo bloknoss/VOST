@@ -28,9 +28,10 @@
         }
 
         button {
-            background: #28a745;
+            background: #41788d;
             height: 3rem;
             padding: 1rem;
+            margin-top: 10px;
             border-radius: 0.5rem;
             color: whitesmoke;
             border: none;
