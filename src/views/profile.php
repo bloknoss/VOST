@@ -4,9 +4,14 @@
 <head>
 
     <style>
+        body{
+            background: url("/public/assets/images/discos.jpg");
+            background-size: cover;
+        }
         * {
             font-family: 'Roboto', sans-serif;
             box-sizing: border-box;
+
         }
 
         #editForm {
@@ -14,16 +19,16 @@
         }
 
         .container {
-            width: 100%;
-            height: 30vh;
+            width: 700px;
+            height: 40vh;
             background: #464450;
             color: whitesmoke;
             border-radius: 1rem;
             padding: 2rem;
             display: flex;
             flex-flow: column;
-            align-content: space-between;
-            margin-top:100px;
+            margin-left:700px;
+            margin-top: 100px;
             margin-bottom: 100px;
         }
 
@@ -31,6 +36,17 @@
             background: #41788d;
             height: 3rem;
             padding: 1rem;
+            margin-top: 10px;
+            
+            border-radius: 0.5rem;
+            color: whitesmoke;
+            border: none;
+        }
+        .bot2 {
+            background: #41788d;
+            height: 3rem;
+            padding: 1rem;
+            margin-left: 7px;
             margin-top: 10px;
             border-radius: 0.5rem;
             color: whitesmoke;
@@ -82,7 +98,7 @@
                 <label for="email">Email
                     <input type="email" name="email" id="email" value="<?= $_SESSION["user"]->email ?>">
                 </label>
-                <button type="submit">
+                <button class="bot2" type="submit">
                     Guardar
                 </button>
             </form>
