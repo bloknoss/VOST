@@ -11,11 +11,12 @@ function edit() {
 }
 
 function seeSongs(id, index) {
-  fetch(`http://localhost:80/user/vinyl/${id}/song`)
+    console.log(document.getElementById(`song${index}`))
+  fetch(`http://localhost:80/vinyl/${id}/song`)
     .then((res) => res.text())
     .then((res) => {
-      console.log(res);
-      document.getElementById("songs" + index).innerHTML = res;
+
+      document.getElementById("song" + index).innerHTML = res;
     });
 }
 function getVinyls(id) {

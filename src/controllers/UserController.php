@@ -42,11 +42,11 @@ class UserController
             die(400);
         }
 
+
         //valida el email o name (depende de lo que se inserte)
         $user = self::validateLoginName() ?? self::validateLoginEmail();
-        //validadiones
-        self::validateLogin($user, $_POST["password"]);
 
+        self::validateLogin($user, $_POST["password"]);
         //si pasa las validaciones establezco el login
         $_SESSION["isLogged"] = true;
         require __DIR__.'/../views/profile.php';
@@ -259,6 +259,7 @@ class UserController
         }
         try {
             $pdo = DbUtils::dbConnect();
+
             $user = UserModel::getUserByEmail($pdo, $_POST["email"]) ?? 'not_found';
             return $user;
         } catch (\PDOException $exception) {

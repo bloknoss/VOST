@@ -143,8 +143,7 @@ class DatabaseUtils
             $query = QueryUtils::generateInsertQuery($newItem);
 
             $stmt = $pdo->prepare($query);
-            
-            print_r($newItem);
+
             $stmt = QueryUtils::statementValueBinder($stmt, $newItem);
             
             $stmt->execute();
