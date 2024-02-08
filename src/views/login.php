@@ -26,28 +26,14 @@
     </div>
     <nav>
         <ul class="nav-links">
-            <li><a href="/shop">Inicio</a></li>
             <li><a href="/shop">Tienda</a></li>
+            <li><a href="/user">Cuenta</a></li>
             <li><a href="/user/cart">Carrito</a></li>
+            <li><a href="/user/address">Direcciones</a></li>
         </ul>
     </nav>
-    <a class="btn" href=""><button>Inicia Sesión</button></a><a href="/user/register"><button>Registrate</button></a>
+    <a class="btn" href="/user/login"><button>Inicia Sesión</button></a><a class="btn" href="/user/register"><button>Registrate</button></a>
 
-    <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
-
-    <div id="mobile-menu" class="overlay">
-        <a onclick="closeNav()" href="" class="close">&times;</a>
-
-        <div class="overlay-content">
-            <a href="/shop">Inicio</a>
-
-            <a href="/shop">Tienda</a>
-
-            <a href="/user/cart">Carrito</a>
-
-            <a href="#">Cuenta</a>
-        </div>
-    </div>
 </header>
 
 <body>
@@ -59,7 +45,7 @@
                     <label for="identifier" aria-hidden="true">Iniciar sesión</label>
                     <input class="input" type="email" name="email" placeholder="Email/Nombre" id="identifier" required />
                     <input class="input" type="password" name="password" placeholder="Contraseña" required />
-                    <button>Iniciar Sesión</button>
+                    <button type="submit">Iniciar Sesión</button>
                 </form>
                 <div class="change">
                     <center><button onclick="changeIdentifier()">Cambiar login id</button></center>

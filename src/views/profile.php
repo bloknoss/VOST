@@ -23,6 +23,8 @@
             display: flex;
             flex-flow: column;
             align-content: space-between;
+            margin-top:100px;
+            margin-bottom: 100px;
         }
 
         button {
@@ -48,62 +50,49 @@
 <header class="header">
     <div class="logo">
         <!---->
-        <img src="/public/assets/images/logo.png" alt="Logo de la marca" />
+        <a href="/"> <img src="/public/assets/images/logo.png" alt="Logo de la marca" /></a>
+
     </div>
     <nav>
         <ul class="nav-links">
-            <li><a href="/shop">Inicio</a></li>
             <li><a href="/shop">Tienda</a></li>
+            <li><a href="/user">Cuenta</a></li>
             <li><a href="/user/cart">Carrito</a></li>
+            <li><a href="/user/address">Direcciones</a></li>
         </ul>
     </nav>
-    <a class="btn" href=""><button>Inicia Sesión</button></a><a href="/user/register"><button>Registrate</button></a>
+    
 
-    <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
-
-    <div id="mobile-menu" class="overlay">
-        <a onclick="closeNav()" href="" class="close">&times;</a>
-
-        <div class="overlay-content">
-            <a href="/shop">Inicio</a>
-
-            <a href="/shop">Tienda</a>
-
-            <a href="/user/cart">Carrito</a>
-
-            <a href="#">Cuenta</a>
-        </div>
-    </div>
 </header>
 
 <body>
 
     <div class="container">
         <div>
-            <h1>Your Profile</h1>
-            <h2>User Name : <?= $_SESSION["user"]->name ?></h2>
-            <h2>User Email : <?= $_SESSION["user"]->email ?></h2>
+            <h1>Tu perfil</h1>
+            <h2>Nombre : <?= $_SESSION["user"]->name ?></h2>
+            <h2>Email : <?= $_SESSION["user"]->email ?></h2>
         </div>
         <div>
             <form action="/user/edit" method="post" id="editForm" target="">
-                <label for="userName">User Name
+                <label for="userName">Nombre
                     <input type="text" name="userName" id="userName" value="<?= $_SESSION["user"]->name ?>">
                 </label>
                 <label for="email">Email
                     <input type="email" name="email" id="email" value="<?= $_SESSION["user"]->email ?>">
                 </label>
                 <button type="submit">
-                    Save
+                    Guardar
                 </button>
             </form>
             <button onclick="edit()">
-                Edit
+                Editar
             </button>
 
         </div>
         <div id="orders">
             <button onclick="getOrders()">
-                See orders
+                Ver pedidos
             </button>
 
         </div>

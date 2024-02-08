@@ -1,8 +1,7 @@
 body {
-  background-color: #99a8af;
+  background-color: #9ec3d8;
   font-family: Helvetica Neue, Helvetica;
-  font-size: 14px;
-  width: 100vw;
+  font-size: 10px;
 }
 
 /*----------------------*/
@@ -79,7 +78,7 @@ body {
 }
 
 .header .btn button,
-          /**/.header .menu button {
+                  /**/.header .menu button {
   margin-left: 20px;
   color: #41788d;
   padding: 9px 25px;
@@ -91,7 +90,7 @@ body {
 }
 
 .header .btn button:hover,
-          /**/.header .menu button:hover {
+                  /**/.header .menu button:hover {
   background-color: #e2f1f8;
   color: #179aca;
   transform: scale(1.1);
@@ -105,60 +104,9 @@ body {
     display: inherit;
   }
 }
+/*--------*/
 
-/*------------------*/
-.container {
-  display: flex;
-  align-items: center;
-  margin-top: 50px;
-}
-h1 {
-  font-size: 50px;
-  display: flex;
-  justify-content: center;
-  font-family: "Courier New", Courier, monospace;
-  padding-left: 30px;
-  padding-right: 30px;
-}
-.lineas {
-  height: 5px;
-  width: 50%;
-  background-color: #41788d;
-}
-.productos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.productos img {
-  width: 400px;
-  padding: 20px;
-}
-
-/*----cards-----*/
-.carta {
-  background-color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  margin: 25px;
-}
-
-.info-card {
-  display: flex;
-  justify-content: space-between;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-.text-product {
-  margin-bottom: 20px;
-}
-
-.comprar {
-  margin-bottom: 20px;
-  margin-left: 20px;
-}
-
-/*----------------*/
+/*----------*/
 footer {
   background: #41788d;
   padding: 60px 0 30px 0;

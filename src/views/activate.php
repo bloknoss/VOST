@@ -12,36 +12,23 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="logo">
-            <!---->
-            <img src="/public/assets/images/logo.png" alt="Logo de la marca" />
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/shop">Inicio</a></li>
-                <li><a href="/shop">Tienda</a></li>
-                <li><a href="/user/cart">Carrito</a></li>
-            </ul>
-        </nav>
-        <a class="btn" href=""><button>Inicia Sesión</button></a><a href="/user/register"><button>Registrate</button></a>
+<header class="header">
+    <div class="logo">
+        <!---->
+        <a href="/"> <img src="/public/assets/images/logo.png" alt="Logo de la marca" /></a>
 
-        <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
+    </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/shop">Tienda</a></li>
+            <li><a href="/user">Cuenta</a></li>
+            <li><a href="/user/cart">Carrito</a></li>
+            <li><a href="/user/address">Direcciones</a></li>
+        </ul>
+    </nav>
+    
 
-        <div id="mobile-menu" class="overlay">
-            <a onclick="closeNav()" href="" class="close">&times;</a>
-
-            <div class="overlay-content">
-                <a href="/shop">Inicio</a>
-
-                <a href="/shop">Tienda</a>
-
-                <a href="/user/cart">Carrito</a>
-
-                <a href="#">Cuenta</a>
-            </div>
-        </div>
-    </header>
+</header>
 
     <div class="container">
         <div class="main">

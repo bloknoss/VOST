@@ -7,7 +7,7 @@
     <title>VOST</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="/css/activacion.css" />
+    <link rel="stylesheet" href="/css/address.css" />
     <link rel="shortcut icon" href="/public/assets/images/logo.png" type="image/x-icon" />
 </head>
 
@@ -15,44 +15,32 @@
 <header class="header">
     <div class="logo">
         <!---->
-        <img src="/public/assets/images/logo.png" alt="Logo de la marca" />
+        <a href="/"> <img src="/public/assets/images/logo.png" alt="Logo de la marca" /></a>
+
     </div>
     <nav>
         <ul class="nav-links">
-            <li><a href="/shop">Inicio</a></li>
             <li><a href="/shop">Tienda</a></li>
+            <li><a href="/user">Cuenta</a></li>
             <li><a href="/user/cart">Carrito</a></li>
+            <li><a href="/user/address">Direcciones</a></li>
         </ul>
     </nav>
-    <a class="btn" href=""><button>Inicia Sesión</button></a><a href="/user/register"><button>Registrate</button></a>
+    
 
-    <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
-
-    <div id="mobile-menu" class="overlay">
-        <a onclick="closeNav()" href="" class="close">&times;</a>
-
-        <div class="overlay-content">
-            <a href="/shop">Inicio</a>
-
-            <a href="/shop">Tienda</a>
-
-            <a href="/user/cart">Carrito</a>
-
-            <a href="#">Cuenta</a>
-        </div>
-    </div>
 </header>
 
 <body>
+    <div class="cuerpo">
     <h1>Tus direcciones</h1>
     <?php for ($i = 0; $i < count($addresses); $i++) : ?>
         <h2>Direccion : <?= $i + 1 ?></h2>
         <ul>
-            <li>Postal code : <?= $addresses[$i]->postal_code ?></li>
-            <li>Postal city : <?= $addresses[$i]->city ?></li>
-            <li>Postal street : <?= $addresses[$i]->street ?></li>
-            <li>Postal number : <?= $addresses[$i]->number ?></li>
-            <button onclick="deleteAddress(<?= $addresses[$i]->id_address ?>)">Delete</button>
+            <li>Ciudad : <?= $addresses[$i]->postal_code ?></li>
+            <li>Calle : <?= $addresses[$i]->city ?></li>
+            <li>Nª de casa : <?= $addresses[$i]->street ?></li>
+            <li>Código Postal : <?= $addresses[$i]->number ?></li>
+            <button onclick="deleteAddress(<?= $addresses[$i]->id_address ?>)">Eliminar</button>
         </ul>
     <?php endfor; ?>
     <h1>Nueva dirección</h1>
@@ -73,7 +61,7 @@
             Crear
         </button>
     </form>
-    <script src="/js/funciones.js"></script>
+    <script src="/js/funciones.js"></script></div>
 </body>
 <footer>
     <div class="contenedor-footer">

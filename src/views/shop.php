@@ -13,32 +13,19 @@
 <header class="header">
     <div class="logo">
         <!---->
-        <img src="/public/assets/images/logo.png" alt="Logo de la marca" />
+        <a href="/"> <img src="/public/assets/images/logo.png" alt="Logo de la marca" /></a>
     </div>
     <nav>
         <ul class="nav-links">
-            <li><a href="/shop">Inicio</a></li>
+
             <li><a href="/shop">Tienda</a></li>
+            <li><a href="/user">Cuenta</a></li>
             <li><a href="/user/cart">Carrito</a></li>
+            <li><a href="/user/address">Direcciones</a></li>
         </ul>
     </nav>
-    <a class="btn" href=""><button>Inicia Sesión</button></a><a href="/user/register"><button>Registrate</button></a>
+   
 
-    <a onclick="openNav()" class="menu" href="#"><button>Menu</button></a>
-
-    <div id="mobile-menu" class="overlay">
-        <a onclick="closeNav()" href="" class="close">&times;</a>
-
-        <div class="overlay-content">
-            <a href="/shop">Inicio</a>
-
-            <a href="/shop">Tienda</a>
-
-            <a href="/user/cart">Carrito</a>
-
-            <a href="#">Cuenta</a>
-        </div>
-    </div>
 </header>
 
 <body>
@@ -66,22 +53,39 @@
                     </div>
                 </div>
                 <div class="comprar">
-                    <button><a href="/vinyl/<?= $vinyl->id_vinyl ?>">Ver mas</a></button>
+                    <button><a href="/vinyl/<?=$vinyl->id_vinyl?>">Ver mas</a></button>
+                   
                 </div>
                 <div>
-                    <input style="display: none;" type="number" value="<?= $vinyl->id_vinyl ?>" id="id_vinyl<?= $j ?>" name="id_vinyl">
-                    <form action="" id="form<?= $j ?>" method="post">
-                        <input style="display: none;" type="number" value="1" name="quantity">
-                        <button type="submit" id="addButton<?= $j ?>">
-                            Añadir al carrito
-                        </button>
+                <input style="display: none;" type="number" value="<?=$vinyl->id_vinyl?>" id="id_vinyl<?=$j?>" name="id_vinyl">
+                <form action="" id="form<?=$j?>" method="post">
+                    <input style="display: none;" type="number" value="1" name="quantity">
+                    <button type="submit" id="addButton<?=$j?>">
+                        Añadir al carrito
+                    </button>
                     </form>
                 </div>
             </div>
-            <?php $j++ ?>
+            <?php $j++?>
         <?php endforeach ?>
 
+
     </div>
+    <div class="pages">         <?php
+       
+        $numPaginas = ceil(count($vinyls) );
+
+        for ($i = 1; $i <= $numPaginas; $i++) {
+            echo '<a href="/shop">  ' . $i . '</a> ';
+        }
+        ?> </div>
+    <style>
+        .pages{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+    </style>
 </body>
 <footer>
     <div class="contenedor-footer">
@@ -98,7 +102,7 @@
             <h4>Empresa</h4>
             <ul>
                 <li><a href="#">Sobre nosotros</a></li>
-                <li><a href="#">Política de privacidad</a></li>
+                 <li><a href="#">Política de privacidad</a></li>
                 <li><a href="#">Política de cookies</a></li>
                 <li><a href="#">Condiciones generales</a></li>
             </ul>
@@ -148,4 +152,4 @@
 </body>
 
 </html>
-<?php
+
