@@ -27,7 +27,7 @@
             padding: 2rem;
             display: flex;
             flex-flow: column;
-            margin-left:700px;
+            margin-left:650px;
             margin-top: 100px;
             margin-bottom: 100px;
         }
