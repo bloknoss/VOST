@@ -64,6 +64,7 @@ return FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeColle
                 OrderController::getOrders();
             });
             $routeCollector->post('', function () {
+   
                 OrderController::addOrders();
             });
             $routeCollector->get('/{id:\d+}', fn ($id) => OrderController::getOrderedVinyls($id['id']));

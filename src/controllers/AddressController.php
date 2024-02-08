@@ -10,7 +10,7 @@ require __DIR__ . '/../models/AddressModel.php';
 
 class AddressController
 {
-    private static array $regex = ['city' => null, 'postal_code' =>'/^\d{5}$/', 'street' => null, 'number' => null];
+    private static array $regex = ['city' => null, 'postal_code' => '/^\d{5}$/', 'street' => null, 'number' => null];
     private static array $statusCode = [-1 => 400, 0 => 204, 1 => 202];
 
     public static function getAdresses(): never
@@ -19,7 +19,7 @@ class AddressController
         try {
             $pdo = DbUtils::dbConnect();
             $addresses = AddressModel::getUserAddresses($pdo, $_SESSION["user"]->id_user);
-            require __DIR__ . '/../views/adress.php';
+            require __DIR__ . '/../views/address.php';
             exit(200);
         } catch (\PDOException $exception) {
             die(500);
@@ -40,7 +40,7 @@ class AddressController
         }
     }
 
-    public static function addAddress():never
+    public static function addAddress(): never
     {
         Validator::isLogged();
 
@@ -48,17 +48,14 @@ class AddressController
             print 'Campo invalido';
             exit(400);
         });
-
+ 
         try {
             $pdo = DbUtils::dbConnect();
             $result = AddressModel::insertAddress($pdo, new Address(null, $_SESSION["user"]->id_user, $_POST["postal_code"], $_POST["city"], $_POST["street"], $_POST["number"]));
+            print $result;
             exit(Validator::$statusCode[$result]);
         } catch (\PDOException $exception) {
             die(500);
         }
     }
-
-
-
-
 }

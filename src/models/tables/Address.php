@@ -51,7 +51,7 @@ class Address
      * @param  mixed $number
      * @return void
      */
-    public function __construct($id_address, $postal_code, $city, $street, $number, $id_user)
+    public function __construct($id_address, $id_user, $postal_code, $city, $street, $number)
     {
         $this->id_address = $id_address;
         $this->id_user = $id_user;
