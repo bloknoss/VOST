@@ -66,7 +66,7 @@
     if (!is_array($vinyls)) $vinyls = [$vinyls];
     ?>
     <?php foreach ($vinyls as $vinyl) : ?>
-        <h2>Nomrbe: <?= $vinyl->name ?></h2>
+        <h2>Nombre: <?= $vinyl->name ?></h2>
         <h2>Stock: <?= $vinyl->stock ?></h2>
         <h2>Precio: <?= $vinyl->price ?></h2>
         <h2>Duracion: <?= $vinyl->duration ?> min</h2>

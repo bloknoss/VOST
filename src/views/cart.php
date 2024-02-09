@@ -59,10 +59,10 @@
             <div class="vinyl">
 
                 <input type="checkbox" name="id_vinyls[]" id="id_vinyl<?= $i ?>" value="<?= $cart[$i]->vinyl->id_vinyl ?>">
-                <h2>Nomnbre: <?= $cart[$i]->vinyl->name ?></h2>
+                <h2>Nombre: <?= $cart[$i]->vinyl->name ?></h2>
                 <h2>Precio: <?= $cart[$i]->vinyl->price ?>€</h2>
                 <h2>Stock: <?= $cart[$i]->vinyl->stock ?></h2>
-                <h2>Stock: <?= $cart[$i]->vinyl->duration ?></h2>
+                <h2>Duracion: <?= $cart[$i]->vinyl->duration ?></h2>
                 <h2>Cantidad: <?= $cart[$i]->quantity ?></h2>
                 <div>
                     <button onclick="deleteItem(<?= $cart[$i]->vinyl->id_vinyl ?>)">Eliminar</button>
